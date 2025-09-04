@@ -24,10 +24,21 @@ export function PageLoader({ children }: PageLoaderProps) {
         });
       }
       
-      // Small delay to ensure smooth transition
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
+      // Wait for the main content to actually render before hiding loading screen
+      const checkForContent = () => {
+        const mainContent = document.querySelector('[data-main-content]');
+        if (mainContent) {
+          // Content is rendered, hide loading screen
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 300);
+        } else {
+          // Content not ready yet, check again
+          setTimeout(checkForContent, 100);
+        }
+      };
+      
+      checkForContent();
     };
 
     window.addEventListener('homepageDataLoaded', handleDataLoaded);

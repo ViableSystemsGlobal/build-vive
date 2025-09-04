@@ -448,7 +448,7 @@ export default function Home() {
   }
 
   return (
-    <div className="pt-20">
+    <div className="pt-20" data-main-content>
       <div id="home">
         <Hero data={homepageData} />
       </div>
