@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import SmartImage from "./components/SmartImage";
 import { useQuote } from "./components/QuoteProvider";
 
 type HomepageData = {
@@ -461,7 +462,7 @@ export default function Home() {
       <section id="about" className="container-page grid grid-cols-1 lg:grid-cols-2 gap-12 py-20 lg:py-28">
         <div className="relative order-2 lg:order-1">
           <div className="aspect-[4/3] w-full rounded-2xl overflow-hidden">
-            <Image 
+            <SmartImage 
               src={homepageData?.aboutImage || "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1400&auto=format&fit=crop"}
               alt="Construction site with heavy machinery and workers"
               width={600}
@@ -517,7 +518,7 @@ export default function Home() {
               <div key={service.id} className="w-full flex-shrink-0 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="relative order-2 lg:order-1">
                   <div className="aspect-[4/3] w-full rounded-2xl overflow-hidden">
-                    <Image 
+                    <SmartImage 
                       src={service.image || "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1400&auto=format&fit=crop"}
                       alt={service.title}
                       width={600}
@@ -628,7 +629,7 @@ export default function Home() {
               <div key={index} className="w-full flex-shrink-0 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="relative order-2 lg:order-1">
                   <div className="aspect-[4/3] w-full rounded-2xl overflow-hidden">
-                    <Image 
+                    <SmartImage 
                       src={project.image}
                       alt={project.title}
                       width={600}
@@ -790,7 +791,7 @@ export default function Home() {
           <div>
             <div className="flex items-center gap-2">
               {homepageData?.footerLogoUrl ? (
-                <Image 
+                <SmartImage 
                   src={homepageData.footerLogoUrl} 
                   alt="Logo" 
                   width={24} 
