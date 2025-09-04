@@ -34,10 +34,19 @@ export default function ImageUploader({ currentImage, onImageChange, label = "Im
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch('/api/upload', {
+      // Try cloud upload first, fallback to regular upload
+      let response = await fetch('/api/upload-cloud', {
         method: 'POST',
         body: formData,
       });
+
+      // If cloud upload fails, try regular upload
+      if (!response.ok) {
+        response = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+      }
 
       if (response.ok) {
         const result = await response.json();
