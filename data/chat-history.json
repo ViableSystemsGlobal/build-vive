@@ -1,0 +1,389 @@
+[
+  {
+    "sessionId": "chat_1756923026282_gsauynfc",
+    "startTime": "2025-09-03T18:10:26.282Z",
+    "endTime": "2025-09-03T18:18:39.306Z",
+    "messages": [
+      {
+        "id": "1756923488587",
+        "type": "user",
+        "content": "hi",
+        "timestamp": "2025-09-03T18:18:08.587Z"
+      },
+      {
+        "id": "1756923492292",
+        "type": "bot",
+        "content": "Hello! How can I assist you today with your construction needs or questions? Whether it's advice, safety tips, or project planning, I'm here to help!",
+        "timestamp": "2025-09-03T18:18:12.292Z"
+      },
+      {
+        "id": "1756923502673",
+        "type": "user",
+        "content": "are you ai?",
+        "timestamp": "2025-09-03T18:18:22.673Z"
+      },
+      {
+        "id": "1756923507527",
+        "type": "bot",
+        "content": "Yes, I am an AI designed to assist with construction-related questions and provide guidance on various topics, including safety, project planning, and regulations. How can I help you today? If you have any construction-related inquiries or need advice, feel free to ask!",
+        "timestamp": "2025-09-03T18:18:27.527Z"
+      }
+    ],
+    "status": "completed",
+    "tags": [
+      "permits"
+    ],
+    "id": "chat_1756923519492_5xxws1l06"
+  },
+  {
+    "sessionId": "chat_1756923026282_gsauynfc",
+    "startTime": "2025-09-03T18:10:26.282Z",
+    "endTime": "2025-09-03T18:19:38.540Z",
+    "messages": [
+      {
+        "id": "1756923488587",
+        "type": "user",
+        "content": "hi",
+        "timestamp": "2025-09-03T18:18:08.587Z"
+      },
+      {
+        "id": "1756923492292",
+        "type": "bot",
+        "content": "Hello! How can I assist you today with your construction needs or questions? Whether it's advice, safety tips, or project planning, I'm here to help!",
+        "timestamp": "2025-09-03T18:18:12.292Z"
+      },
+      {
+        "id": "1756923502673",
+        "type": "user",
+        "content": "are you ai?",
+        "timestamp": "2025-09-03T18:18:22.673Z"
+      },
+      {
+        "id": "1756923507527",
+        "type": "bot",
+        "content": "Yes, I am an AI designed to assist with construction-related questions and provide guidance on various topics, including safety, project planning, and regulations. How can I help you today? If you have any construction-related inquiries or need advice, feel free to ask!",
+        "timestamp": "2025-09-03T18:18:27.527Z"
+      },
+      {
+        "id": "1756923552598",
+        "type": "user",
+        "content": "my pipe just burst what do I do",
+        "timestamp": "2025-09-03T18:19:12.598Z"
+      },
+      {
+        "id": "1756923562670",
+        "type": "bot",
+        "content": "I'm sorry to hear about your pipe burst! Here are the immediate steps you should take to ensure safety and minimize damage:\n\n1. **Shut Off the Water Supply**: Locate the main water shut-off valve in your home and turn it off to stop the flow of water.\n\n2. **Turn Off Electricity**: If the burst pipe is near electrical outlets or appliances, turn off the electricity to that area to prevent any electrical hazards.\n\n3. **Drain the System**: Open faucets in your home to relieve pressure and drain any remaining water in the pipes.\n\n4. **Contain the Water**: If possible, use buckets, towels, or mops to contain and soak up the water to prevent further damage to your property.\n\n5. **Call a Professional Plumber**: It's essential to have a licensed plumber assess the damage and make repairs. You can also contact your insurance company to report the incident.\n\n6. **Document the Damage**: Take photos of the affected area for insurance claims and future reference.\n\nIf you need further assistance or help finding a plumber, let me know! Stay safe!",
+        "timestamp": "2025-09-03T18:19:22.670Z"
+      }
+    ],
+    "status": "completed",
+    "tags": [
+      "plumbing",
+      "electrical",
+      "structural",
+      "permits"
+    ],
+    "escalationReason": "User requested call",
+    "id": "chat_1756923578594_po367vmb0"
+  },
+  {
+    "sessionId": "chat_1756931551925_w7b3fmkqn",
+    "startTime": "2025-09-03T20:32:31.925Z",
+    "endTime": "2025-09-03T20:34:34.291Z",
+    "messages": [
+      {
+        "id": "1756931645941",
+        "type": "user",
+        "content": "Hi",
+        "timestamp": "2025-09-03T20:34:05.941Z"
+      },
+      {
+        "id": "1756931653148",
+        "type": "bot",
+        "content": "Hello! How can I assist you today with your construction needs? Whether you have questions about a project, safety practices, permits, or anything else, I'm here to help!",
+        "timestamp": "2025-09-03T20:34:13.149Z"
+      }
+    ],
+    "status": "completed",
+    "tags": [
+      "permits"
+    ],
+    "id": "chat_1756931674526_virxz9ks5"
+  },
+  {
+    "sessionId": "chat_1756932914025_dyewbi9d6",
+    "startTime": "2025-09-03T20:55:14.026Z",
+    "endTime": "2025-09-03T20:59:37.577Z",
+    "messages": [
+      {
+        "id": "1756932964083",
+        "type": "bot",
+        "content": "Thanks for submitting your request! While we process your quote, can I help with some immediate advice?",
+        "timestamp": "2025-09-03T20:56:04.083Z"
+      },
+      {
+        "id": "1756932964095",
+        "type": "bot",
+        "content": "Thanks for submitting your request! While we process your quote, can I help with some immediate advice?",
+        "timestamp": "2025-09-03T20:56:04.095Z"
+      },
+      {
+        "id": "1756932988417",
+        "type": "user",
+        "content": "yes",
+        "timestamp": "2025-09-03T20:56:28.417Z"
+      },
+      {
+        "id": "1756932988596",
+        "type": "bot",
+        "content": "I understand you need immediate assistance. Let me connect you with our team right now.",
+        "timestamp": "2025-09-03T20:56:28.596Z"
+      },
+      {
+        "id": "1756932990685",
+        "type": "bot",
+        "content": "We're calling you now! Please keep your phone nearby.",
+        "timestamp": "2025-09-03T20:56:30.685Z"
+      }
+    ],
+    "status": "completed",
+    "tags": [],
+    "escalationReason": "User requested call",
+    "id": "chat_1756933178065_dldjes13p"
+  },
+  {
+    "sessionId": "chat_1756933609278_72ckr8s9j",
+    "startTime": "2025-09-03T21:06:49.278Z",
+    "endTime": "2025-09-03T21:38:47.372Z",
+    "messages": [
+      {
+        "id": "1756933809521",
+        "type": "bot",
+        "content": "Thanks for submitting your request! While we process your quote, can I help with some immediate advice?",
+        "timestamp": "2025-09-03T21:10:09.521Z"
+      },
+      {
+        "id": "1756933809731",
+        "type": "bot",
+        "content": "Hi Nana Yaw Sasu Appiah-Miracle! 👋\n\n🚨 I see you have an emergency repair/maintenance that needs immediate attention. Our team is working on your quote right now and will get back to you within 30 minutes.\n\nWhile we process your request, I can provide immediate safety guidance and emergency procedures. What specific type of emergency are you dealing with?",
+        "timestamp": "2025-09-03T21:10:09.731Z"
+      },
+      {
+        "id": "1756934007128",
+        "type": "user",
+        "content": "a broken pipe",
+        "timestamp": "2025-09-03T21:13:27.128Z"
+      },
+      {
+        "id": "1756934007137",
+        "type": "bot",
+        "content": "I'm experiencing technical difficulties. Please call us directly for immediate assistance.",
+        "timestamp": "2025-09-03T21:13:27.137Z"
+      },
+      {
+        "id": "1756934024672",
+        "type": "user",
+        "content": "a broken pipe",
+        "timestamp": "2025-09-03T21:13:44.672Z"
+      },
+      {
+        "id": "1756934031479",
+        "type": "bot",
+        "content": "I'm sorry to hear about the broken pipe, Nana Yaw. This is an urgent issue that needs immediate attention to prevent further damage. Here are the steps you should take right away:\n\n1. **Turn Off the Water Supply**: Locate and turn off the main water supply to prevent flooding and additional water damage.\n\n2. **Drain the Pipes**: Open the faucets in your home to relieve any remaining water pressure in the pipes.\n\n3. **Assess the Damage**: If it's safe to do so, check the extent of the damage. Look for signs of water leakage, mold, or structural issues.\n\n4. **Contact a Plumber**: It's crucial to get a licensed plumber to assess and repair the broken pipe as soon as possible. They can ensure that the repair is done correctly and safely.\n\n5. **Document the Damage**: Take photographs of the damage for insurance purposes, especially if you plan to file a claim.\n\n6. **Check for Electrical Hazards**: If the leak is near any electrical outlets or appliances, ensure they are turned off and stay clear of any water.\n\nIf you need assistance finding emergency plumbing support, I can help connect you with professionals in your area. Your safety and the integrity of your home are the top priorities right now. Let me know how you would like to proceed!",
+        "timestamp": "2025-09-03T21:13:51.479Z"
+      },
+      {
+        "id": "1756934193535",
+        "type": "user",
+        "content": "Thank you for your help",
+        "timestamp": "2025-09-03T21:16:33.535Z"
+      },
+      {
+        "id": "1756934198953",
+        "type": "bot",
+        "content": "You're welcome, Nana Yaw Sasu Appiah-Miracle! I'm here to assist you with your kitchen remodeling project, especially given the urgency due to the broken pipe. \n\nSince this is an emergency situation, I recommend taking the following immediate steps:\n\n1. **Shut Off the Water**: Locate your main water shut-off valve and turn it off to prevent further flooding or water damage.\n\n2. **Assess the Damage**: If it's safe to do so, check the extent of the damage caused by the broken pipe. This will help you understand what repairs are needed.\n\n3. **Contact a Plumber**: Given the urgency, I recommend contacting a licensed plumber immediately to fix the broken pipe. They can provide you with a professional assessment and repair.\n\n4. **Consider Water Damage Restoration**: Depending on the damage, you may also need to contact a water damage restoration service to prevent mold and further issues.\n\n5. **Plan for Your Kitchen Remodel**: Once the plumbing issue is resolved, you can move forward with your kitchen remodeling. Since your budget is under $50,000 and the project is small, we can focus on essential upgrades and repairs that fit within that range.\n\nIf you need help finding a reliable plumber or have further questions about your remodeling project, feel free to ask! Stay safe, and I hope to assist you further.",
+        "timestamp": "2025-09-03T21:16:38.953Z"
+      }
+    ],
+    "status": "completed",
+    "tags": [
+      "emergency",
+      "plumbing",
+      "electrical",
+      "structural",
+      "renovation",
+      "maintenance",
+      "budget"
+    ],
+    "escalationReason": "User requested call",
+    "id": "chat_1756935528496_6wtlzd8wp"
+  },
+  {
+    "sessionId": "chat_1756933609278_72ckr8s9j",
+    "startTime": "2025-09-03T21:06:49.278Z",
+    "endTime": "2025-09-03T21:38:48.848Z",
+    "messages": [
+      {
+        "id": "1756933809521",
+        "type": "bot",
+        "content": "Thanks for submitting your request! While we process your quote, can I help with some immediate advice?",
+        "timestamp": "2025-09-03T21:10:09.521Z"
+      },
+      {
+        "id": "1756933809731",
+        "type": "bot",
+        "content": "Hi Nana Yaw Sasu Appiah-Miracle! 👋\n\n🚨 I see you have an emergency repair/maintenance that needs immediate attention. Our team is working on your quote right now and will get back to you within 30 minutes.\n\nWhile we process your request, I can provide immediate safety guidance and emergency procedures. What specific type of emergency are you dealing with?",
+        "timestamp": "2025-09-03T21:10:09.731Z"
+      },
+      {
+        "id": "1756934007128",
+        "type": "user",
+        "content": "a broken pipe",
+        "timestamp": "2025-09-03T21:13:27.128Z"
+      },
+      {
+        "id": "1756934007137",
+        "type": "bot",
+        "content": "I'm experiencing technical difficulties. Please call us directly for immediate assistance.",
+        "timestamp": "2025-09-03T21:13:27.137Z"
+      },
+      {
+        "id": "1756934024672",
+        "type": "user",
+        "content": "a broken pipe",
+        "timestamp": "2025-09-03T21:13:44.672Z"
+      },
+      {
+        "id": "1756934031479",
+        "type": "bot",
+        "content": "I'm sorry to hear about the broken pipe, Nana Yaw. This is an urgent issue that needs immediate attention to prevent further damage. Here are the steps you should take right away:\n\n1. **Turn Off the Water Supply**: Locate and turn off the main water supply to prevent flooding and additional water damage.\n\n2. **Drain the Pipes**: Open the faucets in your home to relieve any remaining water pressure in the pipes.\n\n3. **Assess the Damage**: If it's safe to do so, check the extent of the damage. Look for signs of water leakage, mold, or structural issues.\n\n4. **Contact a Plumber**: It's crucial to get a licensed plumber to assess and repair the broken pipe as soon as possible. They can ensure that the repair is done correctly and safely.\n\n5. **Document the Damage**: Take photographs of the damage for insurance purposes, especially if you plan to file a claim.\n\n6. **Check for Electrical Hazards**: If the leak is near any electrical outlets or appliances, ensure they are turned off and stay clear of any water.\n\nIf you need assistance finding emergency plumbing support, I can help connect you with professionals in your area. Your safety and the integrity of your home are the top priorities right now. Let me know how you would like to proceed!",
+        "timestamp": "2025-09-03T21:13:51.479Z"
+      },
+      {
+        "id": "1756934193535",
+        "type": "user",
+        "content": "Thank you for your help",
+        "timestamp": "2025-09-03T21:16:33.535Z"
+      },
+      {
+        "id": "1756934198953",
+        "type": "bot",
+        "content": "You're welcome, Nana Yaw Sasu Appiah-Miracle! I'm here to assist you with your kitchen remodeling project, especially given the urgency due to the broken pipe. \n\nSince this is an emergency situation, I recommend taking the following immediate steps:\n\n1. **Shut Off the Water**: Locate your main water shut-off valve and turn it off to prevent further flooding or water damage.\n\n2. **Assess the Damage**: If it's safe to do so, check the extent of the damage caused by the broken pipe. This will help you understand what repairs are needed.\n\n3. **Contact a Plumber**: Given the urgency, I recommend contacting a licensed plumber immediately to fix the broken pipe. They can provide you with a professional assessment and repair.\n\n4. **Consider Water Damage Restoration**: Depending on the damage, you may also need to contact a water damage restoration service to prevent mold and further issues.\n\n5. **Plan for Your Kitchen Remodel**: Once the plumbing issue is resolved, you can move forward with your kitchen remodeling. Since your budget is under $50,000 and the project is small, we can focus on essential upgrades and repairs that fit within that range.\n\nIf you need help finding a reliable plumber or have further questions about your remodeling project, feel free to ask! Stay safe, and I hope to assist you further.",
+        "timestamp": "2025-09-03T21:16:38.953Z"
+      }
+    ],
+    "status": "completed",
+    "tags": [
+      "emergency",
+      "plumbing",
+      "electrical",
+      "structural",
+      "renovation",
+      "maintenance",
+      "budget"
+    ],
+    "escalationReason": "User requested call",
+    "id": "chat_1756935528852_9zlxyax9c"
+  },
+  {
+    "sessionId": "chat_1756933609278_72ckr8s9j",
+    "startTime": "2025-09-03T21:06:49.278Z",
+    "endTime": "2025-09-03T21:38:54.999Z",
+    "messages": [
+      {
+        "id": "1756933809521",
+        "type": "bot",
+        "content": "Thanks for submitting your request! While we process your quote, can I help with some immediate advice?",
+        "timestamp": "2025-09-03T21:10:09.521Z"
+      },
+      {
+        "id": "1756933809731",
+        "type": "bot",
+        "content": "Hi Nana Yaw Sasu Appiah-Miracle! 👋\n\n🚨 I see you have an emergency repair/maintenance that needs immediate attention. Our team is working on your quote right now and will get back to you within 30 minutes.\n\nWhile we process your request, I can provide immediate safety guidance and emergency procedures. What specific type of emergency are you dealing with?",
+        "timestamp": "2025-09-03T21:10:09.731Z"
+      },
+      {
+        "id": "1756934007128",
+        "type": "user",
+        "content": "a broken pipe",
+        "timestamp": "2025-09-03T21:13:27.128Z"
+      },
+      {
+        "id": "1756934007137",
+        "type": "bot",
+        "content": "I'm experiencing technical difficulties. Please call us directly for immediate assistance.",
+        "timestamp": "2025-09-03T21:13:27.137Z"
+      },
+      {
+        "id": "1756934024672",
+        "type": "user",
+        "content": "a broken pipe",
+        "timestamp": "2025-09-03T21:13:44.672Z"
+      },
+      {
+        "id": "1756934031479",
+        "type": "bot",
+        "content": "I'm sorry to hear about the broken pipe, Nana Yaw. This is an urgent issue that needs immediate attention to prevent further damage. Here are the steps you should take right away:\n\n1. **Turn Off the Water Supply**: Locate and turn off the main water supply to prevent flooding and additional water damage.\n\n2. **Drain the Pipes**: Open the faucets in your home to relieve any remaining water pressure in the pipes.\n\n3. **Assess the Damage**: If it's safe to do so, check the extent of the damage. Look for signs of water leakage, mold, or structural issues.\n\n4. **Contact a Plumber**: It's crucial to get a licensed plumber to assess and repair the broken pipe as soon as possible. They can ensure that the repair is done correctly and safely.\n\n5. **Document the Damage**: Take photographs of the damage for insurance purposes, especially if you plan to file a claim.\n\n6. **Check for Electrical Hazards**: If the leak is near any electrical outlets or appliances, ensure they are turned off and stay clear of any water.\n\nIf you need assistance finding emergency plumbing support, I can help connect you with professionals in your area. Your safety and the integrity of your home are the top priorities right now. Let me know how you would like to proceed!",
+        "timestamp": "2025-09-03T21:13:51.479Z"
+      },
+      {
+        "id": "1756934193535",
+        "type": "user",
+        "content": "Thank you for your help",
+        "timestamp": "2025-09-03T21:16:33.535Z"
+      },
+      {
+        "id": "1756934198953",
+        "type": "bot",
+        "content": "You're welcome, Nana Yaw Sasu Appiah-Miracle! I'm here to assist you with your kitchen remodeling project, especially given the urgency due to the broken pipe. \n\nSince this is an emergency situation, I recommend taking the following immediate steps:\n\n1. **Shut Off the Water**: Locate your main water shut-off valve and turn it off to prevent further flooding or water damage.\n\n2. **Assess the Damage**: If it's safe to do so, check the extent of the damage caused by the broken pipe. This will help you understand what repairs are needed.\n\n3. **Contact a Plumber**: Given the urgency, I recommend contacting a licensed plumber immediately to fix the broken pipe. They can provide you with a professional assessment and repair.\n\n4. **Consider Water Damage Restoration**: Depending on the damage, you may also need to contact a water damage restoration service to prevent mold and further issues.\n\n5. **Plan for Your Kitchen Remodel**: Once the plumbing issue is resolved, you can move forward with your kitchen remodeling. Since your budget is under $50,000 and the project is small, we can focus on essential upgrades and repairs that fit within that range.\n\nIf you need help finding a reliable plumber or have further questions about your remodeling project, feel free to ask! Stay safe, and I hope to assist you further.",
+        "timestamp": "2025-09-03T21:16:38.953Z"
+      }
+    ],
+    "status": "completed",
+    "tags": [
+      "emergency",
+      "plumbing",
+      "electrical",
+      "structural",
+      "renovation",
+      "maintenance",
+      "budget"
+    ],
+    "escalationReason": "User requested call",
+    "id": "chat_1756935535052_clpplgjet"
+  },
+  {
+    "sessionId": "chat_1756990415036_lzk79s1c5",
+    "startTime": "2025-09-04T12:53:35.036Z",
+    "endTime": "2025-09-04T12:54:55.457Z",
+    "messages": [
+      {
+        "id": "1756990464896",
+        "type": "bot",
+        "content": "Thanks for submitting your request! While we process your quote, can I help with some immediate advice?",
+        "timestamp": "2025-09-04T12:54:24.896Z"
+      },
+      {
+        "id": "1756990467181",
+        "type": "bot",
+        "content": "I'm not sure I understand your question. Could you please rephrase it? I can help with:\n\n• Emergency situations (leaks, electrical issues, structural damage)\n• General construction advice (renovation, maintenance, permits)\n• Budget and timeline planning\n\nOr if you need immediate assistance, just say 'call me' and I'll connect you with our team.",
+        "timestamp": "2025-09-04T12:54:27.181Z"
+      }
+    ],
+    "status": "completed",
+    "tags": [
+      "emergency",
+      "plumbing",
+      "electrical",
+      "structural",
+      "renovation",
+      "maintenance",
+      "permits",
+      "budget",
+      "timeline"
+    ],
+    "escalationReason": "User requested call",
+    "id": "chat_1756990495697_cuqyyjcju"
+  }
+]

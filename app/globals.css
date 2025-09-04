@@ -1,26 +1,61 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* Theme tokens for Ace Construction */
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1c1c1c; /* Text */
+  --muted: #6b7280; /* gray-500 */
+  --primary: #ff4c00; /* Brand orange */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  height: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+.container-page {
+  @apply mx-auto max-w-[1200px] px-5 md:px-8;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-md bg-primary px-5 py-3 text-white font-medium shadow-sm hover:opacity-90 transition;
+}
+
+/* Additional orange styling */
+.text-primary {
+  color: #ff4c00;
+}
+
+.bg-primary {
+  background-color: #ff4c00;
+}
+
+.border-primary {
+  border-color: #ff4c00;
+}
+
+/* Orange accent elements */
+.accent-orange {
+  color: #ff4c00;
+}
+
+.bg-accent-orange {
+  background-color: #ff4c00;
+}
+
+.btn-outline {
+  @apply inline-flex items-center justify-center rounded-md border border-foreground/10 px-5 py-3 text-foreground hover:bg-foreground/5 transition;
+}
+
+.badge {
+  @apply inline-flex items-center rounded-full border border-foreground/10 bg-foreground/5 px-3 py-1 text-xs font-medium tracking-wide text-foreground/70;
 }

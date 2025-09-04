@@ -1,0 +1,79 @@
+{
+  "badge": "#1 CONSTRUCTION COMPANY IN DENVER",
+  "headline": "Unparalleled construction solutions in Denver",
+  "subtext": "Experience excellence and durability with Ace Construction's Denver team of experts, offering innovative and unmatched residential and commercial solutions tailored to your needs.",
+  "heroImage": "/uploads/1755531017009-7zex2lqil6m.jpg",
+  "services": [
+    {
+      "id": "1",
+      "title": "Residential Construction",
+      "description": "Custom homes and renovations",
+      "icon": "🏠"
+    },
+    {
+      "id": "2",
+      "title": "Commercial Projects",
+      "description": "Office buildings and retail spaces",
+      "icon": "🏢"
+    },
+    {
+      "id": "3",
+      "title": "Renovations",
+      "description": "Complete home and office makeovers",
+      "icon": "🔨"
+    }
+  ],
+  "aboutTitle": "Building Excellence Since 2010",
+  "aboutDescription": "With over a decade of experience in Denver's construction industry, we've built our reputation on quality craftsmanship and customer satisfaction.",
+  "stats": [
+    {
+      "number": "500+",
+      "label": "Projects Completed"
+    },
+    {
+      "number": "15+",
+      "label": "Years Experience"
+    },
+    {
+      "number": "98%",
+      "label": "Client Satisfaction"
+    }
+  ],
+  "articles": [
+    {
+      "id": "1",
+      "title": "Modern Construction Technique",
+      "excerpt": "Discover the latest innovations in construction",
+      "imageUrl": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=400"
+    },
+    {
+      "id": "2",
+      "title": "Sustainable Building Practices",
+      "excerpt": "How we're building for the future",
+      "imageUrl": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=400"
+    },
+    {
+      "id": "3",
+      "title": "Denver Construction Trends",
+      "excerpt": "What's popular in Denver construction",
+      "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=400"
+    }
+  ],
+  "trustedLogos": [
+    {
+      "id": "1",
+      "imageUrl": "https://via.placeholder.com/120x60/4F46E5/white?text=Partner+1",
+      "alt": "Partner 1"
+    },
+    {
+      "id": "2",
+      "imageUrl": "https://via.placeholder.com/120x60/059669/white?text=Partner+2",
+      "alt": "Partner 2"
+    },
+    {
+      "id": "3",
+      "imageUrl": "https://via.placeholder.com/120x60/DC2626/white?text=Partner+3",
+      "alt": "Partner 3"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# Handle Next.js routes
+RewriteRule ^api/(.*)$ /api/$1 [L]
+RewriteRule ^_next/(.*)$ /_next/$1 [L]
+RewriteRule ^uploads/(.*)$ /uploads/$1 [L]
+
+# Handle all other routes through Next.js
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.js [L]

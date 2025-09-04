@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Admin {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  password     String
+  name         String?
+  sessionId    String?
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model SiteSettings {
+  id          String   @id @default("main")
+  companyName String
+  city        String
+  badge       String
+  headline    String
+  subtext     String
+  heroImage   String?
+  updatedAt   DateTime @updatedAt
+}
+
+model Service {
+  id          String  @id @default(cuid())
+  title       String
+  description String
+  icon        String?
+  order       Int     @default(0)
+}
+
+model Article {
+  id        String   @id @default(cuid())
+  title     String
+  excerpt   String
+  imageUrl  String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Logo {
+  id       String @id @default(cuid())
+  imageUrl String
+  alt      String @default("")
+  pageSlug String @default("home")
+  order    Int    @default(0)
+}

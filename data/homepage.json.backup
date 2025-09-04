@@ -1,0 +1,199 @@
+{
+  "logoUrl": "/uploads/1756983797931-ik4zx82217.png",
+  "companyName": "Ace Construction",
+  "badge": "#1 CONSTRUCTION COMPANY IN DENVER",
+  "headline": "We Will Match Any Quote You Have For Your Project",
+  "subtext": "Experience excellence and durability with Ace Construction's Denver team of experts, offering innovative and unmatched residential and commercial solutions tailored to your needs.",
+  "heroImage": "/uploads/1756907826328-tnltg4ri76o.jpg",
+  "openaiApiKey": "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",
+  "openaiModel": "gpt-4o-mini",
+  "chatbotGreeting": "Thanks for submitting your request! While we process your quote, can I help with some immediate advice?",
+  "plumbingLeakResponse": "🚨 EMERGENCY: Plumbing leak detected!\n1. Shut off your main water valve immediately\n2. Close all nearby taps and drains\n3. Place buckets under active leaks\n4. Turn off electrical appliances in affected areas\nWould you like us to call you right now for immediate assistance?",
+  "electricalIssueResponse": "⚡ EMERGENCY: Electrical issue detected!\n1. Turn off power at the main breaker\n2. Do NOT touch any electrical equipment\n3. Keep everyone away from affected areas\n4. Check for any burning smells or smoke\nWould you like us to call you right now for immediate assistance?",
+  "renovationPlanningResponse": "🏠 Renovation Planning Tips:\n1. Set a realistic budget (add 20% buffer)\n2. Research local permits and regulations\n3. Plan for temporary living arrangements if needed\n4. Choose materials that match your climate\n5. Consider energy efficiency upgrades",
+  "maintenanceTipsResponse": "🔧 Regular Maintenance Tips:\n1. Inspect roof twice yearly\n2. Clean gutters every 3-6 months\n3. Check HVAC filters monthly\n4. Test smoke detectors quarterly\n5. Schedule annual professional inspection",
+  "escalationMessage": "We're calling you now! Please keep your phone nearby.",
+  "emergencyPhone": "(555) 123-4567",
+  "twilioApiKey": "",
+  "twilioAuthToken": "",
+  "twilioPhoneNumber": "",
+  "vapiApiKey": "",
+  "vapiAssistantId": "",
+  "services": [
+    {
+      "id": "1",
+      "title": "Residential Construction",
+      "description": "Custom homes and renovations",
+      "icon": "🏠",
+      "image": "/uploads/1756983396774-t15g35ws0dl.jpg"
+    },
+    {
+      "id": "2",
+      "title": "Commercial Projects",
+      "description": "Office buildings and retail spaces",
+      "icon": "🏢",
+      "image": "/uploads/1756983401737-gepy13gis0l.jpg"
+    },
+    {
+      "id": "3",
+      "title": "Renovationss",
+      "description": "Complete home and office makeovers",
+      "icon": "🔨",
+      "image": "/uploads/1756983408081-qamux8mfvrb.jpg"
+    },
+    {
+      "id": "1756908921787",
+      "title": "Building Construction",
+      "description": "Service description",
+      "icon": "🔧",
+      "image": "/uploads/1756976419533-yh5wlb1r9wo.png"
+    },
+    {
+      "id": "1756908951270",
+      "title": "New Service",
+      "description": "Service description",
+      "icon": "🔧",
+      "image": "/uploads/1756983420139-xpwdf336s8n.jpg"
+    },
+    {
+      "id": "1756909002604",
+      "title": "Another",
+      "description": "Service description",
+      "icon": "🔧",
+      "image": "/uploads/1756983434160-qg0u885dcp.jpg"
+    }
+  ],
+  "aboutTitle": "Building Excellence Since 2012",
+  "aboutDescription": "With over a decade of experience in Denver's construction industry, we've built our reputation on quality craftsmanship and customer satisfaction.",
+  "aboutImage": "/uploads/1756908050739-8y8v4t9g2kw.jpg",
+  "stats": [
+    {
+      "number": "500+",
+      "label": "Projects Completed"
+    },
+    {
+      "number": "15+",
+      "label": "Years Experience"
+    },
+    {
+      "number": "98%",
+      "label": "Client Satisfaction"
+    }
+  ],
+  "projects": [
+    {
+      "id": "1756909247425",
+      "title": "New Project",
+      "description": "Project description",
+      "badge": "NEW",
+      "image": "/uploads/1756983280252-tj52stk8xtd.jpg",
+      "features": [
+        "Feature 1",
+        "Feature 2",
+        "Feature 3"
+      ]
+    },
+    {
+      "id": "1756978039524",
+      "title": "New Project 1",
+      "description": "Project description",
+      "badge": "NEW",
+      "image": "/uploads/1756983315130-20nr7pnccwq.jpg",
+      "features": [
+        "Feature 1",
+        "Feature 2",
+        "Feature 3"
+      ]
+    },
+    {
+      "id": "1756982866832",
+      "title": "New Project 2",
+      "description": "Project description",
+      "badge": "NEW",
+      "image": "/uploads/1756983145604-syud8ikny7c.jpg",
+      "features": [
+        "Feature 1",
+        "Feature 2",
+        "Feature 3"
+      ]
+    },
+    {
+      "id": "1756983273736",
+      "title": "New Project 3",
+      "description": "Project description",
+      "badge": "NEW",
+      "image": "/uploads/1756983304960-ushnc1e67d.jpg",
+      "features": [
+        "Feature 1",
+        "Feature 2",
+        "Feature 3"
+      ]
+    },
+    {
+      "id": "1756983320411",
+      "title": "New Project 4",
+      "description": "Project description",
+      "badge": "NEW",
+      "image": "/uploads/1756983335565-frdh9xqv3de.jpg",
+      "features": [
+        "Feature 1",
+        "Feature 2",
+        "Feature 3"
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "id": "1",
+      "title": "Modern Construction Technique",
+      "excerpt": "Discover the latest innovations in construction",
+      "imageUrl": "/uploads/1756976674616-b8sie8r5iuu.png"
+    },
+    {
+      "id": "2",
+      "title": "Sustainable Building Practices",
+      "excerpt": "How we're building for the future",
+      "imageUrl": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=400"
+    },
+    {
+      "id": "3",
+      "title": "Denver Construction Trends",
+      "excerpt": "What's popular in Denver construction",
+      "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=400",
+      "content": "Denver's construction landscape is evolving rapidly, driven by a mix of urban expansion, sustainability goals, and technological innovation. Popular trends include modular building techniques, green roofs, and smart infrastructure integration. Developers are increasingly focused on energy-efficient designs and community-centric planning. With a growing population and demand for housing, mixed-use developments and transit-oriented projects are also on the rise.",
+      "slug": "/denver"
+    }
+  ],
+  "trustedLogos": [
+    {
+      "id": "1",
+      "imageUrl": "/uploads/1756908435549-s2zlq2npj3k.png",
+      "alt": "Viable Systems"
+    },
+    {
+      "id": "2",
+      "imageUrl": "/uploads/1756908489477-gsbwdcxnqve.png",
+      "alt": "Partner 2"
+    },
+    {
+      "id": "3",
+      "imageUrl": "/uploads/1756908496457-657jg3kwce.png",
+      "alt": "Partner 3"
+    },
+    {
+      "id": "1756908307555",
+      "imageUrl": "/uploads/1756908500608-kh23qmrcnp.png",
+      "alt": "Partner 4"
+    },
+    {
+      "id": "1756908475022",
+      "imageUrl": "/uploads/1756908506199-47o7mv7hgfh.png",
+      "alt": "Partner 5"
+    },
+    {
+      "id": "1756908533271",
+      "imageUrl": "/uploads/1756908539732-z2igckaavro.png",
+      "alt": "New Partner"
+    }
+  ]
+}

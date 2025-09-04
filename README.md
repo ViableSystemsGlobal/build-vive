@@ -1,36 +1,155 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ACE Construction - Next.js Website
 
-## Getting Started
+This is a [Next.js](https://nextjs.org) project for ACE Construction, a Denver-based construction company.
 
-First, run the development server:
+## ⚠️ IMPORTANT: CHANGE MANAGEMENT POLICY
 
+**NO CODE CHANGES SHOULD BE MADE WITHOUT EXPLICIT USER PERMISSION.**
+
+This project is in active development and all modifications must be approved by the user before implementation.
+
+## 🏗️ Current Project State
+
+### Architecture
+- **Framework**: Next.js 15.1.3 with App Router
+- **Styling**: Tailwind CSS with custom color scheme
+- **Language**: TypeScript
+- **State Management**: React Context API for quote modal
+- **Database**: Prisma ORM with SQLite
+
+### Key Components
+- **Navbar**: Fixed navigation with active section highlighting
+- **Hero Section**: Main landing area with CTA buttons
+- **Services Slider**: Interactive service showcase with navigation
+- **Projects Slider**: Portfolio display with project details
+- **About Section**: Company information with image
+- **Articles & News**: Professional blog section
+- **Quote Modal**: Multi-step form for project quotes
+
+### Current Features
+- ✅ Fixed navbar with smooth scrolling
+- ✅ Dynamic sliders for services and projects
+- ✅ Enhanced quote form with file uploads
+- ✅ Professional article layout
+- ✅ Responsive design with Tailwind CSS
+- ✅ Active section highlighting in navigation
+- ✅ Image optimization with Next.js Image component
+
+### Recent Implementations
+- Quote modal refactored to use React Context
+- File upload functionality for project images
+- Detailed address collection (street, city, state, zip)
+- Enhanced quote form with urgency and comments
+- User-friendly review page instead of JSON display
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (version 18 or higher)
+- npm or yarn
+
+### Installation
+```bash
+cd website
+npm install
+```
+
+### Development
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build
+```bash
+npm run build
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Project Structure
 
-## Learn More
+```
+website/
+├── app/
+│   ├── components/
+│   │   ├── Navbar.tsx          # Main navigation
+│   │   ├── QuoteModal.tsx      # Quote form modal
+│   │   └── QuoteProvider.tsx   # Context provider
+│   ├── api/
+│   │   ├── admin/
+│   │   │   └── homepage/       # Admin API routes
+│   │   └── quote/              # Quote submission API
+│   ├── globals.css             # Global styles + Tailwind
+│   ├── layout.tsx              # Root layout
+│   └── page.tsx                # Homepage
+├── prisma/                     # Database schema
+├── public/                     # Static assets
+└── tailwind.config.js          # Tailwind configuration
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🎨 Design System
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Colors
+- **Primary**: #ff4c00 (Brand Orange)
+- **Background**: #ffffff (White)
+- **Foreground**: #0f1216 (Dark)
+- **Accent**: #fbbf24 (Amber)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Typography
+- **Font**: Inter (Google Fonts)
+- **Headings**: Extrabold weight
+- **Body**: Regular weight with proper hierarchy
 
-## Deploy on Vercel
+## 🔧 Configuration Files
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **next.config.ts**: Next.js configuration
+- **tailwind.config.js**: Tailwind CSS configuration
+- **postcss.config.js**: PostCSS configuration
+- **tsconfig.json**: TypeScript configuration
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📝 Development Guidelines
+
+1. **Always ask for permission** before making any code changes
+2. **Document changes** in this README when approved
+3. **Test thoroughly** before committing changes
+4. **Maintain responsive design** across all screen sizes
+5. **Follow existing code patterns** and structure
+
+## 🚫 What NOT to Change Without Permission
+
+- Component structure and naming
+- API endpoints and data flow
+- Styling and color schemes
+- Database schema
+- File organization
+- Dependencies and versions
+
+## 🔍 Troubleshooting
+
+### Common Issues
+- **Port conflicts**: Server will automatically try next available port
+- **Build errors**: Clear `.next` folder and reinstall dependencies
+- **Image loading**: Ensure proper Next.js Image component usage
+
+### Reset Commands
+```bash
+# Clear build cache
+rm -rf .next
+
+# Reinstall dependencies
+npm install
+
+# Restart development server
+npm run dev
+```
+
+## 📞 Support
+
+For any questions or issues, please contact the development team. All changes must be approved before implementation.
+
+---
+
+**Last Updated**: September 3, 2025
+**Project Status**: Active Development
+**Change Approval Required**: Yes
