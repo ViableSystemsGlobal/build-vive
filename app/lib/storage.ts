@@ -1,5 +1,6 @@
 // Storage service that can switch between different storage options
 import { kv } from '@vercel/kv';
+import { createClient } from 'redis';
 
 export type StorageType = 'kv' | 'file' | 'memory';
 
@@ -9,7 +10,7 @@ class StorageService {
 
   constructor() {
     // Auto-detect storage type based on environment
-    if (process.env.KV_REST_API_URL) {
+    if (process.env.REDIS_URL || process.env.KV_REST_API_URL) {
       this.storageType = 'kv';
     } else if (process.env.VERCEL === '1') {
       this.storageType = 'memory'; // Fallback for Vercel without KV
@@ -22,8 +23,18 @@ class StorageService {
     try {
       switch (this.storageType) {
         case 'kv':
-          const kvData = await kv.get(key);
-          return kvData ? JSON.parse(kvData as string) : null;
+          if (process.env.REDIS_URL) {
+            // Use direct Redis connection
+            const client = createClient({ url: process.env.REDIS_URL });
+            await client.connect();
+            const data = await client.get(key);
+            await client.disconnect();
+            return data ? JSON.parse(data) : null;
+          } else {
+            // Use Vercel KV
+            const kvData = await kv.get(key);
+            return kvData ? JSON.parse(kvData as string) : null;
+          }
         
         case 'memory':
           return this.memoryCache.get(key) || null;
@@ -53,8 +64,18 @@ class StorageService {
     try {
       switch (this.storageType) {
         case 'kv':
-          await kv.set(key, JSON.stringify(value));
-          return true;
+          if (process.env.REDIS_URL) {
+            // Use direct Redis connection
+            const client = createClient({ url: process.env.REDIS_URL });
+            await client.connect();
+            await client.set(key, JSON.stringify(value));
+            await client.disconnect();
+            return true;
+          } else {
+            // Use Vercel KV
+            await kv.set(key, JSON.stringify(value));
+            return true;
+          }
         
         case 'memory':
           this.memoryCache.set(key, value);
@@ -84,8 +105,18 @@ class StorageService {
     try {
       switch (this.storageType) {
         case 'kv':
-          await kv.del(key);
-          return true;
+          if (process.env.REDIS_URL) {
+            // Use direct Redis connection
+            const client = createClient({ url: process.env.REDIS_URL });
+            await client.connect();
+            await client.del(key);
+            await client.disconnect();
+            return true;
+          } else {
+            // Use Vercel KV
+            await kv.del(key);
+            return true;
+          }
         
         case 'memory':
           this.memoryCache.delete(key);
