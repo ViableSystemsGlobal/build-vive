@@ -32,28 +32,23 @@ export function PageLoader({ children }: PageLoaderProps) {
 
     fetchCompanyData();
 
-    // Wait for page to be fully loaded
-    const handleLoad = () => {
-      // Small delay to ensure everything is rendered
+    // Listen for custom event when homepage data is loaded
+    const handleDataLoaded = () => {
+      // Small delay to ensure smooth transition
       setTimeout(() => {
         setIsLoading(false);
-      }, 800);
+      }, 500);
     };
 
-    // Check if page is already loaded
-    if (document.readyState === 'complete') {
-      handleLoad();
-    } else {
-      window.addEventListener('load', handleLoad);
-    }
+    window.addEventListener('homepageDataLoaded', handleDataLoaded);
 
     // Fallback timeout
     const fallbackTimeout = setTimeout(() => {
       setIsLoading(false);
-    }, 4000);
+    }, 5000);
 
     return () => {
-      window.removeEventListener('load', handleLoad);
+      window.removeEventListener('homepageDataLoaded', handleDataLoaded);
       clearTimeout(fallbackTimeout);
     };
   }, []);

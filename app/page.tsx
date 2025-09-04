@@ -392,6 +392,7 @@ function QuoteModal({ open, onClose }: { open: boolean; onClose: () => void }) {
 export default function Home() {
   const { openQuote } = useQuote();
   const [homepageData, setHomepageData] = useState<HomepageData | null>(null);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [currentProject, setCurrentProject] = useState(0);
   const [currentRoofingProject, setCurrentRoofingProject] = useState(0);
   const [currentService, setCurrentService] = useState(0);
@@ -400,8 +401,17 @@ export default function Home() {
   useEffect(() => {
     fetch("/api/admin/homepage")
       .then(res => res.json())
-      .then(data => setHomepageData(data))
-      .catch(error => console.error("Failed to load homepage data:", error));
+      .then(data => {
+        setHomepageData(data);
+        setIsDataLoaded(true);
+        // Dispatch custom event to notify PageLoader that data is ready
+        window.dispatchEvent(new CustomEvent('homepageDataLoaded'));
+      })
+      .catch(error => {
+        console.error("Failed to load homepage data:", error);
+        setIsDataLoaded(true); // Still show page even if data fails to load
+        window.dispatchEvent(new CustomEvent('homepageDataLoaded'));
+      });
   }, []);
 
   // Auto-rotate roofing projects every 6 seconds
@@ -421,6 +431,11 @@ export default function Home() {
     
     return () => clearInterval(interval);
   }, []);
+
+  // Don't render until data is loaded
+  if (!isDataLoaded) {
+    return null; // This will be handled by the PageLoader
+  }
 
   return (
     <div className="pt-20">
