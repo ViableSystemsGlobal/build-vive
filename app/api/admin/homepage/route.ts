@@ -1,5 +1,6 @@
 import { writeFile, readFile, mkdir } from "fs/promises";
 import { join } from "path";
+import { storage } from "../../../lib/storage";
 
 const DATA_DIR = join(process.cwd(), "data");
 const DATA_FILE = join(DATA_DIR, "homepage.json");
@@ -172,10 +173,26 @@ const defaultData = {
 
 export async function GET() {
   try {
-    const data = await readFile(DATA_FILE, "utf-8");
-    return Response.json(JSON.parse(data));
+    // Try storage service first
+    const data = await storage.get('homepage-data');
+    if (data) {
+      return Response.json(data);
+    }
+
+    // Fallback to file system
+    try {
+      const fileData = await readFile(DATA_FILE, "utf-8");
+      const parsedData = JSON.parse(fileData);
+      // Migrate to storage service
+      await storage.set('homepage-data', parsedData);
+      return Response.json(parsedData);
+    } catch (fileError) {
+      // If file doesn't exist, return default data and initialize storage
+      await storage.set('homepage-data', defaultData);
+      return Response.json(defaultData);
+    }
   } catch (error) {
-    console.log("No homepage data file found, returning defaults");
+    console.error('Error loading homepage data:', error);
     return Response.json(defaultData);
   }
 }
@@ -185,19 +202,27 @@ export async function POST(request: Request) {
     console.log("Saving homepage data...");
     const data = await request.json();
     
-    // Create data directory if it doesn't exist
+    // Try storage service first
+    const success = await storage.set('homepage-data', data);
+    
+    if (success) {
+      console.log("Homepage data saved to storage service successfully");
+      return Response.json({ success: true, storage: storage.getStorageType() });
+    }
+    
+    // Fallback to file system
     try {
       await mkdir(DATA_DIR, { recursive: true });
       console.log("Data directory created/verified");
     } catch (error) {
-      console.log("Data directory already exists or creation failed:", error instanceof Error ? error instanceof Error ? error.message : String(error) : String(error));
+      console.log("Data directory already exists or creation failed:", error instanceof Error ? error.message : String(error));
     }
     
-    // Save the data
+    // Save the data to file system as backup
     await writeFile(DATA_FILE, JSON.stringify(data, null, 2));
-    console.log("Homepage data saved successfully");
+    console.log("Homepage data saved to file system successfully");
     
-    return Response.json({ success: true, message: "Data saved successfully" });
+    return Response.json({ success: true, storage: 'file' });
   } catch (error) {
     console.error("Failed to save homepage data:", error);
     return Response.json({ 
