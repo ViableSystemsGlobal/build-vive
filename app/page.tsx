@@ -404,13 +404,23 @@ export default function Home() {
       .then(data => {
         setHomepageData(data);
         setIsDataLoaded(true);
-        // Dispatch custom event to notify PageLoader that data is ready
-        window.dispatchEvent(new CustomEvent('homepageDataLoaded'));
+        // Dispatch custom event with the actual data to notify PageLoader
+        window.dispatchEvent(new CustomEvent('homepageDataLoaded', { 
+          detail: { 
+            logoUrl: data.logoUrl || "",
+            companyName: data.companyName || "Ace Construction"
+          } 
+        }));
       })
       .catch(error => {
         console.error("Failed to load homepage data:", error);
         setIsDataLoaded(true); // Still show page even if data fails to load
-        window.dispatchEvent(new CustomEvent('homepageDataLoaded'));
+        window.dispatchEvent(new CustomEvent('homepageDataLoaded', { 
+          detail: { 
+            logoUrl: "",
+            companyName: "Ace Construction"
+          } 
+        }));
       });
   }, []);
 

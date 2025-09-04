@@ -14,26 +14,16 @@ export function PageLoader({ children }: PageLoaderProps) {
   });
 
   useEffect(() => {
-    // Fetch company data for the loading screen
-    const fetchCompanyData = async () => {
-      try {
-        const response = await fetch('/api/admin/homepage');
-        if (response.ok) {
-          const data = await response.json();
-          setCompanyData({
-            logoUrl: data.logoUrl || "",
-            companyName: data.companyName || "Ace Construction"
-          });
-        }
-      } catch (error) {
-        console.error('Failed to load company data:', error);
-      }
-    };
-
-    fetchCompanyData();
-
     // Listen for custom event when homepage data is loaded
-    const handleDataLoaded = () => {
+    const handleDataLoaded = (event: any) => {
+      // Update company data with the real data from the main page
+      if (event.detail) {
+        setCompanyData({
+          logoUrl: event.detail.logoUrl || "",
+          companyName: event.detail.companyName || "Ace Construction"
+        });
+      }
+      
       // Small delay to ensure smooth transition
       setTimeout(() => {
         setIsLoading(false);
