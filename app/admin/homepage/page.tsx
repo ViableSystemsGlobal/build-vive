@@ -942,63 +942,40 @@ export default function HomepageAdmin() {
             {/* Favicon Section */}
             <div>
               <h3 className="text-lg font-medium mb-4">Favicon</h3>
-              <p className="text-sm text-gray-600 mb-4">Upload a favicon that will appear in the browser tab. Recommended size: 32x32 pixels or 16x16 pixels.</p>
+              <p className="text-sm text-gray-600 mb-4">Your favicon automatically uses your main logo. The favicon will appear in browser tabs, bookmarks, and browser history.</p>
               
               <div className="space-y-4">
-                <div>
-                  <ImageUploader
-                    currentImage={data.faviconUrl}
-                    onImageChange={async (imageUrl) => {
-                      setData({ ...data, faviconUrl: imageUrl });
-                      
-                      // Auto-save the favicon data
-                      try {
-                        const response = await fetch("/api/admin/homepage", {
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                          },
-                          body: JSON.stringify({ ...data, faviconUrl: imageUrl }),
-                        });
-
-                        if (response.ok) {
-                          setMessage("Favicon saved successfully! Refreshing page...");
-                          // Trigger favicon update after saving
-                          setTimeout(() => {
-                            window.location.reload();
-                          }, 1500);
-                        } else {
-                          setMessage("Error saving favicon. Please try again.");
-                        }
-                      } catch (error) {
-                        console.error("Error saving favicon:", error);
-                        setMessage("Error saving favicon. Please try again.");
-                      }
-                    }}
-                    label="Favicon"
-                    uniqueKey="favicon"
-                  />
-                  <p className="text-xs text-gray-500 mt-2">
-                    The favicon will appear in browser tabs, bookmarks, and browser history. 
-                    For best results, use a square image (16x16, 32x32, or 48x48 pixels).
-                    <br />
-                    <strong>Note:</strong> The page will refresh automatically after uploading to update the favicon.
-                  </p>
-                </div>
-
-                {data.faviconUrl && (
+                {data.logoUrl ? (
                   <div className="p-4 bg-gray-50 rounded-lg">
-                    <h4 className="text-sm font-medium mb-2">Favicon Preview</h4>
+                    <h4 className="text-sm font-medium mb-2">Current Favicon (Using Main Logo)</h4>
                     <div className="flex items-center gap-3">
                       <img 
-                        src={data.faviconUrl} 
+                        src={data.logoUrl} 
                         alt="Favicon preview" 
-                        className="w-8 h-8 rounded"
+                        className="w-8 h-8 rounded object-cover"
                       />
-                      <span className="text-sm text-gray-600">This is how your favicon will appear in browser tabs</span>
+                      <div>
+                        <span className="text-sm text-gray-600">This is how your favicon will appear in browser tabs</span>
+                        <br />
+                        <span className="text-xs text-gray-500">Automatically synced with your main logo</span>
+                      </div>
                     </div>
                   </div>
+                ) : (
+                  <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                    <h4 className="text-sm font-medium mb-2 text-yellow-800">No Logo Set</h4>
+                    <p className="text-sm text-yellow-700">
+                      Upload a logo in the "Company Logo" section above to automatically set your favicon.
+                    </p>
+                  </div>
                 )}
+                
+                <div className="p-3 bg-blue-50 rounded-lg">
+                  <p className="text-xs text-blue-700">
+                    <strong>Note:</strong> Your favicon automatically uses the same image as your main logo. 
+                    For best results, use a square logo image that looks good at small sizes (16x16, 32x32, or 48x48 pixels).
+                  </p>
+                </div>
               </div>
             </div>
           </div>

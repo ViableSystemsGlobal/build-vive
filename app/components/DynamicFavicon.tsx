@@ -13,28 +13,31 @@ export default function DynamicFavicon() {
         const existingLinks = document.querySelectorAll('link[rel*="icon"]');
         existingLinks.forEach(link => link.remove());
         
-        if (data.faviconUrl && data.faviconUrl.trim() !== '') {
+        // Use logo URL for favicon (same as loading screen)
+        const faviconUrl = data.faviconUrl || data.logoUrl;
+        
+        if (faviconUrl && faviconUrl.trim() !== '') {
           // Create new favicon link
           const link = document.createElement('link');
           link.rel = 'icon';
           link.type = 'image/x-icon';
-          link.href = data.faviconUrl;
+          link.href = faviconUrl;
           document.head.appendChild(link);
           
           // Also add shortcut icon
           const shortcutLink = document.createElement('link');
           shortcutLink.rel = 'shortcut icon';
           shortcutLink.type = 'image/x-icon';
-          shortcutLink.href = data.faviconUrl;
+          shortcutLink.href = faviconUrl;
           document.head.appendChild(shortcutLink);
           
           // Add Apple touch icon
           const appleLink = document.createElement('link');
           appleLink.rel = 'apple-touch-icon';
-          appleLink.href = data.faviconUrl;
+          appleLink.href = faviconUrl;
           document.head.appendChild(appleLink);
           
-          console.log('Favicon updated to:', data.faviconUrl);
+          console.log('Favicon updated to:', faviconUrl);
         } else {
           // Use default favicon if none is set
           const defaultLink = document.createElement('link');

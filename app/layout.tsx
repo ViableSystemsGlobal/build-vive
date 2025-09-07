@@ -58,10 +58,10 @@ export async function generateMetadata() {
         description: data.subtext || "Experience excellence in construction and renovations with Denver's most trusted team.",
         images: data.heroImage ? [data.heroImage] : [],
       },
-      icons: data.faviconUrl ? {
-        icon: data.faviconUrl,
-        shortcut: data.faviconUrl,
-        apple: data.faviconUrl,
+      icons: (data.faviconUrl || data.logoUrl) ? {
+        icon: data.faviconUrl || data.logoUrl,
+        shortcut: data.faviconUrl || data.logoUrl,
+        apple: data.faviconUrl || data.logoUrl,
       } : undefined,
     };
   } catch (error) {
