@@ -1,8 +1,9 @@
 // Storage service that can switch between different storage options
 import { kv } from '@vercel/kv';
 import { createClient } from 'redis';
+import { database } from './database';
 
-export type StorageType = 'kv' | 'file' | 'memory';
+export type StorageType = 'database' | 'kv' | 'file' | 'memory';
 
 class StorageService {
   private storageType: StorageType;
@@ -10,7 +11,9 @@ class StorageService {
 
   constructor() {
     // Auto-detect storage type based on environment
-    if (process.env.REDIS_URL || process.env.KV_REST_API_URL) {
+    if (database.isConfigured()) {
+      this.storageType = 'database';
+    } else if (process.env.REDIS_URL || process.env.KV_REST_API_URL) {
       this.storageType = 'kv';
     } else if (process.env.VERCEL === '1') {
       this.storageType = 'memory'; // Fallback for Vercel without KV
@@ -22,6 +25,12 @@ class StorageService {
   async get(key: string): Promise<any> {
     try {
       switch (this.storageType) {
+        case 'database':
+          const result = await database.query(
+            'SELECT data FROM homepage_data WHERE id = 1 ORDER BY updated_at DESC LIMIT 1'
+          );
+          return result.rows[0]?.data || null;
+        
         case 'kv':
           if (process.env.REDIS_URL) {
             // Use direct Redis connection
@@ -63,6 +72,13 @@ class StorageService {
   async set(key: string, value: any): Promise<boolean> {
     try {
       switch (this.storageType) {
+        case 'database':
+          await database.query(
+            'INSERT INTO homepage_data (data) VALUES ($1) ON CONFLICT (id) DO UPDATE SET data = $1, updated_at = NOW()',
+            [JSON.stringify(value)]
+          );
+          return true;
+        
         case 'kv':
           if (process.env.REDIS_URL) {
             // Use direct Redis connection
@@ -104,6 +120,10 @@ class StorageService {
   async delete(key: string): Promise<boolean> {
     try {
       switch (this.storageType) {
+        case 'database':
+          await database.query('DELETE FROM homepage_data WHERE id = 1');
+          return true;
+        
         case 'kv':
           if (process.env.REDIS_URL) {
             // Use direct Redis connection

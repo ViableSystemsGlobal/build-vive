@@ -34,11 +34,19 @@ export default function ImageUploader({ currentImage, onImageChange, label = "Im
       const formData = new FormData();
       formData.append('file', file);
 
-      // Try Vercel Blob first, then cloud upload, then regular upload
-      let response = await fetch('/api/upload-vercel-blob', {
+      // Try S3 first, then Vercel Blob, then cloud upload, then regular upload
+      let response = await fetch('/api/upload-s3', {
         method: 'POST',
         body: formData,
       });
+
+      // If S3 fails, try Vercel Blob
+      if (!response.ok) {
+        response = await fetch('/api/upload-vercel-blob', {
+          method: 'POST',
+          body: formData,
+        });
+      }
 
       // If Vercel Blob fails, try cloud upload
       if (!response.ok) {

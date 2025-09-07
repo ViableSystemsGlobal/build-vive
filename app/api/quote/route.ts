@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { readFile, writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 import nodemailer from "nodemailer";
+import { database } from "../../lib/database";
 
 type QuotePayload = {
   projectType?: string;
@@ -170,36 +171,44 @@ export async function POST(request: Request) {
       // Continue execution even if email fails
     }
 
-    // Save quote data to local JSON file for admin panel access
+    // Save quote data to database or local file
     try {
-      const dataDir = join(process.cwd(), 'data');
-      const quotesFile = join(dataDir, 'quotes.json');
-      
-      // Ensure data directory exists
-      await mkdir(dataDir, { recursive: true });
-      
-      // Read existing quotes or create new array
-      let quotes = [];
-      try {
-        const existingData = await readFile(quotesFile, 'utf-8');
-        quotes = JSON.parse(existingData);
-  } catch {
-        // File doesn't exist or is invalid, start with empty array
-      }
-      
-      // Add new quote with timestamp and ID
       const newQuote = {
         id: Date.now().toString(),
         timestamp: new Date().toISOString(),
         ...body
       };
-      
-      quotes.push(newQuote);
-      
-      // Save updated quotes
-      await writeFile(quotesFile, JSON.stringify(quotes, null, 2));
-      console.log("Quote data saved successfully");
-      
+
+      // Try to save to database first
+      if (database.isConfigured()) {
+        await database.query(
+          'INSERT INTO quotes (data) VALUES ($1)',
+          [JSON.stringify(newQuote)]
+        );
+        console.log("Quote data saved to database successfully");
+      } else {
+        // Fallback to local file system
+        const dataDir = join(process.cwd(), 'data');
+        const quotesFile = join(dataDir, 'quotes.json');
+        
+        // Ensure data directory exists
+        await mkdir(dataDir, { recursive: true });
+        
+        // Read existing quotes or create new array
+        let quotes = [];
+        try {
+          const existingData = await readFile(quotesFile, 'utf-8');
+          quotes = JSON.parse(existingData);
+        } catch {
+          // File doesn't exist or is invalid, start with empty array
+        }
+        
+        quotes.push(newQuote);
+        
+        // Write back to file
+        await writeFile(quotesFile, JSON.stringify(quotes, null, 2));
+        console.log("Quote data saved to file system successfully");
+      }
     } catch (saveError) {
       console.error("Failed to save quote data:", saveError);
       // Continue execution even if save fails
