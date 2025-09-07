@@ -447,11 +447,73 @@ export default function Home() {
     return null; // This will be handled by the PageLoader
   }
 
+  // Generate structured data for SEO
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": homepageData?.footerCompanyName || "BuildVive Renovations",
+    "description": homepageData?.aboutDescription || "Denver's premier construction and renovation company specializing in residential and commercial projects.",
+    "url": process.env.NEXT_PUBLIC_BASE_URL || "https://buildvive.com",
+    "telephone": homepageData?.footerPhone || "(555) 123-4567",
+    "email": homepageData?.footerEmail || "info@buildvive.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": homepageData?.footerAddress || "123 Construction Way",
+      "addressLocality": "Denver",
+      "addressRegion": "CO",
+      "postalCode": "80202",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "39.7392",
+      "longitude": "-104.9903"
+    },
+    "openingHours": "Mo-Fr 08:00-17:00",
+    "priceRange": "$$",
+    "image": homepageData?.heroImage || "",
+    "logo": homepageData?.footerLogoUrl || "",
+    "sameAs": [
+      "https://www.facebook.com/buildvive",
+      "https://www.instagram.com/buildvive",
+      "https://www.linkedin.com/company/buildvive"
+    ],
+    "serviceArea": {
+      "@type": "GeoCircle",
+      "geoMidpoint": {
+        "@type": "GeoCoordinates",
+        "latitude": "39.7392",
+        "longitude": "-104.9903"
+      },
+      "geoRadius": "50000"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Construction Services",
+      "itemListElement": (homepageData?.services || []).map((service, index) => ({
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": service.title,
+          "description": service.description
+        },
+        "position": index + 1
+      }))
+    }
+  };
+
   return (
-    <div className="pt-20" data-main-content>
-      <div id="home">
-        <Hero data={homepageData} />
-      </div>
+    <>
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      
+      <div className="pt-20" data-main-content>
+        <div id="home">
+          <Hero data={homepageData} />
+        </div>
 
       {/* Trusted logos band */}
       <section className="py-10">
@@ -863,6 +925,7 @@ export default function Home() {
         </div>
       </footer>
       
-    </div>
+      </div>
+    </>
   );
 }

@@ -19,8 +19,45 @@ export async function generateMetadata() {
     const data = await response.json();
     
     return {
-      title: "Ace Construction - Denver's Premier Construction Company",
-      description: "Experience excellence in construction with Denver's most trusted construction company. Quality craftsmanship, innovative solutions, and unmatched service.",
+      title: `${data.companyName || "BuildVive Renovations"} - Denver's Premier Construction & Renovation Company`,
+      description: data.subtext || "Experience excellence in construction and renovations with Denver's most trusted team. Quality craftsmanship, innovative solutions, and unmatched service for residential and commercial projects.",
+      keywords: "Denver construction, home renovations, commercial construction, residential remodeling, kitchen remodeling, bathroom renovation, construction company Denver, BuildVive Renovations",
+      authors: [{ name: data.companyName || "BuildVive Renovations" }],
+      creator: data.companyName || "BuildVive Renovations",
+      publisher: data.companyName || "BuildVive Renovations",
+      robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          'max-video-preview': -1,
+          'max-image-preview': 'large',
+          'max-snippet': -1,
+        },
+      },
+      openGraph: {
+        type: 'website',
+        locale: 'en_US',
+        url: process.env.NEXT_PUBLIC_BASE_URL || 'https://buildvive.com',
+        siteName: data.companyName || "BuildVive Renovations",
+        title: `${data.companyName || "BuildVive Renovations"} - Denver's Premier Construction & Renovation Company`,
+        description: data.subtext || "Experience excellence in construction and renovations with Denver's most trusted team. Quality craftsmanship, innovative solutions, and unmatched service.",
+        images: data.heroImage ? [
+          {
+            url: data.heroImage,
+            width: 1200,
+            height: 630,
+            alt: `${data.companyName || "BuildVive Renovations"} - Denver Construction Services`,
+          }
+        ] : [],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${data.companyName || "BuildVive Renovations"} - Denver's Premier Construction & Renovation Company`,
+        description: data.subtext || "Experience excellence in construction and renovations with Denver's most trusted team.",
+        images: data.heroImage ? [data.heroImage] : [],
+      },
       icons: data.faviconUrl ? {
         icon: data.faviconUrl,
         shortcut: data.faviconUrl,
@@ -29,8 +66,36 @@ export async function generateMetadata() {
     };
   } catch (error) {
     return {
-      title: "Ace Construction - Denver's Premier Construction Company",
-      description: "Experience excellence in construction with Denver's most trusted construction company. Quality craftsmanship, innovative solutions, and unmatched service.",
+      title: "BuildVive Renovations - Denver's Premier Construction & Renovation Company",
+      description: "Experience excellence in construction and renovations with Denver's most trusted team. Quality craftsmanship, innovative solutions, and unmatched service for residential and commercial projects.",
+      keywords: "Denver construction, home renovations, commercial construction, residential remodeling, kitchen remodeling, bathroom renovation, construction company Denver, BuildVive Renovations",
+      authors: [{ name: "BuildVive Renovations" }],
+      creator: "BuildVive Renovations",
+      publisher: "BuildVive Renovations",
+      robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          'max-video-preview': -1,
+          'max-image-preview': 'large',
+          'max-snippet': -1,
+        },
+      },
+      openGraph: {
+        type: 'website',
+        locale: 'en_US',
+        url: process.env.NEXT_PUBLIC_BASE_URL || 'https://buildvive.com',
+        siteName: "BuildVive Renovations",
+        title: "BuildVive Renovations - Denver's Premier Construction & Renovation Company",
+        description: "Experience excellence in construction and renovations with Denver's most trusted team. Quality craftsmanship, innovative solutions, and unmatched service.",
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: "BuildVive Renovations - Denver's Premier Construction & Renovation Company",
+        description: "Experience excellence in construction and renovations with Denver's most trusted team.",
+      },
     };
   }
 }
