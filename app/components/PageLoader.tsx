@@ -14,35 +14,40 @@ export function PageLoader({ children }: PageLoaderProps) {
   });
 
   useEffect(() => {
-    // Listen for custom event when homepage data is loaded
-    const handleDataLoaded = (event: any) => {
-      // Update company data with the real data from the main page
-      if (event.detail) {
-        console.log('PageLoader received data:', event.detail);
-        setCompanyData({
-          logoUrl: event.detail.logoUrl || "",
-          companyName: event.detail.companyName || "BuildVive Renovations"
-        });
-      }
-      
-      // Wait for the main content to actually render before hiding loading screen
-      const checkForContent = () => {
-        const mainContent = document.querySelector('[data-main-content]');
-        if (mainContent) {
-          // Content is rendered, hide loading screen
-          setTimeout(() => {
-            setIsLoading(false);
-          }, 300);
-        } else {
-          // Content not ready yet, check again
-          setTimeout(checkForContent, 100);
+    // Load company data directly from API (same as Navbar)
+    const loadCompanyData = async () => {
+      try {
+        const response = await fetch('/api/admin/homepage');
+        if (response.ok) {
+          const data = await response.json();
+          console.log('PageLoader loaded data:', data);
+          setCompanyData({
+            logoUrl: data.logoUrl || "",
+            companyName: data.companyName || "BuildVive Renovations"
+          });
         }
-      };
-      
-      checkForContent();
+      } catch (error) {
+        console.error('Failed to load company data for loader:', error);
+      }
     };
 
-    window.addEventListener('homepageDataLoaded', handleDataLoaded);
+    loadCompanyData();
+
+    // Wait for the main content to actually render before hiding loading screen
+    const checkForContent = () => {
+      const mainContent = document.querySelector('[data-main-content]');
+      if (mainContent) {
+        // Content is rendered, hide loading screen
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 300);
+      } else {
+        // Content not ready yet, check again
+        setTimeout(checkForContent, 100);
+      }
+    };
+    
+    checkForContent();
 
     // Fallback timeout
     const fallbackTimeout = setTimeout(() => {
@@ -50,7 +55,6 @@ export function PageLoader({ children }: PageLoaderProps) {
     }, 5000);
 
     return () => {
-      window.removeEventListener('homepageDataLoaded', handleDataLoaded);
       clearTimeout(fallbackTimeout);
     };
   }, []);

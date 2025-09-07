@@ -404,25 +404,12 @@ export default function Home() {
       .then(data => {
         setHomepageData(data);
         setIsDataLoaded(true);
-        // Dispatch custom event with the actual data to notify PageLoader
-        const eventData = { 
-          logoUrl: data.logoUrl || "",
-          companyName: data.companyName || "BuildVive Renovations"
-        };
-        console.log('Dispatching homepageDataLoaded event with:', eventData);
-        window.dispatchEvent(new CustomEvent('homepageDataLoaded', { 
-          detail: eventData
-        }));
+        // Note: PageLoader now fetches data directly from API instead of using events
       })
       .catch(error => {
         console.error("Failed to load homepage data:", error);
         setIsDataLoaded(true); // Still show page even if data fails to load
-        window.dispatchEvent(new CustomEvent('homepageDataLoaded', { 
-          detail: { 
-            logoUrl: "",
-            companyName: "BuildVive Renovations"
-          } 
-        }));
+        // Note: PageLoader now fetches data directly from API instead of using events
       });
   }, []);
 
