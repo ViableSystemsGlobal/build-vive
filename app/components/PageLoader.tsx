@@ -18,6 +18,7 @@ export function PageLoader({ children }: PageLoaderProps) {
     const handleDataLoaded = (event: any) => {
       // Update company data with the real data from the main page
       if (event.detail) {
+        console.log('PageLoader received data:', event.detail);
         setCompanyData({
           logoUrl: event.detail.logoUrl || "",
           companyName: event.detail.companyName || "BuildVive Renovations"

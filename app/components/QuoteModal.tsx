@@ -20,88 +20,22 @@ type QuoteFormData = {
   phone?: string;
 };
 
-// Define services by project type
-const SERVICES_BY_PROJECT_TYPE = {
-  "New Construction": [
-    "Foundation & Structural Work",
-    "Electrical Installation",
-    "Plumbing Installation",
-    "HVAC Systems",
-    "Insulation & Drywall",
-    "Flooring Installation",
-    "Kitchen Remodeling",
-    "Bathroom Remodeling",
-    "Exterior Siding",
-    "Window Installation",
-    "Door Installation",
-    "Painting & Finishing",
-    "Concrete & Masonry",
-    "Landscaping & Outdoor",
-  ],
-  "Renovation/Remodel": [
-    "Kitchen Remodeling",
-    "Bathroom Remodeling",
-    "Flooring Installation",
-    "Painting & Finishing",
-    "Electrical Installation",
-    "Plumbing Installation",
-    "HVAC Systems",
-    "Window Installation",
-    "Door Installation",
-    "Insulation & Drywall",
-    "Exterior Siding",
-    "Concrete & Masonry",
-  ],
-  "Addition": [
-    "Foundation & Structural Work",
-    "Electrical Installation",
-    "Plumbing Installation",
-    "HVAC Systems",
-    "Insulation & Drywall",
-    "Flooring Installation",
-    "Window Installation",
-    "Door Installation",
-    "Painting & Finishing",
-    "Exterior Siding",
-    "Concrete & Masonry",
-  ],
-  "Repair/Maintenance": [
-    "Electrical Installation",
-    "Plumbing Installation",
-    "HVAC Systems",
-    "Window Installation",
-    "Door Installation",
-    "Painting & Finishing",
-    "Foundation & Structural Work",
-    "Exterior Siding",
-    "Concrete & Masonry",
-  ],
-  "Other": [
-    "Foundation & Structural Work",
-    "Electrical Installation",
-    "Plumbing Installation",
-    "HVAC Systems",
-    "Insulation & Drywall",
-    "Flooring Installation",
-    "Kitchen Remodeling",
-    "Bathroom Remodeling",
-    "Exterior Siding",
-    "Window Installation",
-    "Door Installation",
-    "Painting & Finishing",
-    "Concrete & Masonry",
-    "Landscaping & Outdoor",
-  ],
-};
+// Simplified services for all project types
+const SIMPLE_SERVICES = [
+  "Kitchen Remodeling",
+  "Bathroom Remodeling", 
+  "Flooring",
+  "Painting",
+  "Electrical Work",
+  "Plumbing",
+  "HVAC",
+  "Windows & Doors",
+  "Roofing",
+  "Foundation & Structural",
+  "Exterior Work",
+  "Other"
+];
 
-// Fallback to all services if project type not found
-const getAllServices = () => {
-  const allServices = new Set();
-  Object.values(SERVICES_BY_PROJECT_TYPE).forEach(services => {
-    services.forEach(service => allServices.add(service));
-  });
-  return Array.from(allServices) as string[];
-};
 
 export function QuoteModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [step, setStep] = useState(1);
@@ -231,10 +165,7 @@ export function QuoteModal({ open, onClose }: { open: boolean; onClose: () => vo
                     type="radio" 
                     name="projectType" 
                     checked={data.projectType === s} 
-                    onChange={() => {
-                      // Clear services when project type changes to avoid irrelevant selections
-                      setData({ ...data, projectType: s, services: [] });
-                    }} 
+                    onChange={() => setData({ ...data, projectType: s })} 
                   />
                   <span className="font-medium">{s}</span>
                 </label>
@@ -244,23 +175,9 @@ export function QuoteModal({ open, onClose }: { open: boolean; onClose: () => vo
           {step === 3 && (
             <div className="space-y-3">
               <p className="font-medium">Which services do you need? (Select all that apply)</p>
-              {data.projectType && (
-                <div className="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                  <p className="text-sm text-blue-800">
-                    <strong>Project Type:</strong> {data.projectType}
-                  </p>
-                  <p className="text-xs text-blue-600 mt-1">
-                    Showing relevant services for your project type
-                  </p>
-                </div>
-              )}
-              {(() => {
-                const availableServices = data.projectType 
-                  ? SERVICES_BY_PROJECT_TYPE[data.projectType as keyof typeof SERVICES_BY_PROJECT_TYPE] || getAllServices()
-                  : getAllServices();
-                
-                return availableServices.map((s) => (
-                  <label key={s} className="flex items-center gap-3 text-sm p-2 border border-foreground/10 rounded-lg hover:bg-foreground/5 cursor-pointer">
+              <div className="grid grid-cols-2 gap-3">
+                {SIMPLE_SERVICES.map((s) => (
+                  <label key={s} className="flex items-center gap-3 text-sm p-3 border border-foreground/10 rounded-lg hover:bg-foreground/5 cursor-pointer">
                     <input 
                       type="checkbox" 
                       checked={data.services?.includes(s) || false} 
@@ -275,8 +192,8 @@ export function QuoteModal({ open, onClose }: { open: boolean; onClose: () => vo
                     />
                     <span className="font-medium">{s}</span>
                   </label>
-                ));
-              })()}
+                ))}
+              </div>
             </div>
           )}
           {step === 4 && (

@@ -9,6 +9,7 @@ interface LoadingScreenProps {
 export function LoadingScreen({ logoUrl, companyName = "BuildVive Renovations" }: LoadingScreenProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [logoError, setLogoError] = useState(false);
 
   useEffect(() => {
     // Simulate loading progress
@@ -56,14 +57,18 @@ export function LoadingScreen({ logoUrl, companyName = "BuildVive Renovations" }
       <div className="flex flex-col items-center space-y-8">
         {/* Logo */}
         <div className="relative">
-          {logoUrl ? (
+          {logoUrl && !logoError ? (
             <img 
               src={logoUrl} 
               alt="Logo" 
               className="h-16 w-16 rounded-lg object-cover animate-pulse"
+              onError={() => setLogoError(true)}
+              onLoad={() => setLogoError(false)}
             />
           ) : (
-            <div className="h-16 w-16 rounded-lg border-4 border-primary animate-pulse" />
+            <div className="h-16 w-16 rounded-lg bg-primary/10 border-4 border-primary animate-pulse flex items-center justify-center">
+              <span className="text-primary font-bold text-xl">B</span>
+            </div>
           )}
           {/* Spinning ring around logo */}
           <div className="absolute inset-0 rounded-lg border-4 border-transparent border-t-primary animate-spin" />

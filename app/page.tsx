@@ -405,11 +405,13 @@ export default function Home() {
         setHomepageData(data);
         setIsDataLoaded(true);
         // Dispatch custom event with the actual data to notify PageLoader
+        const eventData = { 
+          logoUrl: data.logoUrl || "",
+          companyName: data.companyName || "BuildVive Renovations"
+        };
+        console.log('Dispatching homepageDataLoaded event with:', eventData);
         window.dispatchEvent(new CustomEvent('homepageDataLoaded', { 
-          detail: { 
-            logoUrl: data.logoUrl || "",
-            companyName: data.companyName || "BuildVive Renovations"
-          } 
+          detail: eventData
         }));
       })
       .catch(error => {
@@ -925,7 +927,7 @@ export default function Home() {
         </div>
       </footer>
       
-      </div>
+    </div>
     </>
   );
 }
