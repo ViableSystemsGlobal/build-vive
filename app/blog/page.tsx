@@ -1,8 +1,24 @@
-"use client";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Footer } from "../components/Footer";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Construction Blog - BuildVive Renovations | Denver Construction Insights",
+  description: "Expert construction insights, industry trends, and practical tips from Denver's premier construction company. Stay informed with BuildVive Renovations' professional blog.",
+  keywords: "Denver construction blog, construction insights, building tips, renovation advice, construction industry news, BuildVive Renovations blog",
+  openGraph: {
+    title: "Construction Blog - BuildVive Renovations | Denver Construction Insights",
+    description: "Expert construction insights, industry trends, and practical tips from Denver's premier construction company.",
+    type: "website",
+    url: "/blog",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Construction Blog - BuildVive Renovations | Denver Construction Insights",
+    description: "Expert construction insights, industry trends, and practical tips from Denver's premier construction company.",
+  },
+};
 
 type Article = {
   id: string;
@@ -17,41 +33,65 @@ type Article = {
   slug: string;
 };
 
-export default function BlogPage() {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const loadArticles = async () => {
-      try {
-        const response = await fetch('/api/admin/homepage');
-        if (response.ok) {
-          const data = await response.json();
-          setArticles(data.articles || []);
-        }
-      } catch (error) {
-        console.error('Failed to load articles:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadArticles();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="pt-20">
-        <div className="container-page py-20">
-          <div className="text-center">Loading articles...</div>
-        </div>
-      </div>
-    );
+async function getArticles(): Promise<Article[]> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/admin/homepage`, {
+      cache: 'no-store'
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data.articles || [];
+    }
+  } catch (error) {
+    console.error('Failed to load articles:', error);
   }
+  return [];
+}
+
+export default async function BlogPage() {
+  const articles = await getArticles();
+
+  // Generate structured data for blog
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "BuildVive Renovations Construction Blog",
+    "description": "Expert construction insights, industry trends, and practical tips from Denver's premier construction company.",
+    "url": `${process.env.NEXT_PUBLIC_BASE_URL || 'https://buildvive.com'}/blog`,
+    "publisher": {
+      "@type": "Organization",
+      "name": "BuildVive Renovations",
+      "url": process.env.NEXT_PUBLIC_BASE_URL || "https://buildvive.com"
+    },
+    "blogPost": articles.map(article => ({
+      "@type": "BlogPosting",
+      "headline": article.title,
+      "description": article.excerpt,
+      "image": article.imageUrl,
+      "author": {
+        "@type": "Person",
+        "name": article.author
+      },
+      "datePublished": article.publishDate,
+      "dateModified": article.publishDate,
+      "url": `${process.env.NEXT_PUBLIC_BASE_URL || 'https://buildvive.com'}/blog/${article.slug}`,
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": `${process.env.NEXT_PUBLIC_BASE_URL || 'https://buildvive.com'}/blog/${article.slug}`
+      }
+    }))
+  };
 
   return (
-    <div className="pt-20">
-      <div className="container-page py-20">
+    <>
+      {/* Structured Data for Blog */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      
+      <div className="pt-20">
+        <div className="container-page py-20">
         <div className="text-center mb-16">
           <span className="badge">INSIGHTS & EXPERTISE</span>
           <h1 className="mt-4 text-4xl md:text-5xl font-extrabold">Construction Insights & Industry News</h1>
@@ -121,9 +161,10 @@ export default function BlogPage() {
             <p className="text-foreground/60">No articles available yet.</p>
           </div>
         )}
+        </div>
+        
+        <Footer />
       </div>
-      
-      <Footer />
-    </div>
+    </>
   );
 }

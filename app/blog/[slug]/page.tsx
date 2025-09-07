@@ -1,9 +1,8 @@
-"use client";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useParams } from "next/navigation";
 import { Footer } from "../../components/Footer";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type Article = {
   id: string;
@@ -18,72 +17,109 @@ type Article = {
   slug: string;
 };
 
-export default function BlogPost() {
-  const params = useParams();
-  const slug = params.slug as string;
-  const [article, setArticle] = useState<Article | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
-
-  useEffect(() => {
-    const loadArticle = async () => {
-      try {
-        const response = await fetch('/api/admin/homepage');
-        if (response.ok) {
-          const data = await response.json();
-          const foundArticle = data.articles?.find((a: Article) => a.slug === slug);
-          
-          if (foundArticle) {
-            setArticle(foundArticle);
-          } else {
-            setNotFound(true);
-          }
-        }
-      } catch (error) {
-        console.error('Failed to load article:', error);
-        setNotFound(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (slug) {
-      loadArticle();
+async function getArticle(slug: string): Promise<Article | null> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/admin/homepage`, {
+      cache: 'no-store'
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data.articles?.find((a: Article) => a.slug === slug) || null;
     }
-  }, [slug]);
+  } catch (error) {
+    console.error('Failed to load article:', error);
+  }
+  return null;
+}
 
-  if (loading) {
-    return (
-      <div className="pt-20">
-        <div className="container-page py-20">
-          <div className="text-center">Loading article...</div>
-        </div>
-      </div>
-    );
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const article = await getArticle(params.slug);
+  
+  if (!article) {
+    return {
+      title: "Article Not Found - BuildVive Renovations",
+      description: "The article you're looking for doesn't exist.",
+    };
   }
 
-  if (notFound || !article) {
-    return (
-      <div className="pt-20">
-        <div className="container-page py-20">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold mb-4">Article Not Found</h1>
-            <p className="text-foreground/70 mb-8">The article you're looking for doesn't exist.</p>
-            <Link 
-              href="/blog"
-              className="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
-            >
-              Back to Blog
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
+  return {
+    title: `${article.title} - BuildVive Renovations Blog`,
+    description: article.excerpt,
+    keywords: `Denver construction, ${article.category}, construction tips, BuildVive Renovations, ${article.title}`,
+    authors: [{ name: article.author }],
+    openGraph: {
+      title: `${article.title} - BuildVive Renovations Blog`,
+      description: article.excerpt,
+      type: "article",
+      publishedTime: article.publishDate,
+      authors: [article.author],
+      images: [
+        {
+          url: article.imageUrl,
+          width: 800,
+          height: 450,
+          alt: article.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${article.title} - BuildVive Renovations Blog`,
+      description: article.excerpt,
+      images: [article.imageUrl],
+    },
+  };
+}
+
+export default async function BlogPost({ params }: { params: { slug: string } }) {
+  const article = await getArticle(params.slug);
+
+  if (!article) {
+    notFound();
   }
+
+  // Generate structured data for article
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": article.title,
+    "description": article.excerpt,
+    "image": article.imageUrl,
+    "author": {
+      "@type": "Person",
+      "name": article.author
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BuildVive Renovations",
+      "url": process.env.NEXT_PUBLIC_BASE_URL || "https://buildvive.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${process.env.NEXT_PUBLIC_BASE_URL || 'https://buildvive.com'}/logo.png`
+      }
+    },
+    "datePublished": article.publishDate,
+    "dateModified": article.publishDate,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `${process.env.NEXT_PUBLIC_BASE_URL || 'https://buildvive.com'}/blog/${article.slug}`
+    },
+    "articleSection": article.category,
+    "keywords": `Denver construction, ${article.category}, construction tips, BuildVive Renovations`,
+    "wordCount": article.content.split(' ').length,
+    "articleBody": article.content
+  };
 
   return (
-    <div className="pt-20">
-      <div className="container-page py-20">
+    <>
+      {/* Structured Data for Article */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      
+      <div className="pt-20">
+        <div className="container-page py-20">
         {/* Back to Blog */}
         <div className="mb-8">
           <Link 
@@ -162,9 +198,10 @@ export default function BlogPost() {
             </Link>
           </div>
         </div>
+        </div>
+        
+        <Footer />
       </div>
-      
-      <Footer />
-    </div>
+    </>
   );
 }
