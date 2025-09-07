@@ -10,7 +10,7 @@ export function PageLoader({ children }: PageLoaderProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [companyData, setCompanyData] = useState({
     logoUrl: "",
-    companyName: "Ace Construction"
+    companyName: "BuildVive Renovations"
   });
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export function PageLoader({ children }: PageLoaderProps) {
       if (event.detail) {
         setCompanyData({
           logoUrl: event.detail.logoUrl || "",
-          companyName: event.detail.companyName || "Ace Construction"
+          companyName: event.detail.companyName || "BuildVive Renovations"
         });
       }
       

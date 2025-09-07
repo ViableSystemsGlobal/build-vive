@@ -14,11 +14,11 @@ type FooterData = {
 
 export function Footer() {
   const [footerData, setFooterData] = useState<FooterData>({
-    footerCompanyName: "Ace Construction",
+    footerCompanyName: "BuildVive Renovations",
     footerDescription: "Building excellence in Denver since 2010.",
     footerAddress: "123 Construction Way, Denver, CO 80202",
     footerPhone: "(555) 123-4567",
-    footerEmail: "info@aceconstruction.com",
+    footerEmail: "info@buildvive.com",
   });
 
   useEffect(() => {
@@ -29,11 +29,11 @@ export function Footer() {
           const data = await response.json();
           setFooterData({
             footerLogoUrl: data.footerLogoUrl || "",
-            footerCompanyName: data.footerCompanyName || "Ace Construction",
+            footerCompanyName: data.footerCompanyName || "BuildVive Renovations",
             footerDescription: data.footerDescription || "Building excellence in Denver since 2010.",
             footerAddress: data.footerAddress || "123 Construction Way, Denver, CO 80202",
             footerPhone: data.footerPhone || "(555) 123-4567",
-            footerEmail: data.footerEmail || "info@aceconstruction.com",
+            footerEmail: data.footerEmail || "info@buildvive.com",
           });
         }
       } catch (error) {

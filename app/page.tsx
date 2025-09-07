@@ -62,7 +62,7 @@ function Hero({ data }: { data: HomepageData | null }) {
           {data?.headline || "Unparalleled construction solutions in Denver"}
         </h1>
         <p className="text-muted-foreground text-base md:text-lg max-w-xl">
-          {data?.subtext || "Experience excellence and durability with Ace Construction's Denver team of experts, offering innovative and unmatched residential and commercial solutions tailored to your needs."}
+          {data?.subtext || "Experience excellence and durability with BuildVive Renovations' Denver team of experts, offering innovative and unmatched residential and commercial solutions tailored to your needs."}
         </p>
         <div className="flex items-center gap-4">
           <button className="btn-primary" onClick={openQuote}>Get a Free Quote in 30 mins</button>
@@ -408,7 +408,7 @@ export default function Home() {
         window.dispatchEvent(new CustomEvent('homepageDataLoaded', { 
           detail: { 
             logoUrl: data.logoUrl || "",
-            companyName: data.companyName || "Ace Construction"
+            companyName: data.companyName || "BuildVive Renovations"
           } 
         }));
       })
@@ -418,7 +418,7 @@ export default function Home() {
         window.dispatchEvent(new CustomEvent('homepageDataLoaded', { 
           detail: { 
             logoUrl: "",
-            companyName: "Ace Construction"
+            companyName: "BuildVive Renovations"
           } 
         }));
       });
@@ -824,10 +824,10 @@ export default function Home() {
                   className="h-6 w-6 rounded-sm"
                 />
               ) : (
-                <div className="h-6 w-6 rounded-sm border-2 border-primary" />
+              <div className="h-6 w-6 rounded-sm border-2 border-primary" />
               )}
               <span className="font-semibold tracking-wide">
-                {homepageData?.footerCompanyName || "Ace Construction"}
+                {homepageData?.footerCompanyName || "BuildVive Renovations"}
               </span>
             </div>
             <p className="mt-4 text-sm opacity-80 max-w-sm">
@@ -844,7 +844,7 @@ export default function Home() {
             <ul className="mt-4 space-y-2 text-sm opacity-80">
               <li>{homepageData?.footerAddress || "123 Construction Way, Denver, CO 80202"}</li>
               <li>{homepageData?.footerPhone || "(555) 123-4567"}</li>
-              <li>{homepageData?.footerEmail || "info@aceconstruction.com"}</li>
+              <li>{homepageData?.footerEmail || "info@buildvive.com"}</li>
             </ul>
           </div>
           <div>
@@ -859,7 +859,7 @@ export default function Home() {
           </div>
         </div>
         <div className="container-page mt-12 border-t border-white/10 pt-6 text-center text-xs opacity-70">
-          Copyright © {new Date().getFullYear()} {homepageData?.footerCompanyName || "Ace Construction"}. All Rights Reserved.
+          Copyright © {new Date().getFullYear()} {homepageData?.footerCompanyName || "BuildVive Renovations"}. All Rights Reserved.
         </div>
       </footer>
       

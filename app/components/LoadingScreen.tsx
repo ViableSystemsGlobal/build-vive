@@ -6,7 +6,7 @@ interface LoadingScreenProps {
   companyName?: string;
 }
 
-export function LoadingScreen({ logoUrl, companyName = "Ace Construction" }: LoadingScreenProps) {
+export function LoadingScreen({ logoUrl, companyName = "BuildVive Renovations" }: LoadingScreenProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
 
