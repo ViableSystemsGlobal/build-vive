@@ -948,12 +948,32 @@ export default function HomepageAdmin() {
                 <div>
                   <ImageUploader
                     currentImage={data.faviconUrl}
-                    onImageChange={(imageUrl) => {
+                    onImageChange={async (imageUrl) => {
                       setData({ ...data, faviconUrl: imageUrl });
-                      // Trigger favicon update after a short delay
-                      setTimeout(() => {
-                        window.location.reload();
-                      }, 1000);
+                      
+                      // Auto-save the favicon data
+                      try {
+                        const response = await fetch("/api/admin/homepage", {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({ ...data, faviconUrl: imageUrl }),
+                        });
+
+                        if (response.ok) {
+                          setMessage("Favicon saved successfully! Refreshing page...");
+                          // Trigger favicon update after saving
+                          setTimeout(() => {
+                            window.location.reload();
+                          }, 1500);
+                        } else {
+                          setMessage("Error saving favicon. Please try again.");
+                        }
+                      } catch (error) {
+                        console.error("Error saving favicon:", error);
+                        setMessage("Error saving favicon. Please try again.");
+                      }
                     }}
                     label="Favicon"
                     uniqueKey="favicon"
