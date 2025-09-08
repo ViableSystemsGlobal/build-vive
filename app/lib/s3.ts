@@ -10,21 +10,26 @@ class S3Service {
   }
 
   private initializeClient() {
-    if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY) {
+    const accessKey = process.env.AWS_ACCESS_KEY_ID || process.env.S3_ACCESS_KEY;
+    const secretKey = process.env.AWS_SECRET_ACCESS_KEY || process.env.S3_SECRET_KEY;
+    const region = process.env.AWS_REGION || process.env.S3_REGION || 'us-east-1';
+    const bucketName = process.env.S3_BUCKET_NAME || process.env.S3_BUCKET || 'buildvive-uploads';
+    
+    if (accessKey && secretKey) {
       this.client = new S3Client({
-        region: process.env.AWS_REGION || 'us-east-1',
+        region: region,
         credentials: {
-          accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+          accessKeyId: accessKey,
+          secretAccessKey: secretKey,
         },
       });
-      this.bucketName = process.env.S3_BUCKET_NAME || 'buildvive-uploads';
+      this.bucketName = bucketName;
     }
   }
 
   async uploadFile(key: string, file: Buffer, contentType: string): Promise<string> {
     if (!this.client || !this.bucketName) {
-      throw new Error('S3 not configured. Please set AWS credentials and S3_BUCKET_NAME.');
+      throw new Error('S3 not configured. Please set AWS credentials and S3_BUCKET_NAME or S3_BUCKET.');
     }
 
     const command = new PutObjectCommand({
@@ -35,12 +40,13 @@ class S3Service {
     });
 
     await this.client.send(command);
-    return `https://${this.bucketName}.s3.${process.env.AWS_REGION || 'us-east-1'}.amazonaws.com/${key}`;
+    const region = process.env.AWS_REGION || process.env.S3_REGION || 'us-east-1';
+    return `https://${this.bucketName}.s3.${region}.amazonaws.com/${key}`;
   }
 
   async getFileUrl(key: string): Promise<string> {
     if (!this.client || !this.bucketName) {
-      throw new Error('S3 not configured. Please set AWS credentials and S3_BUCKET_NAME.');
+      throw new Error('S3 not configured. Please set AWS credentials and S3_BUCKET_NAME or S3_BUCKET.');
     }
 
     const command = new GetObjectCommand({
@@ -53,7 +59,7 @@ class S3Service {
 
   async deleteFile(key: string): Promise<void> {
     if (!this.client || !this.bucketName) {
-      throw new Error('S3 not configured. Please set AWS credentials and S3_BUCKET_NAME.');
+      throw new Error('S3 not configured. Please set AWS credentials and S3_BUCKET_NAME or S3_BUCKET.');
     }
 
     const command = new DeleteObjectCommand({

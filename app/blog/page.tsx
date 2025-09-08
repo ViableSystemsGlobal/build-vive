@@ -3,6 +3,8 @@ import Image from "next/image";
 import { Footer } from "../components/Footer";
 import { Metadata } from "next";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Construction Blog - BuildVive Renovations | Denver Construction Insights",
   description: "Expert construction insights, industry trends, and practical tips from Denver's premier construction company. Stay informed with BuildVive Renovations' professional blog.",
@@ -35,9 +37,19 @@ type Article = {
 
 async function getArticles(): Promise<Article[]> {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/admin/homepage`, {
-      cache: 'no-store'
+    // During build time, we might not have access to the API
+    // So we'll return an empty array and let the page render with no articles
+    if (process.env.NODE_ENV === 'production' && !process.env.NEXT_PUBLIC_BASE_URL) {
+      return [];
+    }
+    
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const response = await fetch(`${baseUrl}/api/admin/homepage`, {
+      cache: 'no-store',
+      // Add timeout to prevent hanging during build
+      signal: AbortSignal.timeout(5000)
     });
+    
     if (response.ok) {
       const data = await response.json();
       return data.articles || [];

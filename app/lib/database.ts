@@ -38,7 +38,7 @@ class DatabaseService {
         port: parseInt(process.env.DB_PORT || '5432'),
         database: process.env.DB_NAME || 'buildvive',
         username: process.env.DB_USER || 'postgres',
-        password: process.env.DB_PASSWORD || '',
+        password: process.env.DB_PASSWORD || process.env.DB_PASS || '',
         ssl: process.env.NODE_ENV === 'production'
       };
     }
