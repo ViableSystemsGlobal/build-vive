@@ -3,7 +3,8 @@ import Image from "next/image";
 import { Footer } from "../components/Footer";
 import { Metadata } from "next";
 
-export const dynamic = 'force-dynamic';
+// Use ISR instead of force-dynamic for better performance
+export const revalidate = 3600; // Revalidate every hour
 
 export const metadata: Metadata = {
   title: "Construction Blog - BuildVive Renovations | Denver Construction Insights",
@@ -37,16 +38,29 @@ type Article = {
 
 async function getArticles(): Promise<Article[]> {
   try {
-    // During build time, we might not have access to the API
-    // So we'll return an empty array and let the page render with no articles
+    // During build time, use static fallback data
     if (process.env.NODE_ENV === 'production' && !process.env.NEXT_PUBLIC_BASE_URL) {
-      return [];
+      // Return static articles for build time
+      return [
+        {
+          id: '1',
+          title: 'Denver Construction Trends 2024',
+          excerpt: 'Discover the latest construction trends shaping Denver\'s skyline in 2024.',
+          imageUrl: 'https://images.unsplash.com/photo-1581091215367-59ab6f01b7f0?q=80&w=400',
+          content: 'Full article content...',
+          author: 'BuildVive Team',
+          publishDate: '2024-01-15T00:00:00Z',
+          category: 'Industry News',
+          featured: true,
+          slug: 'denver-construction-trends-2024'
+        }
+      ];
     }
     
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     const response = await fetch(`${baseUrl}/api/admin/homepage`, {
-      cache: 'no-store',
-      // Add timeout to prevent hanging during build
+      // Use ISR caching
+      next: { revalidate: 3600 },
       signal: AbortSignal.timeout(5000)
     });
     
@@ -57,7 +71,22 @@ async function getArticles(): Promise<Article[]> {
   } catch (error) {
     console.error('Failed to load articles:', error);
   }
-  return [];
+  
+  // Fallback to static articles
+  return [
+    {
+      id: '1',
+      title: 'Denver Construction Trends 2024',
+      excerpt: 'Discover the latest construction trends shaping Denver\'s skyline in 2024.',
+      imageUrl: 'https://images.unsplash.com/photo-1581091215367-59ab6f01b7f0?q=80&w=400',
+      content: 'Full article content...',
+      author: 'BuildVive Team',
+      publishDate: '2024-01-15T00:00:00Z',
+      category: 'Industry News',
+      featured: true,
+      slug: 'denver-construction-trends-2024'
+    }
+  ];
 }
 
 export default async function BlogPage() {

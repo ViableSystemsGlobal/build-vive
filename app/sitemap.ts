@@ -1,19 +1,29 @@
 import { MetadataRoute } from 'next'
 
-export const dynamic = 'force-dynamic';
+// Remove dynamic export - let it be static by default
+// export const dynamic = 'force-dynamic';
 
 async function getArticles() {
   try {
-    // During build time, we might not have access to the API
-    // So we'll return an empty array and let the sitemap work with static pages
+    // During build time, use static fallback data
     if (process.env.NODE_ENV === 'production' && !process.env.NEXT_PUBLIC_BASE_URL) {
-      return [];
+      // Return static articles for build time
+      return [
+        {
+          slug: 'denver-construction-trends-2024',
+          publishDate: '2024-01-15T00:00:00Z'
+        },
+        {
+          slug: 'home-renovation-tips',
+          publishDate: '2024-01-10T00:00:00Z'
+        }
+      ];
     }
     
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     const response = await fetch(`${baseUrl}/api/admin/homepage`, {
-      cache: 'no-store',
-      // Add timeout to prevent hanging during build
+      // Use revalidate for ISR (Incremental Static Regeneration)
+      next: { revalidate: 3600 }, // Revalidate every hour
       signal: AbortSignal.timeout(5000)
     });
     
@@ -24,7 +34,14 @@ async function getArticles() {
   } catch (error) {
     console.error('Failed to load articles for sitemap:', error);
   }
-  return [];
+  
+  // Fallback to static articles
+  return [
+    {
+      slug: 'denver-construction-trends-2024',
+      publishDate: '2024-01-15T00:00:00Z'
+    }
+  ];
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "./components/Navbar";
+import Navbar from "./components/Navbar";
 import { QuoteProvider } from "./components/QuoteProvider";
 import FloatingChat from "./components/FloatingChat";
 import DynamicFavicon from "./components/DynamicFavicon";

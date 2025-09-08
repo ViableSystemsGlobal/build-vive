@@ -1,7 +1,12 @@
-import { cookies } from "next/headers";
+import { SimpleAuthService } from "../../../../lib/simple-auth";
 
 export async function POST() {
-  const cookieStore = await cookies();
-  cookieStore.delete("admin_logged_in");
-  return Response.json({ success: true });
+  try {
+    // Clear all session cookies
+    await SimpleAuthService.clearSessionCookies();
+    return Response.json({ success: true });
+  } catch (error) {
+    console.error('Logout error:', error);
+    return Response.json({ error: "Logout failed" }, { status: 500 });
+  }
 }

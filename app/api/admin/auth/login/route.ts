@@ -1,24 +1,30 @@
-import { cookies } from "next/headers";
+import { SimpleAuthService } from "../../../../lib/simple-auth";
 
 export async function POST(request: Request) {
   try {
     const { email, password } = await request.json();
 
-    // Hardcoded admin credentials - simple and works!
-    if (email === "admin@aceconstruction.local" && password === "admin123") {
-      // Set a simple session cookie
-      const cookieStore = await cookies();
-      cookieStore.set("admin_logged_in", "true", {
-        httpOnly: true,
-        path: "/",
-        maxAge: 60 * 60 * 24, // 24 hours
-      });
-
-      return Response.json({ success: true });
+    // Authenticate user
+    const user = await SimpleAuthService.authenticate(email, password);
+    
+    if (!user) {
+      return Response.json({ error: "Invalid credentials" }, { status: 401 });
     }
 
-    return Response.json({ error: "Invalid credentials" }, { status: 401 });
+    // Set simple session cookies
+    await SimpleAuthService.setSessionCookies(user);
+
+    return Response.json({ 
+      success: true, 
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role
+      }
+    });
   } catch (error) {
+    console.error('Login error:', error);
     return Response.json({ error: "Login failed" }, { status: 500 });
   }
 }

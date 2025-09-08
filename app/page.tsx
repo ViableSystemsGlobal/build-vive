@@ -44,6 +44,12 @@ type HomepageData = {
     title: string;
     excerpt: string;
     imageUrl: string;
+    content: string;
+    author: string;
+    publishDate: string;
+    category: string;
+    featured: boolean;
+    slug: string;
   }>;
   trustedLogos: Array<{
     id: string;
@@ -833,7 +839,7 @@ export default function Home() {
 
         </div>
         
-        {homepageData?.articles?.length > 3 && (
+        {homepageData?.articles && homepageData.articles.length > 3 && (
           <div className="text-center mt-12">
             <a 
               href="/blog"

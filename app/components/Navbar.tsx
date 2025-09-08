@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useQuote } from "./QuoteProvider";
 
-export function Navbar() {
+export default function Navbar() {
   const { openQuote } = useQuote();
   const [activeSection, setActiveSection] = useState("home");
   const [navbarData, setNavbarData] = useState({
