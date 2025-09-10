@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuote } from "./QuoteProvider";
 
 type QuoteFormData = {
@@ -46,8 +46,71 @@ export function QuoteModal({ open, onClose }: { open: boolean; onClose: () => vo
   const next = () => setStep(s => Math.min(s + 1, total));
   const prev = () => setStep(s => Math.max(s - 1, 1));
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [recaptchaConfig, setRecaptchaConfig] = useState({ enabled: false, siteKey: '' });
+  const [recaptchaToken, setRecaptchaToken] = useState('');
+  const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
+
+  // Load reCAPTCHA configuration
+  useEffect(() => {
+    const loadRecaptchaConfig = async () => {
+      try {
+        const response = await fetch('/api/admin/homepage');
+        if (response.ok) {
+          const config = await response.json();
+          setRecaptchaConfig({
+            enabled: config.recaptchaEnabled || false,
+            siteKey: config.recaptchaSiteKey || ''
+          });
+        }
+      } catch (error) {
+        console.error('Failed to load reCAPTCHA config:', error);
+      }
+    };
+
+    if (open) {
+      loadRecaptchaConfig();
+    }
+  }, [open]);
+
+  // Load reCAPTCHA script
+  useEffect(() => {
+    if (recaptchaConfig.enabled && recaptchaConfig.siteKey && !recaptchaLoaded) {
+      const script = document.createElement('script');
+      script.src = 'https://www.google.com/recaptcha/api.js';
+      script.async = true;
+      script.defer = true;
+      script.onload = () => setRecaptchaLoaded(true);
+      document.head.appendChild(script);
+    }
+  }, [recaptchaConfig, recaptchaLoaded]);
+
   const submit = async () => {
+    if (isSubmitting) return; // Prevent double submission
+    
+    setIsSubmitting(true);
     try {
+      // Verify reCAPTCHA if enabled
+      if (recaptchaConfig.enabled) {
+        if (!recaptchaToken) {
+          alert('Please complete the reCAPTCHA verification');
+          setIsSubmitting(false);
+          return;
+        }
+
+        const recaptchaResponse = await fetch('/api/verify-recaptcha', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: recaptchaToken })
+        });
+
+        if (!recaptchaResponse.ok) {
+          alert('reCAPTCHA verification failed. Please try again.');
+          setIsSubmitting(false);
+          return;
+        }
+      }
+
       // Create FormData to handle file uploads
       const formData = new FormData();
       
@@ -114,6 +177,8 @@ export function QuoteModal({ open, onClose }: { open: boolean; onClose: () => vo
       }
     } catch (error) {
       alert("Failed to submit quote request");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -394,6 +459,19 @@ export function QuoteModal({ open, onClose }: { open: boolean; onClose: () => vo
             </div>
           )}
         </div>
+        
+        {/* reCAPTCHA */}
+        {step === total && recaptchaConfig.enabled && recaptchaConfig.siteKey && (
+          <div className="mt-4 flex justify-center">
+            <div 
+              className="g-recaptcha" 
+              data-sitekey={recaptchaConfig.siteKey}
+              data-callback={(token: string) => setRecaptchaToken(token)}
+              data-expired-callback={() => setRecaptchaToken('')}
+            ></div>
+          </div>
+        )}
+        
         <div className="mt-6 flex items-center justify-between">
           <button className="btn-outline" onClick={onClose}>Close</button>
           <div className="flex items-center gap-3">
@@ -401,7 +479,23 @@ export function QuoteModal({ open, onClose }: { open: boolean; onClose: () => vo
             {step < total ? (
               <button className="btn-primary" onClick={next}>Next</button>
             ) : (
-              <button className="btn-primary" onClick={submit}>Submit & Get My Quote</button>
+              <button 
+                className="btn-primary" 
+                onClick={submit}
+                disabled={isSubmitting || (recaptchaConfig.enabled && !recaptchaToken)}
+              >
+                {isSubmitting ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Submitting...
+                  </>
+                ) : (
+                  'Submit & Get My Quote'
+                )}
+              </button>
             )}
           </div>
         </div>

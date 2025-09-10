@@ -86,7 +86,7 @@ const generalAdvice = {
   "timeline": [
     "⏰ Project Timeline:",
     "1. Small projects: 1-4 weeks",
-    "2. Medium renovations: 4-12 weeks",
+    "2. Medium renovations: 4-12 weeks", 
     "3. Large projects: 3-6 months",
     "4. Weather can affect outdoor work",
     "5. Permits may add 2-6 weeks to timeline"
@@ -130,7 +130,7 @@ function detectGeneralAdvice(message: string): string[] {
         (keyword === "maintenance" && (lowerMessage.includes('maintenance') || lowerMessage.includes('inspect') || lowerMessage.includes('check'))) ||
         (keyword === "permits" && (lowerMessage.includes('permit') || lowerMessage.includes('legal') || lowerMessage.includes('regulation'))) ||
         (keyword === "budget" && (lowerMessage.includes('budget') || lowerMessage.includes('cost') || lowerMessage.includes('price'))) ||
-        (keyword === "timeline" && (lowerMessage.includes('timeline') || lowerMessage.includes('schedule') || lowerMessage.includes('duration')))) {
+        (keyword === "timeline" && (lowerMessage.includes('timeline') || lowerMessage.includes('schedule') || lowerMessage.includes('duration') || lowerMessage.includes('how long') || lowerMessage.includes('take') || lowerMessage.includes('time')))) {
       detectedTopics.push(keyword);
     }
   }
@@ -153,12 +153,22 @@ function generatePersonalizedGreeting(quoteContext: {
   projectType?: string;
   services?: string[];
   urgency?: string;
+  location?: string;
+  size?: string;
+  timeline?: string;
+  budget?: string;
+  comments?: string;
   [key: string]: unknown;
 }): string {
   const name = quoteContext.name || 'there';
   const projectType = quoteContext.projectType || 'construction project';
   const services = quoteContext.services || [];
   const urgency = quoteContext.urgency || '';
+  const location = quoteContext.location || '';
+  const size = quoteContext.size || '';
+  const timeline = quoteContext.timeline || '';
+  const budget = quoteContext.budget || '';
+  const comments = quoteContext.comments || '';
   
   let greeting = `Hi ${name}! 👋\n\n`;
   
@@ -168,18 +178,152 @@ function generatePersonalizedGreeting(quoteContext: {
     greeting += `While we process your request, I can provide immediate safety guidance and emergency procedures. `;
     greeting += `What specific type of emergency are you dealing with?`;
   } else {
-    greeting += `I see you're planning a ${projectType.toLowerCase()} project. `;
+    // Create personalized message based on project details
+    let personalizedMessage = `I see you're planning a ${projectType.toLowerCase()} project`;
+    
+    if (location) {
+      personalizedMessage += ` in ${location}`;
+    }
+    
+    if (size) {
+      personalizedMessage += ` (${size})`;
+    }
+    
+    personalizedMessage += `. `;
+    
+    // Add interesting random facts based on project type
+    const projectFacts = {
+      'kitchen': 'Did you know that kitchen remodels typically increase home value by 60-80%?',
+      'bathroom': 'Bathroom renovations often have the highest ROI of any home improvement project!',
+      'roofing': 'A new roof can improve your home\'s energy efficiency by up to 30%.',
+      'flooring': 'Hardwood floors can last 100+ years with proper maintenance.',
+      'electrical': 'Modern electrical upgrades can reduce energy costs by 20-30%.',
+      'plumbing': 'New plumbing fixtures can reduce water usage by up to 50%.',
+      'hvac': 'A new HVAC system can improve indoor air quality and reduce allergens.',
+      'windows': 'Energy-efficient windows can save you $200-400 annually on heating/cooling.',
+      'painting': 'A fresh coat of paint can increase your home\'s value by 1-3%.',
+      'basement': 'Finished basements can add 70-75% of their cost to your home\'s value.'
+    };
+    
+    // Find relevant fact based on project type or services
+    let relevantFact = '';
+    const lowerProjectType = projectType.toLowerCase();
+    const lowerServices = services.map(s => s.toLowerCase()).join(' ');
+    
+    for (const [key, fact] of Object.entries(projectFacts)) {
+      if (lowerProjectType.includes(key) || lowerServices.includes(key)) {
+        relevantFact = fact;
+        break;
+      }
+    }
+    
+    if (!relevantFact) {
+      // Default facts for general construction
+      const generalFacts = [
+        'Construction projects in Denver often benefit from our 300+ days of sunshine for planning!',
+        'Did you know that proper permits can actually save you money in the long run?',
+        'Denver\'s building codes are designed to ensure your project lasts for decades.',
+        'Many construction materials perform better in Colorado\'s climate than elsewhere.',
+        'Planning your project during Denver\'s mild seasons can save 10-15% on costs.'
+      ];
+      relevantFact = generalFacts[Math.floor(Math.random() * generalFacts.length)];
+    }
+    
+    greeting += personalizedMessage + relevantFact + '\n\n';
+    
     greeting += `Our team is working on your quote and will get back to you within 30 minutes.\n\n`;
     
     if (services.length > 0) {
       greeting += `I can see you're interested in: ${services.join(', ')}. `;
     }
     
-    greeting += `I'm here to help with planning advice, permit information, timeline estimates, and general guidance while we prepare your quote. `;
-    greeting += `What would you like to know more about?`;
+    // Add specific help based on project details
+    let specificHelp = '';
+    if (timeline && timeline.includes('urgent') || timeline.includes('asap')) {
+      specificHelp = 'Since you need this done quickly, I can help you understand what can be expedited and what might need more time. ';
+    } else if (budget && budget.includes('tight') || budget.includes('limited')) {
+      specificHelp = 'I can help you prioritize which parts of your project will give you the best value for your budget. ';
+    } else if (comments && comments.length > 50) {
+      specificHelp = 'I see you\'ve provided detailed information about your project. I can help clarify any questions about permits, materials, or process. ';
+    } else {
+      specificHelp = 'I\'m here to help with planning advice, permit information, timeline estimates, and general guidance. ';
+    }
+    
+    greeting += specificHelp + 'What would you like to know more about?';
   }
   
   return greeting;
+}
+
+// Generate contextual timeline response based on quote data
+function generateContextualTimeline(quoteContext: {
+  name?: string;
+  projectType?: string;
+  services?: string[];
+  urgency?: string;
+  location?: string;
+  size?: string;
+  timeline?: string;
+  budget?: string;
+  comments?: string;
+  [key: string]: unknown;
+}): string {
+  const name = quoteContext.name || 'there';
+  const projectType = quoteContext.projectType || 'project';
+  const size = quoteContext.size || '';
+  const urgency = quoteContext.urgency || '';
+  const services = quoteContext.services || [];
+  
+  let response = `⏰ Timeline for your ${projectType.toLowerCase()}, ${name}:\n\n`;
+  
+  // Determine timeline based on project size and type
+  let estimatedWeeks = '';
+  if (size.includes('Small') || size.includes('<1,000')) {
+    estimatedWeeks = '1-4 weeks';
+  } else if (size.includes('Medium') || size.includes('1,000-2,500')) {
+    estimatedWeeks = '4-12 weeks';
+  } else if (size.includes('Large') || size.includes('>2,500')) {
+    estimatedWeeks = '3-6 months';
+  } else {
+    estimatedWeeks = '2-8 weeks'; // Default estimate
+  }
+  
+  response += `📅 **Estimated Duration: ${estimatedWeeks}**\n\n`;
+  
+  // Add urgency considerations
+  if (urgency.includes('Emergency')) {
+    response += `🚨 **Emergency Priority**: We can expedite your project and start within 24-48 hours for emergency situations.\n\n`;
+  } else if (urgency.includes('ASAP') || urgency.includes('urgent')) {
+    response += `⚡ **Urgent Timeline**: We can prioritize your project and potentially start within 1-2 weeks.\n\n`;
+  }
+  
+  // Add project-specific timeline factors
+  if (services.includes('Kitchen Remodeling')) {
+    response += `🍳 **Kitchen Remodeling**: Typically takes 4-8 weeks including:\n`;
+    response += `• Demolition: 1-2 days\n`;
+    response += `• Plumbing/Electrical: 3-5 days\n`;
+    response += `• Cabinetry installation: 3-5 days\n`;
+    response += `• Countertops: 1-2 weeks (custom fabrication)\n`;
+    response += `• Finishing touches: 3-5 days\n\n`;
+  } else if (services.includes('Bathroom Remodeling')) {
+    response += `🚿 **Bathroom Remodeling**: Usually takes 2-4 weeks including:\n`;
+    response += `• Demolition: 1 day\n`;
+    response += `• Plumbing/Electrical: 2-3 days\n`;
+    response += `• Tile work: 3-5 days\n`;
+    response += `• Fixture installation: 1-2 days\n`;
+    response += `• Final touches: 1-2 days\n\n`;
+  }
+  
+  // Add general timeline factors
+  response += `📋 **Timeline Factors**:\n`;
+  response += `• Permits: 2-6 weeks (varies by location)\n`;
+  response += `• Material delivery: 1-3 weeks\n`;
+  response += `• Weather delays: Possible for exterior work\n`;
+  response += `• Change orders: May extend timeline\n\n`;
+  
+  response += `Our team will provide a detailed project schedule once we review your specific requirements. Would you like to discuss any specific timeline concerns?`;
+  
+  return response;
 }
 
 // Get AI response from OpenAI
@@ -356,6 +500,16 @@ export async function POST(request: NextRequest): Promise<NextResponse<ChatRespo
     const adviceTopics = detectGeneralAdvice(message);
     if (adviceTopics.length > 0) {
       const adviceType = adviceTopics[0] as keyof typeof generalAdvice;
+      
+      // Special handling for timeline questions with quote context
+      if (adviceType === "timeline" && quoteContext) {
+        const contextualTimeline = generateContextualTimeline(quoteContext);
+        return NextResponse.json({
+          response: contextualTimeline,
+          escalate: false
+        });
+      }
+      
       const adviceResponse = generalAdvice[adviceType].join('\n');
       return NextResponse.json({
         response: adviceResponse,
@@ -378,6 +532,35 @@ export async function POST(request: NextRequest): Promise<NextResponse<ChatRespo
         response: "You're welcome! I'm here to help. Is there anything else you'd like to know about construction or need assistance with?",
         escalate: false
       });
+    }
+    
+    // Check for generic affirmative responses
+    if (lowerMessage === 'yes' || lowerMessage === 'yeah' || lowerMessage === 'sure' || lowerMessage === 'ok' || lowerMessage === 'okay') {
+      if (quoteContext) {
+        // Provide contextual help based on their project
+        const projectType = quoteContext.projectType || 'project';
+        const services = quoteContext.services || [];
+        
+        let contextualResponse = `Great! I'd be happy to help you with your ${projectType.toLowerCase()}. `;
+        
+        if (services.includes('Kitchen Remodeling')) {
+          contextualResponse += `For kitchen remodeling, I can help with:\n\n• **Planning & Design**: Layout optimization, material selection, color schemes\n• **Timeline**: Project phases, permit requirements, scheduling\n• **Budget**: Cost breakdown, value engineering, financing options\n• **Permits**: Denver building codes, inspection process\n• **Materials**: Countertops, cabinets, flooring, appliances\n\nWhat specific aspect would you like to discuss?`;
+        } else if (services.includes('Bathroom Remodeling')) {
+          contextualResponse += `For bathroom remodeling, I can help with:\n\n• **Design**: Layout planning, fixture selection, storage solutions\n• **Timeline**: Project duration, phases, scheduling\n• **Budget**: Cost estimates, material options, value considerations\n• **Permits**: Plumbing permits, electrical requirements\n• **Materials**: Tiles, fixtures, vanities, lighting\n\nWhat would you like to know more about?`;
+        } else {
+          contextualResponse += `I can help you with:\n\n• **Project Planning**: Timeline, permits, design considerations\n• **Budget & Costs**: Estimates, financing, value engineering\n• **Materials & Options**: Product selection, quality considerations\n• **Denver-Specific**: Local codes, weather considerations, contractors\n• **Emergency Situations**: Immediate safety, urgent repairs\n\nWhat specific area would you like to explore?`;
+        }
+        
+        return NextResponse.json({
+          response: contextualResponse,
+          escalate: false
+        });
+      } else {
+        return NextResponse.json({
+          response: "Great! I'm here to help with construction advice and guidance. What would you like to know about?\n\n• **Project Planning**: Timeline, permits, design\n• **Budget & Costs**: Estimates, financing options\n• **Materials**: Selection, quality, durability\n• **Emergency Situations**: Safety, urgent repairs\n• **Denver-Specific**: Local codes, weather considerations\n\nWhat can I help you with today?",
+          escalate: false
+        });
+      }
     }
     
     // Default response for unrecognized messages

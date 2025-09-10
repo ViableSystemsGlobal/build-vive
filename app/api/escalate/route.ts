@@ -76,29 +76,35 @@ export async function POST(request: NextRequest): Promise<NextResponse<Escalatio
     // Trigger VAPI call if configured
     if (adminConfig?.vapiApiKey && adminConfig?.vapiAssistantId && userPhone) {
       try {
-        // TODO: Implement actual VAPI call triggering
-        console.log(`📞 VAPI CALL TRIGGERED:`, {
-          escalationId,
-          userPhone,
-          reason,
-          userMessage,
-          apiKey: adminConfig.vapiApiKey ? '***configured***' : 'not configured',
-          assistantId: adminConfig.vapiAssistantId
+        // Use the new VAPI call endpoint with context
+        const vapiResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/vapi-call`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            userPhone,
+            userName,
+            userEmail: body.userEmail,
+            context: {
+              reason,
+              userMessage,
+              urgency: body.urgency || 'non-emergency'
+            }
+          })
         });
-        
-        // Here you would implement the actual VAPI API call:
-        // const response = await fetch('https://api.vapi.ai/call', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Authorization': `Bearer ${adminConfig.vapiApiKey}`,
-        //     'Content-Type': 'application/json'
-        //   },
-        //   body: JSON.stringify({
-        //     phoneNumberId: adminConfig.vapiPhoneNumberId,
-        //     assistantId: adminConfig.vapiAssistantId,
-        //     customer: { number: userPhone }
-        //   })
-        // });
+
+        if (vapiResponse.ok) {
+          const vapiResult = await vapiResponse.json();
+          console.log(`📞 VAPI CALL TRIGGERED SUCCESSFULLY:`, {
+            escalationId,
+            callId: vapiResult.callId,
+            userPhone,
+            reason
+          });
+        } else {
+          console.error('Failed to trigger VAPI call:', await vapiResponse.text());
+        }
         
       } catch (error) {
         console.error('Failed to trigger VAPI call:', error);

@@ -43,12 +43,12 @@ export async function POST(request: NextRequest) {
     const info = await transporter.sendMail({
       from: adminConfig.fromEmail || adminConfig.smtpUsername,
       to: testEmail,
-      subject: `Test Email - ${adminConfig.companyName || 'Ace Construction'}`,
+      subject: `Test Email - ${adminConfig.companyName || 'BuildVive Renovations'}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #2563eb;">✅ Email Configuration Test</h2>
           <p>This is a test email to verify your SMTP configuration is working correctly.</p>
-          <p><strong>Company:</strong> ${adminConfig.companyName || 'Ace Construction'}</p>
+          <p><strong>Company:</strong> ${adminConfig.companyName || 'BuildVive Renovations'}</p>
           <p><strong>SMTP Host:</strong> ${adminConfig.smtpHost}</p>
           <p><strong>Port:</strong> ${adminConfig.smtpPort}</p>
           <p><strong>Sent at:</strong> ${new Date().toLocaleString()}</p>

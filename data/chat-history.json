@@ -385,5 +385,296 @@
     ],
     "escalationReason": "User requested call",
     "id": "chat_1756990495697_cuqyyjcju"
+  },
+  {
+    "sessionId": "chat_1757498081136_hj112b5k5",
+    "startTime": "2025-09-10T09:54:41.136Z",
+    "endTime": "2025-09-10T09:56:48.165Z",
+    "messages": [
+      {
+        "id": "1757498139548",
+        "type": "bot",
+        "content": "Thanks for submitting your request! While we process your quote, can I help with some immediate advice?",
+        "timestamp": "2025-09-10T09:55:39.548Z"
+      },
+      {
+        "id": "1757498139601",
+        "type": "bot",
+        "content": "Hi Nana Yaw Appiah-Miracle! 👋\n\n🚨 I see you have an emergency renovation/remodel that needs immediate attention. Our team is working on your quote right now and will get back to you within 30 minutes.\n\nWhile we process your request, I can provide immediate safety guidance and emergency procedures. What specific type of emergency are you dealing with?",
+        "timestamp": "2025-09-10T09:55:39.601Z"
+      },
+      {
+        "id": "1757498172167",
+        "type": "user",
+        "content": "I am not sure, my pipe is leaking",
+        "timestamp": "2025-09-10T09:56:12.167Z"
+      },
+      {
+        "id": "1757498172247",
+        "type": "bot",
+        "content": "🚨 EMERGENCY: Plumbing leak detected!\n1. Shut off your main water valve immediately\n2. Close all nearby taps and drains\n3. Place buckets under active leaks\n4. Turn off electrical appliances in affected areas\nWould you like us to call you right now for immediate assistance?",
+        "timestamp": "2025-09-10T09:56:12.247Z"
+      },
+      {
+        "id": "1757498183180",
+        "type": "user",
+        "content": "not yet",
+        "timestamp": "2025-09-10T09:56:23.180Z"
+      },
+      {
+        "id": "1757498184439",
+        "type": "bot",
+        "content": "I'm not sure I understand your question. Could you please rephrase it? I can help with:\n\n• Emergency situations (leaks, electrical issues, structural damage)\n• General construction advice (renovation, maintenance, permits)\n• Budget and timeline planning\n\nOr if you need immediate assistance, just say 'call me' and I'll connect you with our team.",
+        "timestamp": "2025-09-10T09:56:24.439Z"
+      },
+      {
+        "id": "1757498193744",
+        "type": "user",
+        "content": "don",
+        "timestamp": "2025-09-10T09:56:33.744Z"
+      },
+      {
+        "id": "1757498194745",
+        "type": "bot",
+        "content": "I'm not sure I understand your question. Could you please rephrase it? I can help with:\n\n• Emergency situations (leaks, electrical issues, structural damage)\n• General construction advice (renovation, maintenance, permits)\n• Budget and timeline planning\n\nOr if you need immediate assistance, just say 'call me' and I'll connect you with our team.",
+        "timestamp": "2025-09-10T09:56:34.745Z"
+      },
+      {
+        "id": "1757498201805",
+        "type": "user",
+        "content": "don't call me yet",
+        "timestamp": "2025-09-10T09:56:41.805Z"
+      },
+      {
+        "id": "1757498201871",
+        "type": "bot",
+        "content": "I understand you need immediate assistance. Let me connect you with our team right now.",
+        "timestamp": "2025-09-10T09:56:41.871Z"
+      },
+      {
+        "id": "1757498204203",
+        "type": "bot",
+        "content": "We're calling you now! Please keep your phone nearby.",
+        "timestamp": "2025-09-10T09:56:44.203Z"
+      }
+    ],
+    "status": "completed",
+    "tags": [
+      "emergency",
+      "plumbing",
+      "electrical",
+      "structural",
+      "renovation",
+      "maintenance",
+      "permits",
+      "budget",
+      "timeline"
+    ],
+    "escalationReason": "User requested call",
+    "id": "chat_1757498208490_s7ggk9gnv"
+  },
+  {
+    "sessionId": "chat_1757499339398_dneo3mxmv",
+    "startTime": "2025-09-10T10:15:39.398Z",
+    "endTime": "2025-09-10T10:17:44.330Z",
+    "messages": [
+      {
+        "id": "1757499392419",
+        "type": "bot",
+        "content": "Thanks for submitting your request! While we process your quote, can I help with some immediate advice?",
+        "timestamp": "2025-09-10T10:16:32.419Z"
+      },
+      {
+        "id": "1757499392609",
+        "type": "bot",
+        "content": "Hi Nana Yaw Sasu Appiah-Miracle! 👋\n\nI see you're planning a renovation/remodel project (Small (<1,000 sq ft)). Did you know that kitchen remodels typically increase home value by 60-80%?\n\nOur team is working on your quote and will get back to you within 30 minutes.\n\nI can see you're interested in: Kitchen Remodeling. I'm here to help with planning advice, permit information, timeline estimates, and general guidance. What would you like to know more about?",
+        "timestamp": "2025-09-10T10:16:32.609Z"
+      },
+      {
+        "id": "1757499419939",
+        "type": "user",
+        "content": "how long will it take?",
+        "timestamp": "2025-09-10T10:16:59.939Z"
+      },
+      {
+        "id": "1757499420690",
+        "type": "bot",
+        "content": "I'm not sure I understand your question. Could you please rephrase it? I can help with:\n\n• Emergency situations (leaks, electrical issues, structural damage)\n• General construction advice (renovation, maintenance, permits)\n• Budget and timeline planning\n\nOr if you need immediate assistance, just say 'call me' and I'll connect you with our team.",
+        "timestamp": "2025-09-10T10:17:00.690Z"
+      }
+    ],
+    "status": "completed",
+    "tags": [
+      "emergency",
+      "plumbing",
+      "electrical",
+      "structural",
+      "renovation",
+      "maintenance",
+      "permits",
+      "budget",
+      "timeline"
+    ],
+    "escalationReason": "User requested call",
+    "id": "chat_1757499464866_pi2nv2kk0"
+  },
+  {
+    "sessionId": "chat_1757503104391_zdrlb5sgv",
+    "startTime": "2025-09-10T11:18:24.392Z",
+    "endTime": "2025-09-10T11:20:27.021Z",
+    "messages": [
+      {
+        "id": "1757503142172",
+        "type": "bot",
+        "content": "Thanks for submitting your request! While we process your quote, can I help with some immediate advice?",
+        "timestamp": "2025-09-10T11:19:02.172Z"
+      },
+      {
+        "id": "1757503142357",
+        "type": "bot",
+        "content": "Hi Nana Yaw Sasu Appiah-Miracle! 👋\n\nI see you're planning a renovation/remodel project (Small (<1,000 sq ft)). New plumbing fixtures can reduce water usage by up to 50%.\n\nOur team is working on your quote and will get back to you within 30 minutes.\n\nI can see you're interested in: Plumbing. I'm here to help with planning advice, permit information, timeline estimates, and general guidance. What would you like to know more about?",
+        "timestamp": "2025-09-10T11:19:02.357Z"
+      },
+      {
+        "id": "1757503203418",
+        "type": "user",
+        "content": "Yes",
+        "timestamp": "2025-09-10T11:20:03.418Z"
+      },
+      {
+        "id": "1757503206939",
+        "type": "bot",
+        "content": "Great! I'd be happy to help you with your renovation/remodel. I can help you with:\n\n• **Project Planning**: Timeline, permits, design considerations\n• **Budget & Costs**: Estimates, financing, value engineering\n• **Materials & Options**: Product selection, quality considerations\n• **Denver-Specific**: Local codes, weather considerations, contractors\n• **Emergency Situations**: Immediate safety, urgent repairs\n\nWhat specific area would you like to explore?",
+        "timestamp": "2025-09-10T11:20:06.939Z"
+      },
+      {
+        "id": "1757503218180",
+        "type": "user",
+        "content": "Project planning",
+        "timestamp": "2025-09-10T11:20:18.180Z"
+      },
+      {
+        "id": "1757503219309",
+        "type": "bot",
+        "content": "🏠 Renovation Planning Tips:\n1. Set a realistic budget (add 20% buffer)\n2. Research local permits and regulations\n3. Plan for temporary living arrangements if needed\n4. Choose materials that match your climate\n5. Consider energy efficiency upgrades",
+        "timestamp": "2025-09-10T11:20:19.309Z"
+      }
+    ],
+    "status": "completed",
+    "tags": [
+      "emergency",
+      "plumbing",
+      "renovation",
+      "permits",
+      "budget",
+      "timeline"
+    ],
+    "id": "chat_1757503227439_29i2sowjt"
+  },
+  {
+    "sessionId": "chat_1757503104391_zdrlb5sgv",
+    "startTime": "2025-09-10T11:18:24.392Z",
+    "endTime": "2025-09-10T11:20:29.406Z",
+    "messages": [
+      {
+        "id": "1757503142172",
+        "type": "bot",
+        "content": "Thanks for submitting your request! While we process your quote, can I help with some immediate advice?",
+        "timestamp": "2025-09-10T11:19:02.172Z"
+      },
+      {
+        "id": "1757503142357",
+        "type": "bot",
+        "content": "Hi Nana Yaw Sasu Appiah-Miracle! 👋\n\nI see you're planning a renovation/remodel project (Small (<1,000 sq ft)). New plumbing fixtures can reduce water usage by up to 50%.\n\nOur team is working on your quote and will get back to you within 30 minutes.\n\nI can see you're interested in: Plumbing. I'm here to help with planning advice, permit information, timeline estimates, and general guidance. What would you like to know more about?",
+        "timestamp": "2025-09-10T11:19:02.357Z"
+      },
+      {
+        "id": "1757503203418",
+        "type": "user",
+        "content": "Yes",
+        "timestamp": "2025-09-10T11:20:03.418Z"
+      },
+      {
+        "id": "1757503206939",
+        "type": "bot",
+        "content": "Great! I'd be happy to help you with your renovation/remodel. I can help you with:\n\n• **Project Planning**: Timeline, permits, design considerations\n• **Budget & Costs**: Estimates, financing, value engineering\n• **Materials & Options**: Product selection, quality considerations\n• **Denver-Specific**: Local codes, weather considerations, contractors\n• **Emergency Situations**: Immediate safety, urgent repairs\n\nWhat specific area would you like to explore?",
+        "timestamp": "2025-09-10T11:20:06.939Z"
+      },
+      {
+        "id": "1757503218180",
+        "type": "user",
+        "content": "Project planning",
+        "timestamp": "2025-09-10T11:20:18.180Z"
+      },
+      {
+        "id": "1757503219309",
+        "type": "bot",
+        "content": "🏠 Renovation Planning Tips:\n1. Set a realistic budget (add 20% buffer)\n2. Research local permits and regulations\n3. Plan for temporary living arrangements if needed\n4. Choose materials that match your climate\n5. Consider energy efficiency upgrades",
+        "timestamp": "2025-09-10T11:20:19.309Z"
+      }
+    ],
+    "status": "completed",
+    "tags": [
+      "emergency",
+      "plumbing",
+      "renovation",
+      "permits",
+      "budget",
+      "timeline"
+    ],
+    "id": "chat_1757503229433_ojykqecqc"
+  },
+  {
+    "sessionId": "chat_1757504306002_cibpc7k0c",
+    "startTime": "2025-09-10T11:38:26.002Z",
+    "endTime": "2025-09-10T11:40:47.249Z",
+    "messages": [
+      {
+        "id": "1757504415068",
+        "type": "bot",
+        "content": "Thanks for submitting your request! While we process your quote, can I help with some immediate advice?",
+        "timestamp": "2025-09-10T11:40:15.068Z"
+      },
+      {
+        "id": "1757504415291",
+        "type": "bot",
+        "content": "Hi Nana Yaw Sasu Appiah-Miracle! 👋\n\nI see you're planning a renovation/remodel project (Small (<1,000 sq ft)). Did you know that kitchen remodels typically increase home value by 60-80%?\n\nOur team is working on your quote and will get back to you within 30 minutes.\n\nI can see you're interested in: Kitchen Remodeling. I'm here to help with planning advice, permit information, timeline estimates, and general guidance. What would you like to know more about?",
+        "timestamp": "2025-09-10T11:40:15.291Z"
+      },
+      {
+        "id": "1757504423539",
+        "type": "user",
+        "content": "yes",
+        "timestamp": "2025-09-10T11:40:23.539Z"
+      },
+      {
+        "id": "1757504424871",
+        "type": "bot",
+        "content": "Great! I'd be happy to help you with your renovation/remodel. For kitchen remodeling, I can help with:\n\n• **Planning & Design**: Layout optimization, material selection, color schemes\n• **Timeline**: Project phases, permit requirements, scheduling\n• **Budget**: Cost breakdown, value engineering, financing options\n• **Permits**: Denver building codes, inspection process\n• **Materials**: Countertops, cabinets, flooring, appliances\n\nWhat specific aspect would you like to discuss?",
+        "timestamp": "2025-09-10T11:40:24.871Z"
+      },
+      {
+        "id": "1757504433992",
+        "type": "user",
+        "content": "planning",
+        "timestamp": "2025-09-10T11:40:33.992Z"
+      },
+      {
+        "id": "1757504435346",
+        "type": "bot",
+        "content": "🏠 Renovation Planning Tips:\n1. Set a realistic budget (add 20% buffer)\n2. Research local permits and regulations\n3. Plan for temporary living arrangements if needed\n4. Choose materials that match your climate\n5. Consider energy efficiency upgrades",
+        "timestamp": "2025-09-10T11:40:35.346Z"
+      }
+    ],
+    "status": "completed",
+    "tags": [
+      "renovation",
+      "maintenance",
+      "permits",
+      "budget",
+      "timeline"
+    ],
+    "escalationReason": "User requested call",
+    "id": "chat_1757504447390_etlwpg6gd"
   }
 ]

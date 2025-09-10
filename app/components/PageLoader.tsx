@@ -36,7 +36,9 @@ export function PageLoader({ children }: PageLoaderProps) {
     // Wait for the main content to actually render before hiding loading screen
     const checkForContent = () => {
       const mainContent = document.querySelector('[data-main-content]');
-      if (mainContent) {
+      const adminContent = document.querySelector('.min-h-screen'); // Admin pages have this class
+      
+      if (mainContent || adminContent) {
         // Content is rendered, hide loading screen
         setTimeout(() => {
           setIsLoading(false);
@@ -67,7 +69,14 @@ export function PageLoader({ children }: PageLoaderProps) {
           companyName={companyData.companyName}
         />
       )}
-      <div className={isLoading ? "opacity-0" : "opacity-100 transition-opacity duration-500"}>
+      <div 
+        className="relative"
+        style={{ 
+          opacity: isLoading ? 0 : 1, 
+          transition: 'opacity 0.5s ease-in-out',
+          pointerEvents: isLoading ? 'none' : 'auto'
+        }}
+      >
         {children}
       </div>
     </>

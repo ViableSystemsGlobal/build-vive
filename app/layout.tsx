@@ -1,10 +1,9 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
 import { QuoteProvider } from "./components/QuoteProvider";
-import FloatingChat from "./components/FloatingChat";
 import DynamicFavicon from "./components/DynamicFavicon";
 import { PageLoader } from "./components/PageLoader";
+import ConditionalNavbar from "./components/ConditionalNavbar";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -116,9 +115,9 @@ export default function RootLayout({
       >
         <QuoteProvider>
           <PageLoader>
-            <Navbar />
-            <main>{children}</main>
-            <FloatingChat />
+            <ConditionalNavbar>
+              <main>{children}</main>
+            </ConditionalNavbar>
           </PageLoader>
         </QuoteProvider>
       </body>

@@ -34,37 +34,89 @@ export default function ImageUploader({ currentImage, onImageChange, label = "Im
       const formData = new FormData();
       formData.append('file', file);
 
-      // Try S3 first, then Vercel Blob, then cloud upload, then regular upload
-      let response = await fetch('/api/upload-s3', {
-        method: 'POST',
-        body: formData,
-      });
-
-      // If S3 fails, try Vercel Blob
-      if (!response.ok) {
-        response = await fetch('/api/upload-vercel-blob', {
+      // Try upload methods in order: S3 -> Vercel Blob -> Cloud -> Regular
+      let response;
+      let lastError = '';
+      
+      // Try S3 first
+      try {
+        response = await fetch('/api/upload-s3', {
           method: 'POST',
           body: formData,
         });
+        if (response.ok) {
+          console.log('Upload successful via S3');
+        } else {
+          const error = await response.json();
+          lastError = error.error || 'S3 upload failed';
+          console.log('S3 upload failed, trying Vercel Blob...');
+        }
+      } catch (error) {
+        lastError = 'S3 upload error';
+        console.log('S3 upload error, trying Vercel Blob...');
+      }
+
+      // If S3 fails, try Vercel Blob
+      if (!response || !response.ok) {
+        try {
+          response = await fetch('/api/upload-vercel-blob', {
+            method: 'POST',
+            body: formData,
+          });
+          if (response.ok) {
+            console.log('Upload successful via Vercel Blob');
+          } else {
+            const error = await response.json();
+            lastError = error.error || 'Vercel Blob upload failed';
+            console.log('Vercel Blob upload failed, trying Cloud upload...');
+          }
+        } catch (error) {
+          lastError = 'Vercel Blob upload error';
+          console.log('Vercel Blob upload error, trying Cloud upload...');
+        }
       }
 
       // If Vercel Blob fails, try cloud upload
-      if (!response.ok) {
-        response = await fetch('/api/upload-cloud', {
-          method: 'POST',
-          body: formData,
-        });
+      if (!response || !response.ok) {
+        try {
+          response = await fetch('/api/upload-cloud', {
+            method: 'POST',
+            body: formData,
+          });
+          if (response.ok) {
+            console.log('Upload successful via Cloud upload');
+          } else {
+            const error = await response.json();
+            lastError = error.error || 'Cloud upload failed';
+            console.log('Cloud upload failed, trying Regular upload...');
+          }
+        } catch (error) {
+          lastError = 'Cloud upload error';
+          console.log('Cloud upload error, trying Regular upload...');
+        }
       }
 
       // If cloud upload fails, try regular upload
-      if (!response.ok) {
-        response = await fetch('/api/upload', {
-          method: 'POST',
-          body: formData,
-        });
+      if (!response || !response.ok) {
+        try {
+          response = await fetch('/api/upload', {
+            method: 'POST',
+            body: formData,
+          });
+          if (response.ok) {
+            console.log('Upload successful via Regular upload');
+          } else {
+            const error = await response.json();
+            lastError = error.error || 'Regular upload failed';
+            console.log('All upload methods failed');
+          }
+        } catch (error) {
+          lastError = 'Regular upload error';
+          console.log('All upload methods failed');
+        }
       }
 
-      if (response.ok) {
+      if (response && response.ok) {
         const result = await response.json();
         console.log('Upload successful:', result);
         console.log('Updating ImageUploader with uniqueKey:', uniqueKey);
@@ -73,9 +125,13 @@ export default function ImageUploader({ currentImage, onImageChange, label = "Im
         setImageKey(prev => prev + 1); // Force re-render
         console.log('Image URL updated to:', result.url);
       } else {
-        const error = await response.json();
-        console.error('Upload failed:', error);
-        alert(`Upload failed: ${error.error}`);
+        if (response) {
+          const error = await response.json();
+          console.error('Upload failed:', error);
+          alert(`Upload failed: ${lastError || error.error || 'All upload methods failed. Please try a smaller image or check your connection.'}`);
+        } else {
+          alert(`Upload failed: ${lastError || 'All upload methods failed. Please try a smaller image or check your connection.'}`);
+        }
       }
     } catch (error) {
       alert('Upload failed. Please try again.');
@@ -188,7 +244,7 @@ export default function ImageUploader({ currentImage, onImageChange, label = "Im
               <div className="text-sm text-gray-600">
                 <span className="font-medium text-blue-600">Click to upload</span> or drag and drop
               </div>
-              <div className="text-xs text-gray-500">JPG, PNG, GIF, WebP up to 10MB (HEIC not supported)</div>
+              <div className="text-xs text-gray-500">JPG, PNG, GIF, WebP up to 5MB (HEIC not supported)</div>
             </div>
           )}
         </label>

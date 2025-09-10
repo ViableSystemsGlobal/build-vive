@@ -1,16 +1,72 @@
 "use client";
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [recaptchaConfig, setRecaptchaConfig] = useState({ enabled: false, siteKey: '' });
+  const [recaptchaToken, setRecaptchaToken] = useState('');
+  const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
+
+  // Load reCAPTCHA configuration
+  useEffect(() => {
+    const loadRecaptchaConfig = async () => {
+      try {
+        const response = await fetch('/api/admin/homepage');
+        if (response.ok) {
+          const config = await response.json();
+          setRecaptchaConfig({
+            enabled: config.recaptchaEnabled || false,
+            siteKey: config.recaptchaSiteKey || ''
+          });
+        }
+      } catch (error) {
+        console.error('Failed to load reCAPTCHA config:', error);
+      }
+    };
+
+    loadRecaptchaConfig();
+  }, []);
+
+  // Load reCAPTCHA script
+  useEffect(() => {
+    if (recaptchaConfig.enabled && recaptchaConfig.siteKey && !recaptchaLoaded) {
+      const script = document.createElement('script');
+      script.src = 'https://www.google.com/recaptcha/api.js';
+      script.async = true;
+      script.defer = true;
+      script.onload = () => setRecaptchaLoaded(true);
+      document.head.appendChild(script);
+    }
+  }, [recaptchaConfig, recaptchaLoaded]);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
     setLoading(true);
+
+    // Verify reCAPTCHA if enabled
+    if (recaptchaConfig.enabled) {
+      if (!recaptchaToken) {
+        setError('Please complete the reCAPTCHA verification');
+        setLoading(false);
+        return;
+      }
+
+      const recaptchaResponse = await fetch('/api/verify-recaptcha', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: recaptchaToken })
+      });
+
+      if (!recaptchaResponse.ok) {
+        setError('reCAPTCHA verification failed. Please try again.');
+        setLoading(false);
+        return;
+      }
+    }
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
@@ -77,7 +133,7 @@ export default function LoginPage() {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
                 placeholder="Email address"
-                defaultValue="admin@aceconstruction.local"
+                defaultValue="admin@buildvive.local"
               />
             </div>
             <div>
@@ -97,10 +153,22 @@ export default function LoginPage() {
             </div>
           </div>
 
+          {/* reCAPTCHA */}
+          {recaptchaConfig.enabled && recaptchaConfig.siteKey && (
+            <div className="flex justify-center">
+              <div 
+                className="g-recaptcha" 
+                data-sitekey={recaptchaConfig.siteKey}
+                data-callback={(token: string) => setRecaptchaToken(token)}
+                data-expired-callback={() => setRecaptchaToken('')}
+              ></div>
+            </div>
+          )}
+
           <div>
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || (recaptchaConfig.enabled && !recaptchaToken)}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50"
             >
               {loading ? (

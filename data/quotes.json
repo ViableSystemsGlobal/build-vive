@@ -136,5 +136,272 @@
     "email": "ysasu38@gmail.com",
     "phone": "7207107525",
     "comments": "I have a broken pipe"
+  },
+  {
+    "id": "1757497000011",
+    "timestamp": "2025-09-10T09:36:40.011Z",
+    "urgency": "Emergency - Need immediate attention",
+    "projectType": "Renovation/Remodel",
+    "services": [
+      "Plumbing",
+      "Foundation & Structural"
+    ],
+    "address": "8350 E Yale Ave",
+    "city": "Denver",
+    "state": "CO",
+    "zipCode": "80014",
+    "size": "Small (<1,000 sq ft)",
+    "timeline": "Immediately",
+    "budget": "<$50,000",
+    "images": [
+      "ben-allan-BIeC4YK2MTA-unsplash.jpg"
+    ],
+    "name": "Nana Yaw Sasu Appiah-Miracle",
+    "email": "ysasu38@gmail.com",
+    "phone": "7207107525",
+    "comments": "I need a new pipe installed."
+  },
+  {
+    "id": "1757498028154",
+    "timestamp": "2025-09-10T09:53:48.154Z",
+    "urgency": "Emergency - Need immediate attention",
+    "projectType": "Renovation/Remodel",
+    "services": [
+      "Painting",
+      "Plumbing"
+    ],
+    "address": "8400 E Yale Ave Apt 2 - 305",
+    "city": "Denver",
+    "state": "CO",
+    "zipCode": "80014",
+    "size": "Small (<1,000 sq ft)",
+    "timeline": "Immediately",
+    "budget": "<$50,000",
+    "images": [
+      "ben-allan-BIeC4YK2MTA-unsplash.jpg"
+    ],
+    "name": "Nana Yaw Appiah-Miracle",
+    "email": "ysasu38@gmail.com",
+    "phone": "7207107525`",
+    "comments": "I need new pipes for the house"
+  },
+  {
+    "id": "1757498139446",
+    "timestamp": "2025-09-10T09:55:39.447Z",
+    "urgency": "Emergency - Need immediate attention",
+    "projectType": "Renovation/Remodel",
+    "services": [
+      "Kitchen Remodeling"
+    ],
+    "address": "8400 East Yale Avenue 2 - 305 2 - 305",
+    "city": "Denver",
+    "state": "CO",
+    "zipCode": "80231",
+    "size": "Small (<1,000 sq ft)",
+    "timeline": "Immediately",
+    "budget": "<$50,000",
+    "images": [
+      "ben-allan-BIeC4YK2MTA-unsplash.jpg"
+    ],
+    "name": "Nana Yaw Appiah-Miracle",
+    "email": "ysasu38@gmail.com",
+    "phone": "7207107525",
+    "comments": "I need a new pipe installation\r\n"
+  },
+  {
+    "id": "1757499392353",
+    "timestamp": "2025-09-10T10:16:32.353Z",
+    "urgency": "Non-emergency - Can wait for scheduled work",
+    "projectType": "Renovation/Remodel",
+    "services": [
+      "Kitchen Remodeling"
+    ],
+    "address": "8400 E Yale Ave Apt 2 - 305",
+    "city": "Denver",
+    "state": "Colorado",
+    "zipCode": "80231",
+    "size": "Small (<1,000 sq ft)",
+    "timeline": "Immediately",
+    "budget": "<$50,000",
+    "images": [
+      "ben-allan-BIeC4YK2MTA-unsplash.jpg"
+    ],
+    "name": "Nana Yaw Sasu Appiah-Miracle",
+    "email": "ysasu38@gmail.com",
+    "phone": "0570150105",
+    "comments": "I need a new kitchen"
+  },
+  {
+    "id": "1757500794536",
+    "timestamp": "2025-09-10T10:39:54.536Z",
+    "urgency": "Non-emergency - Can wait for scheduled work",
+    "projectType": "Renovation/Remodel",
+    "services": [
+      "Kitchen Remodeling"
+    ],
+    "address": "8400 East Yale Avenue 2 - 305 2 - 305",
+    "city": "Denver",
+    "state": "CO",
+    "zipCode": "80231",
+    "size": "Small (<1,000 sq ft)",
+    "timeline": "Immediately",
+    "budget": "<$50,000",
+    "images": [
+      "becca-tapert-tam80nXFvL4-unsplash.jpg"
+    ],
+    "name": "Nana Yaw Sasu Appiah-Miracle",
+    "email": "ysasu38@gmail.com",
+    "phone": "7207107525",
+    "comments": "I need a new kitchen"
+  },
+  {
+    "id": "1757502290130",
+    "timestamp": "2025-09-10T11:04:50.130Z",
+    "urgency": "Non-emergency - Can wait for scheduled work",
+    "projectType": "New Construction",
+    "services": [
+      "Other",
+      "Foundation & Structural",
+      "Windows & Doors",
+      "Plumbing",
+      "Painting",
+      "Bathroom Remodeling",
+      "Flooring",
+      "Electrical Work",
+      "HVAC",
+      "Roofing",
+      "Exterior Work"
+    ],
+    "address": "8400 E Yale Ave Apt 2 - 305",
+    "city": "Denver",
+    "state": "Colorado",
+    "zipCode": "80231",
+    "size": "Small (<1,000 sq ft)",
+    "timeline": "Immediately",
+    "budget": "<$50,000",
+    "images": [
+      "becca-tapert-tam80nXFvL4-unsplash.jpg"
+    ],
+    "name": "Nana Yaw Sasu Appiah-Miracle",
+    "email": "ysasu38@gmail.com",
+    "phone": "7207107525",
+    "comments": "I need a new home built"
+  },
+  {
+    "id": "1757503142123",
+    "timestamp": "2025-09-10T11:19:02.123Z",
+    "urgency": "Non-emergency - Can wait for scheduled work",
+    "projectType": "Renovation/Remodel",
+    "services": [
+      "Plumbing"
+    ],
+    "address": "8400 East Yale Avenue 2 - 305 2 - 305",
+    "city": "Denver",
+    "state": "CO",
+    "zipCode": "80231",
+    "size": "Small (<1,000 sq ft)",
+    "timeline": "Immediately",
+    "budget": "<$50,000",
+    "images": [
+      "ben-allan-BIeC4YK2MTA-unsplash.jpg"
+    ],
+    "name": "Nana Yaw Sasu Appiah-Miracle",
+    "email": "ysasu38@gmail.com",
+    "phone": "7207107525",
+    "comments": "I need a new kitchen"
+  },
+  {
+    "id": "1757503540722",
+    "timestamp": "2025-09-10T11:25:40.722Z",
+    "urgency": "Non-emergency - Can wait for scheduled work",
+    "projectType": "Addition",
+    "services": [
+      "Flooring"
+    ],
+    "address": "8400 East Yale Avenue 2 - 305 2 - 305",
+    "city": "Denver",
+    "state": "CO",
+    "zipCode": "80231",
+    "size": "Small (<1,000 sq ft)",
+    "timeline": "Immediately",
+    "budget": "<$50,000",
+    "images": [
+      "ben-allan-BIeC4YK2MTA-unsplash.jpg"
+    ],
+    "name": "Nana Yaw Sasu Appiah-Miracle",
+    "email": "ysasu38@gmail.com",
+    "phone": "7207107525",
+    "comments": "New Floors"
+  },
+  {
+    "id": "1757503809177",
+    "timestamp": "2025-09-10T11:30:09.177Z",
+    "urgency": "Non-emergency - Can wait for scheduled work",
+    "projectType": "Renovation/Remodel",
+    "services": [
+      "Kitchen Remodeling"
+    ],
+    "address": "8400 E Yale Ave Apt 2 - 305",
+    "city": "Denver",
+    "state": "CO",
+    "zipCode": "80231",
+    "size": "Small (<1,000 sq ft)",
+    "timeline": "Immediately",
+    "budget": "<$50,000",
+    "images": [
+      "ben-allan-BIeC4YK2MTA-unsplash.jpg"
+    ],
+    "name": "Nana Yaw Sasu Appiah-Miracle",
+    "email": "ysasu38@gmail.com",
+    "phone": "7207107525",
+    "comments": "I need a new kitchen"
+  },
+  {
+    "id": "1757504381946",
+    "timestamp": "2025-09-10T11:39:41.946Z",
+    "urgency": "Non-emergency - Can wait for scheduled work",
+    "projectType": "Renovation/Remodel",
+    "services": [
+      "Kitchen Remodeling"
+    ],
+    "address": "8400 East Yale Avenue 2 - 305 2 - 305",
+    "city": "Denver",
+    "state": "CO",
+    "zipCode": "80231",
+    "size": "Small (<1,000 sq ft)",
+    "timeline": "Immediately",
+    "budget": "<$50,000",
+    "images": [
+      "ben-allan-BIeC4YK2MTA-unsplash.jpg"
+    ],
+    "name": "Nana Yaw Sasu Appiah-Miracle",
+    "email": "ysasu38@gmail.com",
+    "phone": "7207107525",
+    "comments": "New Kitchen"
+  },
+  {
+    "id": "1757505183838",
+    "timestamp": "2025-09-10T11:53:03.838Z",
+    "urgency": "Emergency - Need immediate attention",
+    "projectType": "Addition",
+    "services": [
+      "Flooring"
+    ],
+    "address": "8400 East Yale Avenue 2 - 305 2 - 305",
+    "city": "Denver",
+    "state": "CO",
+    "zipCode": "80231",
+    "size": "Small (<1,000 sq ft)",
+    "timeline": "Immediately",
+    "budget": "<$50,000",
+    "images": [
+      "ben-allan-BIeC4YK2MTA-unsplash.jpg"
+    ],
+    "name": "Nana Yaw Sasu Appiah-Miracle",
+    "email": "ysasu38@gmail.com",
+    "phone": "+233570150105",
+    "comments": "New Kitchen",
+    "status": "approved",
+    "updatedAt": "2025-09-10T12:14:14.071Z"
   }
 ]

@@ -12,7 +12,7 @@ export interface User {
 // Default admin user
 const DEFAULT_ADMIN: User = {
   id: '1',
-  email: 'admin@aceconstruction.local',
+  email: 'admin@buildvive.local',
   name: 'Admin User',
   role: 'admin',
   permissions: ['read', 'write', 'delete', 'admin']

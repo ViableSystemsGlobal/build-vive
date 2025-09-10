@@ -45,6 +45,51 @@ export async function POST(request: Request) {
     
     console.log("Parsed quote data:", body);
 
+    // Generate unique quote ID
+    const quoteId = Date.now().toString();
+    const newQuote = {
+      id: quoteId,
+      timestamp: new Date().toISOString(),
+      ...body
+    };
+
+    // Save quote data first (fast operation)
+    try {
+      // Try to save to database first
+      if (database.isConfigured()) {
+        await database.query(
+          'INSERT INTO quotes (data) VALUES ($1)',
+          [JSON.stringify(newQuote)]
+        );
+        console.log("Quote data saved to database successfully");
+      } else {
+        // Fallback to local file system
+        const dataDir = join(process.cwd(), 'data');
+        const quotesFile = join(dataDir, 'quotes.json');
+        
+        // Ensure data directory exists
+        await mkdir(dataDir, { recursive: true });
+        
+        // Read existing quotes or create new array
+        let quotes = [];
+        try {
+          const existingData = await readFile(quotesFile, 'utf-8');
+          quotes = JSON.parse(existingData);
+  } catch {
+          // File doesn't exist or is invalid, start with empty array
+        }
+        
+        quotes.push(newQuote);
+        
+        // Write back to file
+        await writeFile(quotesFile, JSON.stringify(quotes, null, 2));
+        console.log("Quote data saved to file system successfully");
+      }
+    } catch (saveError) {
+      console.error("Failed to save quote data:", saveError);
+      // Continue execution even if save fails
+    }
+
     // Send emails using SMTP configuration
     try {
       // Load admin configuration
@@ -61,6 +106,8 @@ export async function POST(request: Request) {
       }
 
       if (adminConfig && adminConfig.smtpHost && adminConfig.smtpUsername && adminConfig.smtpPassword) {
+        console.log("📧 SMTP configuration found, creating transporter...");
+        
         // Create transporter
         const transporter = nodemailer.createTransport({
           host: adminConfig.smtpHost,
@@ -73,10 +120,13 @@ export async function POST(request: Request) {
         });
 
         const fromEmail = adminConfig.fromEmail || adminConfig.smtpUsername;
-        const companyName = adminConfig.companyName || 'Ace Construction';
+        const companyName = adminConfig.companyName || 'BuildVive Renovations';
+        
+        console.log("📧 Transporter created, preparing to send emails...");
 
         // Send customer confirmation email
         if (body.email) {
+          console.log(`📧 Sending customer confirmation email to: ${body.email}`);
           await transporter.sendMail({
             from: fromEmail,
             to: body.email,
@@ -113,7 +163,9 @@ export async function POST(request: Request) {
               </div>
             `,
           });
-          console.log("Customer confirmation email sent successfully");
+          console.log("✅ Customer confirmation email sent successfully");
+        } else {
+          console.log("⚠️ No customer email provided, skipping customer confirmation email");
         }
 
         // Send admin notification email
@@ -121,6 +173,7 @@ export async function POST(request: Request) {
           const adminEmails = adminConfig.adminEmails.split(',').map((email: string) => email.trim()).filter((email: string) => email);
           
           if (adminEmails.length > 0) {
+            console.log(`📧 Sending admin notification email to: ${adminEmails.join(', ')}`);
             await transporter.sendMail({
               from: fromEmail,
               to: adminEmails.join(', '),
@@ -154,14 +207,16 @@ export async function POST(request: Request) {
                   </div>
                   
                   <p style="color: #666; font-size: 14px;">
-                    Quote ID: ${Date.now().toString()}<br>
+                    Quote ID: ${quoteId}<br>
                     Submitted: ${new Date().toLocaleString()}
                   </p>
                 </div>
               `,
             });
-            console.log("Admin notification email sent successfully");
+            console.log("✅ Admin notification email sent successfully");
           }
+        } else {
+          console.log("⚠️ No admin emails configured, skipping admin notification email");
         }
       } else {
         console.log("SMTP configuration not complete - skipping email send");
@@ -171,53 +226,10 @@ export async function POST(request: Request) {
       // Continue execution even if email fails
     }
 
-    // Save quote data to database or local file
-    try {
-      const newQuote = {
-        id: Date.now().toString(),
-        timestamp: new Date().toISOString(),
-        ...body
-      };
-
-      // Try to save to database first
-      if (database.isConfigured()) {
-        await database.query(
-          'INSERT INTO quotes (data) VALUES ($1)',
-          [JSON.stringify(newQuote)]
-        );
-        console.log("Quote data saved to database successfully");
-      } else {
-        // Fallback to local file system
-        const dataDir = join(process.cwd(), 'data');
-        const quotesFile = join(dataDir, 'quotes.json');
-        
-        // Ensure data directory exists
-        await mkdir(dataDir, { recursive: true });
-        
-        // Read existing quotes or create new array
-        let quotes = [];
-        try {
-          const existingData = await readFile(quotesFile, 'utf-8');
-          quotes = JSON.parse(existingData);
-        } catch {
-          // File doesn't exist or is invalid, start with empty array
-        }
-        
-        quotes.push(newQuote);
-        
-        // Write back to file
-        await writeFile(quotesFile, JSON.stringify(quotes, null, 2));
-        console.log("Quote data saved to file system successfully");
-      }
-    } catch (saveError) {
-      console.error("Failed to save quote data:", saveError);
-      // Continue execution even if save fails
-    }
-
     return NextResponse.json({ 
       ok: true, 
       message: "Quote request submitted successfully! We'll contact you within 30 minutes.",
-      quoteId: Date.now().toString()
+      quoteId: quoteId
     }, { status: 200 });
     
   } catch (error) {
@@ -228,4 +240,3 @@ export async function POST(request: Request) {
     }, { status: 500 });
   }
 }
-

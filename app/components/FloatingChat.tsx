@@ -203,12 +203,41 @@ export default function FloatingChat() {
 
   const handleEscalation = async () => {
     try {
+      // Get user info from quote context if available
+      const userInfo = {
+        userPhone: '', // We'll need to collect this
+        userName: '',
+        userEmail: ''
+      };
+
+      // Try to get user info from quote context
+      if (currentQuoteId) {
+        try {
+          const quoteResponse = await fetch(`/api/admin/quotes`);
+          if (quoteResponse.ok) {
+            const quotesData = await quoteResponse.json();
+            const currentQuote = quotesData.quotes?.find((q: any) => q.id === currentQuoteId);
+            if (currentQuote) {
+              userInfo.userPhone = currentQuote.phone || '';
+              userInfo.userName = currentQuote.name || '';
+              userInfo.userEmail = currentQuote.email || '';
+            }
+          }
+        } catch (error) {
+          console.log('Could not load quote context for escalation');
+        }
+      }
+
       const response = await fetch('/api/escalate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           reason: 'Chatbot escalation',
-          userMessage: messages[messages.length - 1]?.content || ''
+          userMessage: messages[messages.length - 1]?.content || '',
+          userPhone: userInfo.userPhone,
+          userName: userInfo.userName,
+          userEmail: userInfo.userEmail,
+          quoteId: currentQuoteId
         })
       });
 

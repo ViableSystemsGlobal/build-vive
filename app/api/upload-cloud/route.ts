@@ -9,13 +9,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    // For now, we'll use a simple base64 approach that works on Vercel
-    // In production, you might want to use services like:
-    // - Cloudinary
-    // - AWS S3
-    // - Vercel Blob Storage
-    // - Uploadcare
+    // Check file size (5MB limit for base64)
+    if (file.size > 5 * 1024 * 1024) {
+      return NextResponse.json({ 
+        error: "File too large for base64 storage. Maximum size is 5MB.",
+        size: file.size,
+        maxSize: 5 * 1024 * 1024
+      }, { status: 413 });
+    }
     
+    // Use base64 approach that works on Vercel
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     const base64 = buffer.toString('base64');

@@ -11,11 +11,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    // Check if we're in Vercel production environment
+    // Check if we're in Vercel production environment or if file system is not available
     const isVercel = process.env.VERCEL === "1";
+    const isProduction = process.env.NODE_ENV === "production";
     
-    if (isVercel) {
-      // For Vercel, convert to base64 data URL
+    if (isVercel || isProduction) {
+      // For Vercel/production, convert to base64 data URL
+      // Check file size (5MB limit for base64)
+      if (file.size > 5 * 1024 * 1024) {
+        return NextResponse.json({ 
+          error: "File too large for base64 storage. Maximum size is 5MB.",
+          size: file.size,
+          maxSize: 5 * 1024 * 1024
+        }, { status: 413 });
+      }
+      
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
       const base64 = buffer.toString('base64');

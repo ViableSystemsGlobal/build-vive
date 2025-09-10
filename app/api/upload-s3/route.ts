@@ -4,9 +4,10 @@ import { s3 } from '../../lib/s3';
 export async function POST(request: NextRequest) {
   try {
     if (!s3.isConfigured()) {
+      // Instead of failing, return a 400 status so the client can try the next upload method
       return NextResponse.json(
-        { error: 'S3 not configured. Please set AWS credentials and S3_BUCKET_NAME.' },
-        { status: 500 }
+        { error: 'S3 not configured. Trying next upload method...' },
+        { status: 400 }
       );
     }
 
