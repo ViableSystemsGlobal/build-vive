@@ -8,6 +8,7 @@ import { useAdminContext } from "../layout";
 
 export default function AdminDashboard() {
   const { activeTab, setActiveTab } = useAdminContext();
+  
   const [data, setData] = useState({
     // All the data from homepage editor
     companyName: "BuildVive Renovations",
@@ -67,16 +68,30 @@ export default function AdminDashboard() {
   const [testEmailResult, setTestEmailResult] = useState(null);
   const [quotesPage, setQuotesPage] = useState(1);
   const [quotesPerPage] = useState(10);
+  const [chatHistoryPage, setChatHistoryPage] = useState(1);
+  const [chatHistoryPerPage] = useState(10);
   const [quotationFile, setQuotationFile] = useState<File | null>(null);
   const [isUploadingQuotation, setIsUploadingQuotation] = useState(false);
+  const [isLoadingChatHistory, setIsLoadingChatHistory] = useState(false);
+  const [isLoadingKnowledgeBase, setIsLoadingKnowledgeBase] = useState(false);
 
   // Load data on component mount
   useEffect(() => {
     loadData();
     loadQuotes();
-    loadChatHistory();
-    loadKnowledgeBase();
   }, []);
+
+  // Load data when specific tabs are accessed
+  useEffect(() => {
+    if (activeTab === "knowledge-base") {
+      loadKnowledgeBase();
+    } else if (activeTab === "chat-history") {
+      loadChatHistory();
+      setChatHistoryPage(1); // Reset to first page when switching to chat history
+    } else if (activeTab === "quotes") {
+      setQuotesPage(1); // Reset to first page when switching to quotes
+    }
+  }, [activeTab]);
 
   const loadData = async () => {
     try {
@@ -145,32 +160,101 @@ export default function AdminDashboard() {
   };
 
   const loadChatHistory = async () => {
+    if (isLoadingChatHistory) return; // Prevent multiple simultaneous requests
+    
+    setIsLoadingChatHistory(true);
     try {
       const response = await fetch("/api/admin/chat-history");
       if (response.ok) {
         const chatData = await response.json();
+        const chatHistory = chatData.chatHistory || [];
+        
+        // Add sample data if no chat history exists (for testing)
+        if (chatHistory.length === 0) {
+          const sampleChat = {
+            id: "sample_chat_1",
+            sessionId: "session_123",
+            userId: "user_456",
+            userPhone: "+1234567890",
+            userName: "John Doe",
+            messages: [
+              {
+                id: "msg_1",
+                type: "user",
+                content: "Hello, I need help with my construction project",
+                timestamp: new Date().toISOString()
+              },
+              {
+                id: "msg_2", 
+                type: "bot",
+                content: "Hi John! I'd be happy to help you with your construction project. What type of project are you working on?",
+                timestamp: new Date().toISOString()
+              },
+              {
+                id: "msg_3",
+                type: "user", 
+                content: "I need to renovate my kitchen",
+                timestamp: new Date().toISOString()
+              }
+            ],
+            startTime: new Date().toISOString(),
+            endTime: new Date().toISOString(),
+            status: "completed",
+            escalationReason: null,
+            tags: ["kitchen", "renovation"]
+          };
+          chatHistory.push(sampleChat);
+        }
+        
         setData(prevData => ({
           ...prevData,
-          chatHistory: chatData || []
+          chatHistory: chatHistory
+        }));
+      } else {
+        console.error("Failed to load chat history:", response.status);
+        setData(prevData => ({
+          ...prevData,
+          chatHistory: []
         }));
       }
     } catch (error) {
       console.error("Error loading chat history:", error);
+      setData(prevData => ({
+        ...prevData,
+        chatHistory: []
+      }));
+    } finally {
+      setIsLoadingChatHistory(false);
     }
   };
 
   const loadKnowledgeBase = async () => {
+    if (isLoadingKnowledgeBase) return; // Prevent multiple simultaneous requests
+    
+    setIsLoadingKnowledgeBase(true);
     try {
       const response = await fetch("/api/admin/knowledge-base");
       if (response.ok) {
         const kbData = await response.json();
         setData(prevData => ({
           ...prevData,
-          knowledgeBase: kbData || []
+          knowledgeBase: kbData.documents || []
+        }));
+      } else {
+        console.error("Failed to load knowledge base:", response.status);
+        setData(prevData => ({
+          ...prevData,
+          knowledgeBase: []
         }));
       }
     } catch (error) {
       console.error("Error loading knowledge base:", error);
+      setData(prevData => ({
+        ...prevData,
+        knowledgeBase: []
+      }));
+    } finally {
+      setIsLoadingKnowledgeBase(false);
     }
   };
 
@@ -331,6 +415,7 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
+
 
       {/* Content will be rendered based on activeTab */}
       <div className="bg-white rounded-lg shadow p-6">
@@ -1791,6 +1876,9 @@ export default function AdminDashboard() {
               <div>
                 <h3 className="text-xl font-semibold">Knowledge Base</h3>
                 <p className="text-sm text-gray-600 mt-2">Manage documents and FAQ content for your chatbot</p>
+                {isLoadingKnowledgeBase && (
+                  <p className="text-sm text-blue-600 mt-1">Loading knowledge base...</p>
+                )}
               </div>
               <button
                 onClick={() => setActiveTab("knowledge-base-add")}
@@ -1932,6 +2020,9 @@ export default function AdminDashboard() {
             <div>
               <h3 className="text-xl font-semibold">Chat History</h3>
               <p className="text-sm text-gray-600 mt-2">View and analyze customer chat interactions</p>
+              {isLoadingChatHistory && (
+                <p className="text-sm text-blue-600 mt-1">Loading chat history...</p>
+              )}
             </div>
 
             {/* Chat History Statistics */}
@@ -1962,9 +2053,23 @@ export default function AdminDashboard() {
 
             {/* Chat History List */}
             <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h4 className="text-lg font-medium mb-4">Recent Chat Sessions</h4>
+              <div className="flex justify-between items-center mb-4">
+                <h4 className="text-lg font-medium">Recent Chat Sessions</h4>
+                <div className="text-sm text-gray-600">
+                  Showing {((chatHistoryPage - 1) * chatHistoryPerPage) + 1} to {Math.min(chatHistoryPage * chatHistoryPerPage, data.chatHistory?.length || 0)} of {data.chatHistory?.length || 0} sessions
+                </div>
+              </div>
+              {/* Debug info */}
+              {process.env.NODE_ENV === 'development' && (
+                <div className="mb-4 p-2 bg-gray-100 rounded text-xs">
+                  <strong>Debug:</strong> {data.chatHistory?.length || 0} chat sessions loaded
+                  {data.chatHistory?.length > 0 && (
+                    <div>First chat ID: {data.chatHistory[0]?.id}</div>
+                  )}
+                </div>
+              )}
               <div className="space-y-4">
-                {data.chatHistory?.map((chat, index) => (
+                {data.chatHistory?.slice((chatHistoryPage - 1) * chatHistoryPerPage, chatHistoryPage * chatHistoryPerPage).map((chat, index) => (
                   <div key={chat.id} className="border border-gray-200 p-4 rounded-lg">
                     <div className="flex justify-between items-start mb-3">
                       <div>
@@ -2020,26 +2125,81 @@ export default function AdminDashboard() {
                   </div>
                 )}
               </div>
+              
+              {/* Pagination Controls */}
+              {data.chatHistory && data.chatHistory.length > chatHistoryPerPage && (
+                <div className="mt-6 flex items-center justify-between">
+                  <div className="text-sm text-gray-700">
+                    Page {chatHistoryPage} of {Math.ceil(data.chatHistory.length / chatHistoryPerPage)}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setChatHistoryPage(Math.max(1, chatHistoryPage - 1))}
+                      disabled={chatHistoryPage === 1}
+                      className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Previous
+                    </button>
+                    <div className="flex items-center gap-1">
+                      {Array.from({ length: Math.ceil(data.chatHistory.length / chatHistoryPerPage) }, (_, i) => i + 1).map((page) => (
+                        <button
+                          key={page}
+                          onClick={() => setChatHistoryPage(page)}
+                          className={`px-3 py-2 text-sm font-medium rounded-md ${
+                            page === chatHistoryPage
+                              ? 'bg-blue-600 text-white'
+                              : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      ))}
+                    </div>
+                    <button
+                      onClick={() => setChatHistoryPage(Math.min(Math.ceil(data.chatHistory.length / chatHistoryPerPage), chatHistoryPage + 1))}
+                      disabled={chatHistoryPage === Math.ceil(data.chatHistory.length / chatHistoryPerPage)}
+                      className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Chat Detail View */}
-            {activeTab.startsWith("chat-detail-") && (
-              <div className="bg-white border border-gray-200 rounded-lg p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <h4 className="text-lg font-medium">Chat Session Details</h4>
-                  <button
-                    onClick={() => setActiveTab("chat-history")}
-                    className="text-gray-600 hover:text-gray-800"
-                  >
-                    ← Back to List
-                  </button>
-                </div>
-                {(() => {
-                  const chatId = activeTab.replace("chat-detail-", "");
-                  const chat = data.chatHistory?.find(c => c.id === chatId);
-                  if (!chat) return <div>Chat not found</div>;
+            {activeTab.startsWith("chat-detail-") && (() => {
+              const chatId = activeTab.replace("chat-detail-", "");
+              const chat = data.chatHistory?.find(c => c.id === chatId);
+              
+              // Debug logging (only in development)
+              if (process.env.NODE_ENV === 'development') {
+                console.log('Chat Detail Debug:', {
+                  activeTab,
+                  chatId,
+                  chatHistory: data.chatHistory,
+                  foundChat: chat
+                });
+              }
+              
+              return (
+                <div className="bg-white border border-gray-200 rounded-lg p-6">
+                  <div className="flex justify-between items-center mb-4">
+                    <h4 className="text-lg font-medium">Chat Session Details</h4>
+                    <button
+                      onClick={() => setActiveTab("chat-history")}
+                      className="text-gray-600 hover:text-gray-800"
+                    >
+                      ← Back to List
+                    </button>
+                  </div>
                   
-                  return (
+                  {!chat ? (
+                    <div className="text-center py-8 text-gray-500">
+                      <p>Chat session not found</p>
+                      <p className="text-sm">The chat session you're looking for doesn't exist or has been deleted.</p>
+                    </div>
+                  ) : (
                     <div className="space-y-4">
                       <div className="grid grid-cols-2 gap-4 text-sm">
                         <div><strong>Session ID:</strong> {chat.sessionId}</div>
@@ -2048,35 +2208,48 @@ export default function AdminDashboard() {
                         <div><strong>End Time:</strong> {chat.endTime ? new Date(chat.endTime).toLocaleString() : 'N/A'}</div>
                       </div>
                       
+                      {chat.userName && (
+                        <div className="text-sm">
+                          <strong>User:</strong> {chat.userName}
+                          {chat.userPhone && ` (${chat.userPhone})`}
+                        </div>
+                      )}
+                      
                       <div className="border-t pt-4">
                         <h5 className="font-medium mb-3">Conversation</h5>
                         <div className="space-y-3 max-h-96 overflow-y-auto">
-                          {chat.messages.map((message, idx) => (
-                            <div key={idx} className={`p-3 rounded-lg ${
-                              message.type === 'user' 
-                                ? 'bg-blue-50 ml-8' 
-                                : 'bg-gray-50 mr-8'
-                            }`}>
-                              <div className="flex justify-between items-start">
-                                <div className="flex-1">
-                                  <div className="text-sm font-medium text-gray-700">
-                                    {message.type === 'user' ? 'Customer' : 'Bot'}
+                          {chat.messages && chat.messages.length > 0 ? (
+                            chat.messages.map((message, idx) => (
+                              <div key={idx} className={`p-3 rounded-lg ${
+                                message.type === 'user' 
+                                  ? 'bg-blue-50 ml-8' 
+                                  : 'bg-gray-50 mr-8'
+                              }`}>
+                                <div className="flex justify-between items-start">
+                                  <div className="flex-1">
+                                    <div className="text-sm font-medium text-gray-700">
+                                      {message.type === 'user' ? 'Customer' : 'Bot'}
+                                    </div>
+                                    <div className="text-gray-900 mt-1">{message.content}</div>
                                   </div>
-                                  <div className="text-gray-900 mt-1">{message.content}</div>
-                                </div>
-                                <div className="text-xs text-gray-500 ml-2">
-                                  {new Date(message.timestamp).toLocaleTimeString()}
+                                  <div className="text-xs text-gray-500 ml-2">
+                                    {new Date(message.timestamp).toLocaleTimeString()}
+                                  </div>
                                 </div>
                               </div>
+                            ))
+                          ) : (
+                            <div className="text-center py-4 text-gray-500">
+                              <p>No messages in this chat session</p>
                             </div>
-                          ))}
+                          )}
                         </div>
                       </div>
                     </div>
-                  );
-                })()}
-              </div>
-            )}
+                  )}
+                </div>
+              );
+            })()}
           </div>
         )}
 

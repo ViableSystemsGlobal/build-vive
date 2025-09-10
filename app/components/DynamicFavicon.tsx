@@ -14,7 +14,7 @@ export default function DynamicFavicon() {
         existingLinks.forEach(link => link.remove());
         
         // Use logo URL for favicon (same as loading screen)
-        const faviconUrl = data.faviconUrl || data.logoUrl;
+        const faviconUrl = data.logoUrl || data.faviconUrl;
         
         if (faviconUrl && faviconUrl.trim() !== '') {
           // Create new favicon link

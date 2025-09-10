@@ -3,9 +3,8 @@
 import { useState, useEffect } from "react";
 import { useQuote } from "./QuoteProvider";
 
-export default function Navbar() {
+export default function BlogNavbar() {
   const { openQuote } = useQuote();
-  const [activeSection, setActiveSection] = useState("home");
   const [navbarData, setNavbarData] = useState({
     logoUrl: "",
     companyName: "BuildVive Renovations"
@@ -31,31 +30,9 @@ export default function Navbar() {
     loadNavbarData();
   }, []);
 
-  // Scroll detection for active section highlighting
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['home', 'about', 'services', 'projects', 'contact'];
-      const scrollPosition = window.scrollY + 100; // Offset for navbar height
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i]);
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i]);
-          break;
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const scrollToSection = (sectionId: string) => {
-    setActiveSection(sectionId);
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Navigate to home page and scroll to section
+    window.location.href = `/#${sectionId}`;
   };
 
   return (
@@ -82,47 +59,37 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-8">
             <button
               onClick={() => scrollToSection('home')}
-              className={`text-sm font-medium transition-colors ${
-                activeSection === 'home' ? 'text-primary' : 'text-gray-600 hover:text-primary'
-              }`}
+              className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
             >
               Home
             </button>
             <button
               onClick={() => scrollToSection('about')}
-              className={`text-sm font-medium transition-colors ${
-                activeSection === 'about' ? 'text-primary' : 'text-gray-600 hover:text-primary'
-              }`}
+              className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
             >
               About
             </button>
             <button
               onClick={() => scrollToSection('services')}
-              className={`text-sm font-medium transition-colors ${
-                activeSection === 'services' ? 'text-primary' : 'text-gray-600 hover:text-primary'
-              }`}
+              className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
             >
               Services
             </button>
             <button
               onClick={() => scrollToSection('projects')}
-              className={`text-sm font-medium transition-colors ${
-                activeSection === 'projects' ? 'text-primary' : 'text-gray-600 hover:text-primary'
-              }`}
+              className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
             >
               Projects
             </button>
             <a
               href="/blog"
-              className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
+              className="text-sm font-medium text-primary transition-colors"
             >
               Blog
             </a>
             <button
               onClick={() => scrollToSection('contact')}
-              className={`text-sm font-medium transition-colors ${
-                activeSection === 'contact' ? 'text-primary' : 'text-gray-600 hover:text-primary'
-              }`}
+              className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
             >
               Contact
             </button>

@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useMemo } from "react";
 import Link from "next/link";
 
   const sidebarItems = [
@@ -43,8 +43,13 @@ export default function AdminLayout({
     window.location.href = "/admin/login";
   };
 
+  const contextValue = useMemo(() => ({
+    activeTab,
+    setActiveTab
+  }), [activeTab]);
+
   return (
-    <AdminContext.Provider value={{ activeTab, setActiveTab }}>
+    <AdminContext.Provider value={contextValue}>
       <div className="min-h-screen bg-gray-100">
         {/* Fixed Header */}
         <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm border-b border-gray-200">
@@ -106,7 +111,7 @@ export default function AdminLayout({
 
         <div className="flex pt-16">
           {/* Fixed Sidebar */}
-          <div className={`${sidebarOpen ? 'w-64' : 'w-16'} fixed left-0 top-16 bottom-0 bg-white shadow-sm border-r border-gray-200 transition-all duration-300 z-40`}>
+          <div className={`${sidebarOpen ? 'w-64' : 'w-16'} fixed left-0 top-16 bottom-0 bg-white shadow-sm border-r border-gray-200 transition-all duration-300 z-50`}>
             <nav className="p-4 h-full overflow-y-auto">
               <div className="space-y-2">
                 {sidebarItems.map((item) => (
