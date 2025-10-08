@@ -1,0 +1,36 @@
+# Enable rewrite engine
+RewriteEngine On
+
+# If the request is not for an existing file or directory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Forward all requests to Node.js server
+RewriteRule ^(.*)$ http://localhost:3000/$1 [P,L]
+
+# Handle errors
+ErrorDocument 500 "Server error, please try again later."
+ErrorDocument 404 "Page not found."
+
+# Security headers
+Header set X-Content-Type-Options "nosniff"
+Header set X-Frame-Options "SAMEORIGIN"
+Header set X-XSS-Protection "1; mode=block"
+Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+# Cache static assets
+<FilesMatch "\.(jpg|jpeg|png|gif|ico|css|js)$">
+    Header set Cache-Control "max-age=31536000, public"
+</FilesMatch>
+
+# Protect sensitive files
+<FilesMatch "^\.env">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Protect uploads directory from PHP execution
+<Directory "public/uploads">
+    php_flag engine off
+    AddType text/plain .php .php3 .php4 .php5 .phtml .pht
+</Directory>

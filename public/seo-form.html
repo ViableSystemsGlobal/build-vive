@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Settings - BuildVive Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <div class="p-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between mb-6">
+                <button id="saveBtn" class="ml-auto bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50 font-medium">
+                    Save Settings
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Basic Meta Tags -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-lg font-semibold mb-4">Basic Meta Tags</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Site Title</label>
+                            <input type="text" id="siteTitle" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Your website title" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Site Description</label>
+                            <textarea id="siteDescription" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" rows="3" placeholder="Your website description"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Keywords</label>
+                            <input type="text" id="siteKeywords" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="keyword1, keyword2, keyword3" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Author</label>
+                            <input type="text" id="siteAuthor" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Your name or company" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Open Graph -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-lg font-semibold mb-4">Open Graph (Facebook)</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">OG Title</label>
+                            <input type="text" id="ogTitle" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Open Graph title" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">OG Description</label>
+                            <textarea id="ogDescription" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" rows="3" placeholder="Open Graph description"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">OG Image URL</label>
+                            <input type="url" id="ogImage" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="https://example.com/image.jpg" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">OG Type</label>
+                            <select id="ogType" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                <option value="website">Website</option>
+                                <option value="article">Article</option>
+                                <option value="business.business">Business</option>
+                                <option value="place">Place</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Twitter Cards -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-lg font-semibold mb-4">Twitter Cards</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Twitter Card Type</label>
+                            <select id="twitterCard" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                <option value="summary">Summary</option>
+                                <option value="summary_large_image">Summary Large Image</option>
+                                <option value="app">App</option>
+                                <option value="player">Player</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Twitter Site</label>
+                            <input type="text" id="twitterSite" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="@yourtwitterhandle" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Twitter Creator</label>
+                            <input type="text" id="twitterCreator" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="@yourtwitterhandle" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Twitter Image URL</label>
+                            <input type="url" id="twitterImage" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="https://example.com/image.jpg" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics & Tracking -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-lg font-semibold mb-4">Analytics & Tracking</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Google Analytics ID</label>
+                            <input type="text" id="googleAnalytics" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="G-XXXXXXXXXX" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Google Tag Manager ID</label>
+                            <input type="text" id="googleTagManager" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="GTM-XXXXXXX" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Facebook Pixel ID</label>
+                            <input type="text" id="facebookPixel" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="1234567890123456" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Canonical URL</label>
+                            <input type="url" id="canonicalUrl" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="https://yourdomain.com" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Robots</label>
+                            <select id="robots" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                <option value="index, follow">Index, Follow</option>
+                                <option value="index, nofollow">Index, No Follow</option>
+                                <option value="noindex, follow">No Index, Follow</option>
+                                <option value="noindex, nofollow">No Index, No Follow</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Organization Information -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-lg font-semibold mb-4">Organization Information</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Organization Name</label>
+                            <input type="text" id="organizationName" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Your company name" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Organization Logo URL</label>
+                            <input type="url" id="organizationLogo" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="https://example.com/logo.jpg" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Organization URL</label>
+                            <input type="url" id="organizationUrl" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="https://yourdomain.com" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                            <input type="tel" id="organizationPhone" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="(555) 123-4567" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="organizationEmail" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="info@yourdomain.com" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address Information -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-lg font-semibold mb-4">Address Information</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Street Address</label>
+                            <input type="text" id="organizationAddress" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="123 Main Street" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                            <input type="text" id="organizationCity" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Denver" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">State</label>
+                            <input type="text" id="organizationState" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="CO" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">ZIP Code</label>
+                            <input type="text" id="organizationZipCode" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="80202" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                            <input type="text" id="organizationCountry" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="US" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Information -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-lg font-semibold mb-4">Business Information</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Business Hours</label>
+                            <input type="text" id="businessHours" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Mo-Fr 08:00-17:00, Sa 09:00-15:00" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Price Range</label>
+                            <input type="text" id="priceRange" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="$$" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Payment Accepted</label>
+                            <input type="text" id="paymentAccepted" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Cash, Check, Credit Card, Financing" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Currencies Accepted</label>
+                            <input type="text" id="currenciesAccepted" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="USD" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load SEO settings
+        async function loadSEOSettings() {
+            try {
+                const response = await fetch('/api/admin/seo');
+                if (response.ok) {
+                    const settings = await response.json();
+                    
+                    // Populate form fields
+                    document.getElementById('siteTitle').value = settings.siteTitle || '';
+                    document.getElementById('siteDescription').value = settings.siteDescription || '';
+                    document.getElementById('siteKeywords').value = settings.siteKeywords || '';
+                    document.getElementById('siteAuthor').value = settings.siteAuthor || '';
+                    document.getElementById('ogTitle').value = settings.ogTitle || '';
+                    document.getElementById('ogDescription').value = settings.ogDescription || '';
+                    document.getElementById('ogImage').value = settings.ogImage || '';
+                    document.getElementById('ogType').value = settings.ogType || 'website';
+                    document.getElementById('twitterCard').value = settings.twitterCard || 'summary_large_image';
+                    document.getElementById('twitterSite').value = settings.twitterSite || '';
+                    document.getElementById('twitterCreator').value = settings.twitterCreator || '';
+                    document.getElementById('twitterImage').value = settings.twitterImage || '';
+                    document.getElementById('googleAnalytics').value = settings.googleAnalytics || '';
+                    document.getElementById('googleTagManager').value = settings.googleTagManager || '';
+                    document.getElementById('facebookPixel').value = settings.facebookPixel || '';
+                    document.getElementById('canonicalUrl').value = settings.canonicalUrl || '';
+                    document.getElementById('robots').value = settings.robots || 'index, follow';
+                    document.getElementById('organizationName').value = settings.organizationName || '';
+                    document.getElementById('organizationLogo').value = settings.organizationLogo || '';
+                    document.getElementById('organizationUrl').value = settings.organizationUrl || '';
+                    document.getElementById('organizationPhone').value = settings.organizationPhone || '';
+                    document.getElementById('organizationEmail').value = settings.organizationEmail || '';
+                    document.getElementById('organizationAddress').value = settings.organizationAddress || '';
+                    document.getElementById('organizationCity').value = settings.organizationCity || '';
+                    document.getElementById('organizationState').value = settings.organizationState || '';
+                    document.getElementById('organizationZipCode').value = settings.organizationZipCode || '';
+                    document.getElementById('organizationCountry').value = settings.organizationCountry || '';
+                    document.getElementById('businessHours').value = settings.businessHours || '';
+                    document.getElementById('priceRange').value = settings.priceRange || '';
+                    document.getElementById('paymentAccepted').value = settings.paymentAccepted || '';
+                    document.getElementById('currenciesAccepted').value = settings.currenciesAccepted || '';
+                }
+            } catch (error) {
+                console.error('Error loading SEO settings:', error);
+            }
+        }
+
+        // Save SEO settings
+        async function saveSEOSettings() {
+            const saveBtn = document.getElementById('saveBtn');
+            const originalText = saveBtn.textContent;
+            
+            try {
+                saveBtn.textContent = 'Saving...';
+                saveBtn.disabled = true;
+
+                const settings = {
+                    siteTitle: document.getElementById('siteTitle').value,
+                    siteDescription: document.getElementById('siteDescription').value,
+                    siteKeywords: document.getElementById('siteKeywords').value,
+                    siteAuthor: document.getElementById('siteAuthor').value,
+                    siteLanguage: 'en',
+                    ogTitle: document.getElementById('ogTitle').value,
+                    ogDescription: document.getElementById('ogDescription').value,
+                    ogImage: document.getElementById('ogImage').value,
+                    ogType: document.getElementById('ogType').value,
+                    ogSiteName: document.getElementById('organizationName').value,
+                    ogLocale: 'en_US',
+                    twitterCard: document.getElementById('twitterCard').value,
+                    twitterSite: document.getElementById('twitterSite').value,
+                    twitterCreator: document.getElementById('twitterCreator').value,
+                    twitterTitle: document.getElementById('ogTitle').value,
+                    twitterDescription: document.getElementById('ogDescription').value,
+                    twitterImage: document.getElementById('twitterImage').value,
+                    canonicalUrl: document.getElementById('canonicalUrl').value,
+                    robots: document.getElementById('robots').value,
+                    googleAnalytics: document.getElementById('googleAnalytics').value,
+                    googleTagManager: document.getElementById('googleTagManager').value,
+                    facebookPixel: document.getElementById('facebookPixel').value,
+                    organizationName: document.getElementById('organizationName').value,
+                    organizationLogo: document.getElementById('organizationLogo').value,
+                    organizationUrl: document.getElementById('organizationUrl').value,
+                    organizationPhone: document.getElementById('organizationPhone').value,
+                    organizationEmail: document.getElementById('organizationEmail').value,
+                    organizationAddress: document.getElementById('organizationAddress').value,
+                    organizationCity: document.getElementById('organizationCity').value,
+                    organizationState: document.getElementById('organizationState').value,
+                    organizationZipCode: document.getElementById('organizationZipCode').value,
+                    organizationCountry: document.getElementById('organizationCountry').value,
+                    businessHours: document.getElementById('businessHours').value,
+                    priceRange: document.getElementById('priceRange').value,
+                    paymentAccepted: document.getElementById('paymentAccepted').value,
+                    currenciesAccepted: document.getElementById('currenciesAccepted').value
+                };
+
+                const response = await fetch('/api/admin/seo', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(settings)
+                });
+
+                if (response.ok) {
+                    saveBtn.textContent = 'Saved!';
+                    setTimeout(() => {
+                        saveBtn.textContent = originalText;
+                        saveBtn.disabled = false;
+                    }, 2000);
+                } else {
+                    throw new Error('Failed to save settings');
+                }
+            } catch (error) {
+                console.error('Error saving SEO settings:', error);
+                saveBtn.textContent = 'Error - Try Again';
+                setTimeout(() => {
+                    saveBtn.textContent = originalText;
+                    saveBtn.disabled = false;
+                }, 2000);
+            }
+        }
+
+        // Event listeners
+        document.getElementById('saveBtn').addEventListener('click', saveSEOSettings);
+
+        // Load settings on page load
+        loadSEOSettings();
+    </script>
+</body>
+</html>

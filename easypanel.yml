@@ -1,0 +1,51 @@
+# EasyPanel Configuration for BuildVive Website
+# This file helps EasyPanel understand your application structure
+
+name: buildvive-website
+description: BuildVive Renovations - Construction Company Website
+
+# Build configuration
+build:
+  context: .
+  dockerfile: Dockerfile
+
+# Runtime configuration
+runtime:
+  node: 18
+
+# Port configuration
+ports:
+  - 3000
+
+# Environment variables (set these in EasyPanel dashboard)
+environment:
+  - NODE_ENV=production
+  - NEXTAUTH_SECRET=your-super-secret-key-here
+  - NEXTAUTH_URL=https://yourdomain.com
+  - NEXT_PUBLIC_BASE_URL=https://yourdomain.com
+  - ADMIN_EMAIL=admin@yourdomain.com
+  - ADMIN_PASSWORD=your-secure-admin-password
+  - DATABASE_URL=file:./dev.db
+  - UPLOAD_DIR=./public/uploads
+
+# Persistent volumes for data storage
+volumes:
+  - ./public/uploads:/app/public/uploads
+  - ./dev.db:/app/dev.db
+  - ./data:/app/data
+
+# Health check
+healthcheck:
+  test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+  interval: 30s
+  timeout: 10s
+  retries: 3
+  start_period: 40s
+
+# Resource limits
+resources:
+  memory: 512Mi
+  cpu: 500m
+
+# Restart policy
+restart: unless-stopped

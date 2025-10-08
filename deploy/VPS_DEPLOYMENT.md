@@ -56,7 +56,7 @@ npm start
 ## 🌐 **Access Your Application:**
 
 - **Website**: `http://156.67.68.173:3000`
-- **Admin Panel**: `http://156.67.68.173:3000/admin/login`
+- **Admin Panel**: `http://156.67.68.173:3000/login`
   - Email: `admin@aceconstruction.local`
   - Password: `admin123`
 

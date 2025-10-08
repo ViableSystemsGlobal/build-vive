@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function AdminDashboard() {
   const handleLogout = async () => {
     await fetch("/api/admin/auth/logout", { method: "POST" });
-    window.location.href = "/admin/login";
+    window.location.href = "/login";
   };
 
   return (

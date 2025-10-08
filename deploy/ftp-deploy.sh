@@ -49,7 +49,7 @@ if [ $? -eq 0 ]; then
     echo ""
     echo "🌐 Your site will be available at:"
     echo "http://156.67.68.173:3000"
-    echo "Admin: http://156.67.68.173:3000/admin/login"
+    echo "Admin: http://156.67.68.173:3000/login"
 else
     echo ""
     echo "❌ Upload failed!"

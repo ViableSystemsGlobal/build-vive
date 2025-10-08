@@ -676,5 +676,53 @@
     ],
     "escalationReason": "User requested call",
     "id": "chat_1757504447390_etlwpg6gd"
+  },
+  {
+    "sessionId": "chat_1759856148732_8edg2nayg",
+    "startTime": "2025-10-07T16:55:48.732Z",
+    "endTime": "2025-10-07T16:56:10.501Z",
+    "messages": [
+      {
+        "id": "1759856154373",
+        "type": "user",
+        "content": "Hi",
+        "timestamp": "2025-10-07T16:55:54.373Z"
+      },
+      {
+        "id": "1759856164144",
+        "type": "bot",
+        "content": "Hello! I'm here to help with construction advice and emergency guidance. What can I assist you with today?",
+        "timestamp": "2025-10-07T16:56:04.144Z"
+      }
+    ],
+    "status": "completed",
+    "tags": [
+      "emergency"
+    ],
+    "id": "chat_1759856170685_bjz67y85t"
+  },
+  {
+    "sessionId": "chat_1759857505189_e3p4oget6",
+    "startTime": "2025-10-07T17:18:25.189Z",
+    "endTime": "2025-10-07T17:20:58.449Z",
+    "messages": [
+      {
+        "id": "1759857626735",
+        "type": "bot",
+        "content": "Thanks for submitting your request! While we process your quote, can I help with some immediate advice?",
+        "timestamp": "2025-10-07T17:20:26.735Z"
+      },
+      {
+        "id": "1759857626875",
+        "type": "bot",
+        "content": "Hi Nana Sasu! 👋\n\n🚨 I see you have an emergency new construction that needs immediate attention. Our team is working on your quote right now and will get back to you within 30 minutes.\n\nWhile we process your request, I can provide immediate safety guidance and emergency procedures. What specific type of emergency are you dealing with?",
+        "timestamp": "2025-10-07T17:20:26.875Z"
+      }
+    ],
+    "status": "completed",
+    "tags": [
+      "emergency"
+    ],
+    "id": "chat_1759857658651_4je8shpgy"
   }
 ]

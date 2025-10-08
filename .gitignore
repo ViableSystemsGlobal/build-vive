@@ -39,3 +39,11 @@ next-env.d.ts
 # uploads
 /public/uploads/*
 !/public/uploads/.keep
+
+# deployment files
+buildvive-website.zip
+*.zip
+
+# deploy-vps build artifacts
+deploy-vps/.next/
+deploy-vps/node_modules/

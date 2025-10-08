@@ -48,7 +48,7 @@
 - The uploads folder will store user-uploaded images
 - Make sure the uploads folder has write permissions (755)
 - Your admin login credentials are: admin / admin123
-- Access admin at: https://your-domain.com/admin/login
+- Access admin at: https://your-domain.com/login
 
 ## Troubleshooting:
 

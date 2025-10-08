@@ -1107,6 +1107,24 @@ export default function AdminDashboard() {
           </div>
         )}
 
+        {activeTab === "seo" && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">SEO & Meta Data</h1>
+                <p className="text-gray-600">Manage your website's SEO settings, meta tags, and structured data</p>
+              </div>
+            </div>
+
+            <iframe
+              src="/seo-form.html"
+              className="w-full border-0 rounded-lg shadow"
+              style={{ minHeight: '1200px', height: 'calc(100vh - 200px)' }}
+              title="SEO Settings"
+            />
+          </div>
+        )}
+
         {activeTab === "chatbot" && (
           <div className="space-y-8">
             <h3 className="text-xl font-semibold">Chatbot Settings</h3>

@@ -10,6 +10,7 @@ import Link from "next/link";
     { id: "projects", label: "Projects", icon: "📁" },
     { id: "articles", label: "Articles", icon: "📝" },
     { id: "logos", label: "Trusted Logos", icon: "🏢" },
+    { id: "seo", label: "SEO & Meta Data", icon: "🔍" },
     { id: "chatbot", label: "Chatbot", icon: "🤖" },
     { id: "quotes", label: "Quote Requests", icon: "📋" },
     { id: "api-keys", label: "API Keys", icon: "🔑" },
@@ -40,7 +41,7 @@ export default function AdminLayout({
 
   const handleLogout = async () => {
     await fetch("/api/admin/auth/logout", { method: "POST" });
-    window.location.href = "/admin/login";
+    window.location.href = "/login";
   };
 
   const contextValue = useMemo(() => ({

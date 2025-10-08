@@ -148,7 +148,7 @@ cat > deploy/DEPLOY_INSTRUCTIONS.md << EOL
 - The uploads folder will store user-uploaded images
 - Make sure the uploads folder has write permissions (755)
 - Your admin login credentials are: admin / admin123
-- Access admin at: https://your-domain.com/admin/login
+- Access admin at: https://your-domain.com/login
 
 ## Troubleshooting:
 
@@ -171,4 +171,4 @@ echo "4. Set up Node.js app in Hostinger control panel"
 echo "5. Install dependencies and start the app"
 echo ""
 echo "🔐 Admin login: admin / admin123"
-echo "🌐 Admin URL: https://your-domain.com/admin/login"
+echo "🌐 Admin URL: https://your-domain.com/login"

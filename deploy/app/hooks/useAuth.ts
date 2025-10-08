@@ -29,7 +29,7 @@ export function useAuth() {
   const logout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
     setUser(null);
-    router.push("/admin/login");
+    router.push("/login");
   };
 
   return { user, loading, logout };
