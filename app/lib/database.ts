@@ -33,9 +33,9 @@ class DatabaseService {
       // Parse DATABASE_URL (format: postgresql://username:password@host:port/database)
       const url = new URL(process.env.DATABASE_URL);
       
-      // Check for sslmode parameter
+      // Check for sslmode parameter - force disable for EasyPanel
       const sslMode = url.searchParams.get('sslmode');
-      const useSSL = sslMode !== 'disable';
+      const useSSL = false; // Always disable SSL for EasyPanel PostgreSQL
       
       this.config = {
         host: url.hostname,

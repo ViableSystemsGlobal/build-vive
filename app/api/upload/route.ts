@@ -11,11 +11,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    // Check if we're in Vercel production environment or if file system is not available
+    // Check if we're in Vercel production environment (not EasyPanel)
     const isVercel = process.env.VERCEL === "1";
-    const isProduction = process.env.NODE_ENV === "production";
+    const isEasyPanel = process.env.DATABASE_URL && process.env.DATABASE_URL.includes('postgres');
     
-    if (isVercel || isProduction) {
+    if (isVercel && !isEasyPanel) {
       // For Vercel/production, convert to base64 data URL
       // Check file size (5MB limit for base64)
       if (file.size > 5 * 1024 * 1024) {
