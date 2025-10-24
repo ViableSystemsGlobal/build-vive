@@ -38,7 +38,7 @@ class DatabaseService {
         database: url.pathname.slice(1), // Remove leading slash
         username: url.username,
         password: url.password,
-        ssl: process.env.NODE_ENV === 'production'
+        ssl: false
       };
     } else if (process.env.DB_HOST) {
       // Individual environment variables
@@ -48,7 +48,7 @@ class DatabaseService {
         database: process.env.DB_NAME || 'buildvive',
         username: process.env.DB_USER || 'postgres',
         password: process.env.DB_PASSWORD || process.env.DB_PASS || '',
-        ssl: process.env.NODE_ENV === 'production'
+        ssl: false
       };
     }
   }
@@ -61,7 +61,7 @@ class DatabaseService {
         database: this.config.database,
         user: this.config.username,
         password: this.config.password,
-        ssl: this.config.ssl ? { rejectUnauthorized: false } : false,
+        ssl: false,
         max: 20, // Maximum number of clients in the pool
         idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
         connectionTimeoutMillis: 2000, // Return an error after 2 seconds if connection could not be established
