@@ -1,7 +1,9 @@
 import { Pool, PoolClient } from 'pg';
+import Database from 'better-sqlite3';
 
 // Database connection pool
 let pool: Pool | null = null;
+let sqliteDb: Database.Database | null = null;
 
 export interface DatabaseConfig {
   host: string;
@@ -21,6 +23,13 @@ class DatabaseService {
 
   private initializeConfig() {
     if (process.env.DATABASE_URL) {
+      // Check if it's a SQLite file URL
+      if (process.env.DATABASE_URL.startsWith('file:')) {
+        // SQLite database - no config needed for PostgreSQL
+        this.config = null;
+        return;
+      }
+      
       // Parse DATABASE_URL (format: postgresql://username:password@host:port/database)
       const url = new URL(process.env.DATABASE_URL);
       this.config = {
@@ -61,7 +70,24 @@ class DatabaseService {
     return pool!;
   }
 
+  private getSqliteDb(): Database.Database {
+    if (!sqliteDb && process.env.DATABASE_URL?.startsWith('file:')) {
+      const dbPath = process.env.DATABASE_URL.replace('file:', '');
+      sqliteDb = new Database(dbPath);
+    }
+    return sqliteDb!;
+  }
+
   async query(text: string, params?: any[]): Promise<any> {
+    // Check if using SQLite
+    if (process.env.DATABASE_URL?.startsWith('file:')) {
+      const db = this.getSqliteDb();
+      const stmt = db.prepare(text);
+      const result = stmt.all(params || []);
+      return { rows: result };
+    }
+
+    // PostgreSQL
     if (!this.config) {
       throw new Error('Database not configured. Please set DATABASE_URL or individual DB environment variables.');
     }
@@ -95,6 +121,59 @@ class DatabaseService {
   }
 
   async initializeTables(): Promise<void> {
+    // Check if using SQLite
+    if (process.env.DATABASE_URL?.startsWith('file:')) {
+      try {
+        // Create homepage_data table (SQLite version)
+        await this.query(`
+          CREATE TABLE IF NOT EXISTS homepage_data (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            data TEXT NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+          )
+        `);
+
+        // Create quotes table (SQLite version)
+        await this.query(`
+          CREATE TABLE IF NOT EXISTS quotes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            data TEXT NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+          )
+        `);
+
+        // Create chat_history table (SQLite version)
+        await this.query(`
+          CREATE TABLE IF NOT EXISTS chat_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            session_id TEXT NOT NULL,
+            data TEXT NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+          )
+        `);
+
+        // Create knowledge_base table (SQLite version)
+        await this.query(`
+          CREATE TABLE IF NOT EXISTS knowledge_base (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            content TEXT NOT NULL,
+            category TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+          )
+        `);
+
+        console.log('SQLite database tables initialized successfully');
+      } catch (error) {
+        console.error('Error initializing SQLite database tables:', error);
+        throw error;
+      }
+      return;
+    }
+
+    // PostgreSQL initialization
     if (!this.config) {
       console.log('Database not configured, skipping table initialization');
       return;
@@ -142,7 +221,7 @@ class DatabaseService {
         )
       `);
 
-      console.log('Database tables initialized successfully');
+      console.log('PostgreSQL database tables initialized successfully');
     } catch (error) {
       console.error('Error initializing database tables:', error);
       throw error;
@@ -157,6 +236,11 @@ class DatabaseService {
   }
 
   isConfigured(): boolean {
+    // Check if using SQLite
+    if (process.env.DATABASE_URL?.startsWith('file:')) {
+      return true;
+    }
+    // Check PostgreSQL config
     return this.config !== null;
   }
 }
