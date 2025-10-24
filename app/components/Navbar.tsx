@@ -64,14 +64,12 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <a href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            {navbarData.logoUrl ? (
+            {navbarData.logoUrl && (
               <img 
                 src={navbarData.logoUrl} 
                 alt="Logo" 
                 className="h-8 w-8 rounded object-cover"
               />
-            ) : (
-              <div className="h-8 w-8 rounded border-2 border-primary" />
             )}
             <span className="font-bold text-xl text-gray-900">
               {navbarData.companyName}

@@ -39,23 +39,13 @@ export default function DynamicFavicon() {
           
           console.log('Favicon updated to:', faviconUrl);
         } else {
-          // Use default favicon if none is set
-          const defaultLink = document.createElement('link');
-          defaultLink.rel = 'icon';
-          defaultLink.type = 'image/x-icon';
-          defaultLink.href = '/favicon.ico';
-          document.head.appendChild(defaultLink);
-          
-          console.log('Using default favicon');
+          // Don't show any favicon if none is set (more professional)
+          console.log('No favicon set - keeping blank');
         }
       } catch (error) {
         console.error('Failed to update favicon:', error);
-        // Fallback to default favicon
-        const defaultLink = document.createElement('link');
-        defaultLink.rel = 'icon';
-        defaultLink.type = 'image/x-icon';
-        defaultLink.href = '/favicon.ico';
-        document.head.appendChild(defaultLink);
+        // Don't show any favicon on error (more professional)
+        console.log('Favicon error - keeping blank');
       }
     };
 
