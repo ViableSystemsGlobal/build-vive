@@ -32,13 +32,18 @@ class DatabaseService {
       
       // Parse DATABASE_URL (format: postgresql://username:password@host:port/database)
       const url = new URL(process.env.DATABASE_URL);
+      
+      // Check for sslmode parameter
+      const sslMode = url.searchParams.get('sslmode');
+      const useSSL = sslMode !== 'disable';
+      
       this.config = {
         host: url.hostname,
         port: parseInt(url.port) || 5432,
         database: url.pathname.slice(1), // Remove leading slash
         username: url.username,
         password: url.password,
-        ssl: false
+        ssl: useSSL
       };
     } else if (process.env.DB_HOST) {
       // Individual environment variables
@@ -61,7 +66,7 @@ class DatabaseService {
         database: this.config.database,
         user: this.config.username,
         password: this.config.password,
-        ssl: false,
+        ssl: this.config.ssl ? { rejectUnauthorized: false } : false,
         max: 20, // Maximum number of clients in the pool
         idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
         connectionTimeoutMillis: 2000, // Return an error after 2 seconds if connection could not be established
