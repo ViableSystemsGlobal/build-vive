@@ -10,9 +10,13 @@ export async function GET(
     const filename = params.path.join('/');
     const filePath = join(process.cwd(), 'public', 'uploads', filename);
     
+    console.log('Serving file:', filename);
+    console.log('File path:', filePath);
+    
     // Check if file exists
     try {
       const fileBuffer = await readFile(filePath);
+      console.log('File found, size:', fileBuffer.length);
       
       // Determine content type based on file extension
       const extension = filename.split('.').pop()?.toLowerCase();
@@ -44,6 +48,8 @@ export async function GET(
         },
       });
     } catch (error) {
+      console.log('File not found:', filePath);
+      console.log('Error:', error);
       return new NextResponse('File not found', { status: 404 });
     }
   } catch (error) {
