@@ -697,8 +697,8 @@ export default function Home() {
                 {/* Navigation arrows */}
                 <button
                   onClick={() => setCurrentService((prev) => {
-                    const newIndex = prev === 0 ? servicesCount - 1 : prev - 1;
-                    return Math.min(newIndex, servicesCount - 1);
+                    const clampedPrev = Math.min(prev, servicesCount - 1);
+                    return clampedPrev === 0 ? servicesCount - 1 : clampedPrev - 1;
                   })}
                   className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-all"
                 >
@@ -706,8 +706,8 @@ export default function Home() {
                 </button>
                 <button
                   onClick={() => setCurrentService((prev) => {
-                    const newIndex = prev === servicesCount - 1 ? 0 : prev + 1;
-                    return Math.min(newIndex, servicesCount - 1);
+                    const clampedPrev = Math.min(prev, servicesCount - 1);
+                    return clampedPrev === servicesCount - 1 ? 0 : clampedPrev + 1;
                   })}
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-all"
                 >
