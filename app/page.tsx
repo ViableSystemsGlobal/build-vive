@@ -565,42 +565,6 @@ export default function Home() {
           <Hero data={homepageData} />
         </div>
 
-      {/* Trusted logos band */}
-      <section className="py-10">
-        <div className="container-page">
-          <div className="rounded-xl border border-foreground/10 bg-foreground/5 p-6 text-center text-sm text-foreground/70">
-            Trusted by 8,000+ happy clients since 2016.
-          </div>
-          <div className="mt-6 grid grid-cols-3 md:grid-cols-6 gap-6 items-center opacity-80">
-            {homepageData?.trustedLogos?.length ? 
-              homepageData.trustedLogos.map((logo) => (
-                <div key={logo.id} className="flex items-center justify-center h-16">
-                  <SmartImage 
-                    src={logo.imageUrl} 
-                    alt={logo.alt} 
-                    width={120} 
-                    height={60} 
-                    className="max-h-16 max-w-full opacity-70 object-contain" 
-                  />
-                </div>
-              )) :
-              [
-                "/vercel.svg",
-                "/next.svg",
-                "/globe.svg",
-                "/window.svg",
-                "/file.svg",
-                "/next.svg",
-              ].map((src, i) => (
-                <div key={i} className="flex items-center justify-center h-16">
-                  <Image src={src} alt="logo" width={120} height={32} className="opacity-70" />
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      </section>
-
       {/* About section with stats */}
       <section id="about" className="container-page grid grid-cols-1 lg:grid-cols-2 gap-12 py-20 lg:py-28">
         <div className="relative order-2 lg:order-1">
