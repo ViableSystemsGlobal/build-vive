@@ -422,15 +422,17 @@ export default function Home() {
   // Ensure currentService stays within bounds when services are deleted
   useEffect(() => {
     const servicesList = homepageData?.services?.length ? homepageData.services : [
-      { id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }, { id: "5" }, { id: "6" }
+      { id: "1", title: "New builds" }, 
+      { id: "2", title: "Renovation & remodeling" }, 
+      { id: "3", title: "Additions" }, 
+      { id: "4", title: "Concrete & foundations" }, 
+      { id: "5", title: "Framing & structural" }, 
+      { id: "6", title: "Roofing & exterior" }
     ];
     const servicesCount = servicesList.length;
-    setCurrentService((prev) => {
-      if (prev >= servicesCount && servicesCount > 0) {
-        return servicesCount - 1;
-      }
-      return prev;
-    });
+    if (servicesCount > 0) {
+      setCurrentService((prev) => Math.min(prev, servicesCount - 1));
+    }
   }, [homepageData?.services]);
 
   // Auto-rotate roofing projects every 6 seconds
@@ -627,7 +629,6 @@ export default function Home() {
         </div>
         
         <div className="relative overflow-hidden">
-          <div className="flex transition-transform duration-1000 ease-in-out" style={{ transform: `translateX(-${currentService * 100}%)` }}>
           {(() => {
             const servicesList = homepageData?.services?.length ? homepageData.services : [
               { id: "1", title: "New builds", description: "Ground‑up residential and commercial construction from planning to completion.", icon: "🏗️", image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1400&auto=format&fit=crop" },
@@ -637,7 +638,13 @@ export default function Home() {
               { id: "5", title: "Framing & structural", description: "Engineered framing and structural upgrades for safety and longevity.", icon: "🏗️", image: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop" },
               { id: "6", title: "Roofing & exterior", description: "Roofing, siding, windows, and exterior finishes to protect and impress.", icon: "🏠", image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1400&auto=format&fit=crop" },
             ];
-            return servicesList.map((service, index) => (
+            const servicesCount = servicesList.length;
+            const safeCurrentService = Math.min(currentService, servicesCount - 1);
+            
+            return (
+              <>
+                <div className="flex transition-transform duration-1000 ease-in-out" style={{ transform: `translateX(-${safeCurrentService * 100}%)` }}>
+                  {servicesList.map((service, index) => (
               <div key={service.id} className="w-full flex-shrink-0 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="relative order-2 lg:order-1">
                   <div className="aspect-[4/3] w-full rounded-2xl overflow-hidden">
@@ -668,45 +675,40 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            ));
-          })()}
-            </div>
-          
-          {(() => {
-            const servicesList = homepageData?.services?.length ? homepageData.services : [
-              { id: "1", title: "New builds", description: "Ground‑up residential and commercial construction from planning to completion.", icon: "🏗️", image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1400&auto=format&fit=crop" },
-              { id: "2", title: "Renovation & remodeling", description: "Transform kitchens, baths, offices, and full interiors with precision.", icon: "🔨", image: "https://images.unsplash.com/photo-1577962917302-cd874c8f14d6?q=80&w=1400&auto=format&fit=crop" },
-              { id: "3", title: "Additions", description: "Seamless home and facility additions that blend with existing structures.", icon: "🏠", image: "https://images.unsplash.com/photo-1581091215367-59ab6f01b7f0?q=80&w=1400&auto=format&fit=crop" },
-              { id: "4", title: "Concrete & foundations", description: "Footings, slabs, driveways, and structural concrete done right.", icon: "🧱", image: "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1400&auto=format&fit=crop" },
-              { id: "5", title: "Framing & structural", description: "Engineered framing and structural upgrades for safety and longevity.", icon: "🏗️", image: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1400&auto=format&fit=crop" },
-              { id: "6", title: "Roofing & exterior", description: "Roofing, siding, windows, and exterior finishes to protect and impress.", icon: "🏠", image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1400&auto=format&fit=crop" },
-            ];
-            const servicesCount = servicesList.length;
-            
-            return (
-              <>
+                  ))}
+                </div>
+                
                 {/* Navigation dots */}
                 <div className="flex justify-center mt-12 space-x-3">
-                  {Array.from({ length: servicesCount }).map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentService(index)}
-                      className={`w-3 h-3 rounded-full transition-colors ${
-                        currentService === index ? 'bg-primary' : 'bg-foreground/20'
-                      }`}
-                    />
-                  ))}
+                  {Array.from({ length: servicesCount }).map((_, index) => {
+                    const isActive = Math.min(currentService, servicesCount - 1) === index;
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentService(index)}
+                        className={`w-3 h-3 rounded-full transition-colors ${
+                          isActive ? 'bg-primary' : 'bg-foreground/20'
+                        }`}
+                      />
+                    );
+                  })}
                 </div>
                 
                 {/* Navigation arrows */}
                 <button
-                  onClick={() => setCurrentService((prev) => (prev === 0 ? servicesCount - 1 : prev - 1))}
+                  onClick={() => setCurrentService((prev) => {
+                    const newIndex = prev === 0 ? servicesCount - 1 : prev - 1;
+                    return Math.min(newIndex, servicesCount - 1);
+                  })}
                   className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-all"
                 >
                   ←
                 </button>
                 <button
-                  onClick={() => setCurrentService((prev) => (prev === servicesCount - 1 ? 0 : prev + 1))}
+                  onClick={() => setCurrentService((prev) => {
+                    const newIndex = prev === servicesCount - 1 ? 0 : prev + 1;
+                    return Math.min(newIndex, servicesCount - 1);
+                  })}
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-all"
                 >
                   →
