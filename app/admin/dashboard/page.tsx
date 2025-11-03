@@ -53,7 +53,11 @@ export default function AdminDashboard() {
     aboutTitle: "About BuildVive Renovations",
     aboutDescription: "We are a leading construction company in Denver, Colorado, specializing in residential and commercial projects.",
     aboutImage: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1400&auto=format&fit=crop",
-    stats: [],
+    stats: [
+      { number: "500+", label: "Projects Completed" },
+      { number: "15+", label: "Years Experience" },
+      { number: "98%", label: "Client Satisfaction" }
+    ],
     projects: [],
     articles: [],
     trustedLogos: [],
@@ -733,6 +737,76 @@ export default function AdminDashboard() {
                   label="About Section Image"
                   uniqueKey="about-image"
                 />
+              </div>
+            </div>
+
+            {/* Stats Section */}
+            <div className="mt-8 pt-8 border-t border-gray-200">
+              <div className="flex justify-between items-center mb-4">
+                <h4 className="text-lg font-semibold">Statistics</h4>
+                <button
+                  onClick={() => {
+                    const newStat = {
+                      number: "0",
+                      label: "New Stat"
+                    };
+                    setData({ ...data, stats: [...(data.stats || []), newStat] });
+                  }}
+                  className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm"
+                >
+                  + Add Stat
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                {data.stats?.map((stat, index) => (
+                  <div key={index} className="border border-gray-200 p-4 rounded-lg">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Number</label>
+                        <input
+                          type="text"
+                          value={stat.number}
+                          onChange={(e) => {
+                            const newStats = [...(data.stats || [])];
+                            newStats[index].number = e.target.value;
+                            setData({ ...data, stats: newStats });
+                          }}
+                          className="w-full p-3 border border-gray-300 rounded-md"
+                          placeholder="500+"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Label</label>
+                        <input
+                          type="text"
+                          value={stat.label}
+                          onChange={(e) => {
+                            const newStats = [...(data.stats || [])];
+                            newStats[index].label = e.target.value;
+                            setData({ ...data, stats: newStats });
+                          }}
+                          className="w-full p-3 border border-gray-300 rounded-md"
+                          placeholder="Projects Completed"
+                        />
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => {
+                        const newStats = data.stats?.filter((_, i) => i !== index) || [];
+                        setData({ ...data, stats: newStats });
+                      }}
+                      className="mt-3 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-sm"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+                {(!data.stats || data.stats.length === 0) && (
+                  <div className="text-center py-8 text-gray-500">
+                    No statistics added yet. Click "+ Add Stat" to add your first statistic.
+                  </div>
+                )}
               </div>
             </div>
           </div>
