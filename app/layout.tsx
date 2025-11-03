@@ -16,14 +16,39 @@ export async function generateMetadata() {
     // Get SEO settings
     const seoSettings = await getSEOSettings();
     
-    // Get homepage data for fallback
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/admin/homepage`, {
-      cache: 'no-store'
-    });
-    const homepageData = await response.json();
+    // Get homepage data for fallback - handle errors gracefully
+    let homepageData = null;
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+      const response = await fetch(`${baseUrl}/api/admin/homepage`, {
+        cache: 'no-store',
+        headers: {
+          'Accept': 'application/json',
+        },
+      });
+      
+      if (response.ok) {
+        homepageData = await response.json();
+      } else {
+        console.warn('Failed to fetch homepage data for metadata:', response.status);
+      }
+    } catch (fetchError) {
+      console.warn('Error fetching homepage data for metadata:', fetchError);
+      // Continue without homepage data
+    }
     
     // Generate meta tags using SEO settings
     const metaTags = generateMetaTags(seoSettings);
+    
+    // Determine favicon URL
+    let faviconUrl = null;
+    if (homepageData?.faviconUrl || homepageData?.logoUrl) {
+      faviconUrl = homepageData.faviconUrl || homepageData.logoUrl;
+      // Ensure it's a full URL if it's a relative path
+      if (faviconUrl && !faviconUrl.startsWith('http') && !faviconUrl.startsWith('data:')) {
+        faviconUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}${faviconUrl}`;
+      }
+    }
     
     return {
       title: metaTags.title,
@@ -35,10 +60,10 @@ export async function generateMetadata() {
       robots: metaTags.robots,
       openGraph: metaTags.openGraph,
       twitter: metaTags.twitter,
-      icons: (homepageData.faviconUrl || homepageData.logoUrl) ? {
-        icon: homepageData.faviconUrl || homepageData.logoUrl,
-        shortcut: homepageData.faviconUrl || homepageData.logoUrl,
-        apple: homepageData.faviconUrl || homepageData.logoUrl,
+      icons: faviconUrl ? {
+        icon: faviconUrl,
+        shortcut: faviconUrl,
+        apple: faviconUrl,
       } : undefined,
     };
   } catch (error) {
