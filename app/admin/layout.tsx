@@ -12,6 +12,7 @@ import Link from "next/link";
     { id: "logos", label: "Trusted Logos", icon: "🏢" },
     { id: "seo", label: "SEO & Meta Data", icon: "🔍" },
     { id: "chatbot", label: "Chatbot", icon: "🤖" },
+    { id: "quote-services", label: "Quote Services", icon: "✏️" },
     { id: "quotes", label: "Quote Requests", icon: "📋" },
     { id: "api-keys", label: "API Keys", icon: "🔑" },
     { id: "email-config", label: "Email Settings", icon: "📧" },

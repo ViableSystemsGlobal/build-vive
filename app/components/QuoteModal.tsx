@@ -20,19 +20,19 @@ type QuoteFormData = {
   phone?: string;
 };
 
-// Simplified services for all project types
+// Main services tailored for construction/renovation projects
 const SIMPLE_SERVICES = [
+  "HVAC",
+  "Sewer Replacement",
+  "Interior and Exterior Painting",
   "Kitchen Remodeling",
   "Bathroom Remodeling", 
   "Flooring",
-  "Painting",
   "Electrical Work",
   "Plumbing",
-  "HVAC",
   "Windows & Doors",
   "Roofing",
   "Foundation & Structural",
-  "Exterior Work",
   "Other"
 ];
 
@@ -42,6 +42,7 @@ export function QuoteModal({ open, onClose }: { open: boolean; onClose: () => vo
   const [data, setData] = useState<QuoteFormData>({});
   const total = 10;
   const { setQuoteSubmitted, setCurrentQuoteId } = useQuote();
+  const [availableServices, setAvailableServices] = useState(SIMPLE_SERVICES);
 
   const next = () => setStep(s => Math.min(s + 1, total));
   const prev = () => setStep(s => Math.max(s - 1, 1));
@@ -51,9 +52,9 @@ export function QuoteModal({ open, onClose }: { open: boolean; onClose: () => vo
   const [recaptchaToken, setRecaptchaToken] = useState('');
   const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
 
-  // Load reCAPTCHA configuration
+  // Load configuration
   useEffect(() => {
-    const loadRecaptchaConfig = async () => {
+    const loadConfig = async () => {
       try {
         const response = await fetch('/api/admin/homepage');
         if (response.ok) {
@@ -62,14 +63,18 @@ export function QuoteModal({ open, onClose }: { open: boolean; onClose: () => vo
             enabled: config.recaptchaEnabled || false,
             siteKey: config.recaptchaSiteKey || ''
           });
+          // Load custom quote services if available
+          if (config.quoteServices && config.quoteServices.length > 0) {
+            setAvailableServices(config.quoteServices);
+          }
         }
       } catch (error) {
-        console.error('Failed to load reCAPTCHA config:', error);
+        console.error('Failed to load config:', error);
       }
     };
 
     if (open) {
-      loadRecaptchaConfig();
+      loadConfig();
     }
   }, [open]);
 
@@ -241,7 +246,7 @@ export function QuoteModal({ open, onClose }: { open: boolean; onClose: () => vo
             <div className="space-y-3">
               <p className="font-medium">Which services do you need? (Select all that apply)</p>
               <div className="grid grid-cols-2 gap-3">
-                {SIMPLE_SERVICES.map((s) => (
+                {availableServices.map((s) => (
                   <label key={s} className="flex items-center gap-3 text-sm p-3 border border-foreground/10 rounded-lg hover:bg-foreground/5 cursor-pointer">
                     <input 
                       type="checkbox" 

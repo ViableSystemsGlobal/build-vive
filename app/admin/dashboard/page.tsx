@@ -24,6 +24,7 @@ export default function AdminDashboard() {
     subtext: "Experience excellence and durability with BuildVive Renovations' Denver team of experts, offering innovative and unmatched residential and commercial solutions tailored to your needs.",
     heroImage: "https://images.unsplash.com/photo-1581091215367-59ab6f01b7f0?q=80&w=1400&auto=format&fit=crop",
     trustedUsers: "Trusted by 1 Million users",
+    quoteServices: ["HVAC", "Sewer Replacement", "Interior and Exterior Painting"],
     openaiApiKey: "",
     openaiModel: "gpt-4o-mini",
     chatbotGreeting: "Thanks for submitting your request! While we process your quote, can I help with some immediate advice?",
@@ -1161,6 +1162,59 @@ export default function AdminDashboard() {
                   className="w-full p-3 border border-gray-300 rounded-md"
                   placeholder="We're calling you now! Please keep your phone nearby."
                 />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "quote-services" && (
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-xl font-semibold">Quote Services Configuration</h3>
+              <p className="text-sm text-gray-600 mt-2">Customize the services shown in the quote form</p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="border border-gray-200 rounded-lg p-6">
+                <label className="block text-sm font-medium mb-4">Available Services</label>
+                <div className="space-y-3">
+                  {data.quoteServices?.map((service, index) => (
+                    <div key={index} className="flex items-center gap-3">
+                      <input
+                        type="text"
+                        value={service}
+                        onChange={(e) => {
+                          const newServices = [...(data.quoteServices || [])];
+                          newServices[index] = e.target.value;
+                          setData({ ...data, quoteServices: newServices });
+                        }}
+                        className="flex-1 p-3 border border-gray-300 rounded-md"
+                        placeholder="Service name"
+                      />
+                      <button
+                        onClick={() => {
+                          const newServices = data.quoteServices?.filter((_, i) => i !== index) || [];
+                          setData({ ...data, quoteServices: newServices });
+                        }}
+                        className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={() => {
+                    const newServices = [...(data.quoteServices || []), "New Service"];
+                    setData({ ...data, quoteServices: newServices });
+                  }}
+                  className="mt-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+                >
+                  + Add Service
+                </button>
+                <p className="text-sm text-gray-500 mt-3">
+                  💡 Tip: These services will appear in the quote form. Put your main services first!
+                </p>
               </div>
             </div>
           </div>
