@@ -685,6 +685,7 @@ export default function Home() {
       </section>
 
       {/* Construction Projects Slider */}
+      {homepageData?.showProjects !== false && (
       <section id="projects" className="container-page py-20 lg:py-28">
         <div className="text-center mb-16">
           <span className="badge">OUR PROJECTS</span>
@@ -793,6 +794,7 @@ export default function Home() {
           </button>
         </div>
       </section>
+      )}
 
       {/* Articles preview */}
       <section id="blog" className="container-page py-20 lg:py-28">
